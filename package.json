@@ -54,7 +54,7 @@
   },
   "homepage": "https://github.com/moon23k/EZPG_APP_UI#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@eslint/compat": "^2.1.0",
