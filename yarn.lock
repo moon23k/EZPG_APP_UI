@@ -2121,6 +2121,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ezpg/native-blocks@workspace:^, @ezpg/native-blocks@workspace:packages/native-blocks":
+  version: 0.0.0-use.local
+  resolution: "@ezpg/native-blocks@workspace:packages/native-blocks"
+  dependencies:
+    "@ezpg/native-ui": "workspace:^"
+    react-native-builder-bob: "npm:^0.43.2"
+    typescript: "npm:^6.0.3"
+  peerDependencies:
+    "@ezpg/native-ui": "workspace:^"
+    react: ">=19.0.0"
+    react-native: ">=0.79.0"
+  languageName: unknown
+  linkType: soft
+
 "@ezpg/native-ui-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "@ezpg/native-ui-example@workspace:example"
@@ -2128,6 +2142,8 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
+    "@ezpg/native-blocks": "workspace:^"
+    "@ezpg/native-ui": "workspace:^"
     "@react-native-community/cli": "npm:20.1.0"
     "@react-native-community/cli-platform-android": "npm:20.1.0"
     "@react-native-community/cli-platform-ios": "npm:20.1.0"
@@ -2143,52 +2159,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ezpg/native-ui@workspace:.":
+"@ezpg/native-ui@workspace:^, @ezpg/native-ui@workspace:packages/native-ui":
   version: 0.0.0-use.local
-  resolution: "@ezpg/native-ui@workspace:."
+  resolution: "@ezpg/native-ui@workspace:packages/native-ui"
   dependencies:
-    "@changesets/cli": "npm:^3"
-    "@eslint/compat": "npm:^2.1.0"
-    "@eslint/eslintrc": "npm:^3.3.6"
-    "@eslint/js": "npm:^9.39.5"
-    "@react-native/babel-preset": "npm:0.86.2"
-    "@react-native/eslint-config": "npm:0.86.2"
-    "@react-native/jest-preset": "npm:0.86.2"
-    "@storybook/react-native-web-vite": "npm:10.6.3"
-    "@testing-library/react-native": "npm:^14"
-    "@types/jest": "npm:^30.0.0"
-    "@types/react": "npm:^19.2.0"
-    "@types/react-dom": "npm:^19"
-    "@types/react-native-web": "npm:^0"
-    del-cli: "npm:^7.0.0"
-    eslint: "npm:^9.39.5"
-    eslint-config-prettier: "npm:^10.1.8"
-    eslint-plugin-ft-flow: "npm:^3.0.11"
-    eslint-plugin-prettier: "npm:^5.5.6"
-    jest: "npm:^30"
-    prettier: "npm:^3.9.6"
-    react: "npm:19.2.3"
-    react-dom: "npm:19.2.3"
-    react-native: "npm:0.86.2"
     react-native-builder-bob: "npm:^0.43.2"
-    react-native-web: "npm:0.21.4"
-    storybook: "npm:10.6.3"
-    test-renderer: "npm:~1.2.0"
-    turbo: "npm:^2.10.8"
     typescript: "npm:^6.0.3"
-    vite: "npm:^8"
   peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-gesture-handler: "*"
-    react-native-reanimated: "*"
-    react-native-svg: "*"
+    react: ">=19.0.0"
+    react-native: ">=0.79.0"
+    react-native-gesture-handler: ">=2.20.0"
+    react-native-reanimated: ">=3.16.0"
+    react-native-svg: ">=15.0.0"
+    react-native-worklets: ">=0.5.0"
   peerDependenciesMeta:
     react-native-gesture-handler:
       optional: true
     react-native-reanimated:
       optional: true
     react-native-svg:
+      optional: true
+    react-native-worklets:
       optional: true
   languageName: unknown
   linkType: soft
@@ -7064,6 +7055,43 @@ __metadata:
   checksum: 10c0/77e3ae682b7b1f4972f563c6dbcd2b0d54ac679e62d5d32f3e5085feba20483cf28bd505543f520e287a56d4d55a28d7874299941faf637e779a1aa5994d1267
   languageName: node
   linkType: hard
+
+"ezpg-native-ui-monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "ezpg-native-ui-monorepo@workspace:."
+  dependencies:
+    "@changesets/cli": "npm:^3"
+    "@eslint/compat": "npm:^2.1.0"
+    "@eslint/eslintrc": "npm:^3.3.6"
+    "@eslint/js": "npm:^9.39.5"
+    "@react-native/babel-preset": "npm:0.86.2"
+    "@react-native/eslint-config": "npm:0.86.2"
+    "@react-native/jest-preset": "npm:0.86.2"
+    "@storybook/react-native-web-vite": "npm:10.6.3"
+    "@testing-library/react-native": "npm:^14"
+    "@types/jest": "npm:^30.0.0"
+    "@types/react": "npm:^19.2.0"
+    "@types/react-dom": "npm:^19"
+    "@types/react-native-web": "npm:^0"
+    del-cli: "npm:^7.0.0"
+    eslint: "npm:^9.39.5"
+    eslint-config-prettier: "npm:^10.1.8"
+    eslint-plugin-ft-flow: "npm:^3.0.11"
+    eslint-plugin-prettier: "npm:^5.5.6"
+    jest: "npm:^30"
+    prettier: "npm:^3.9.6"
+    react: "npm:19.2.3"
+    react-dom: "npm:19.2.3"
+    react-native: "npm:0.86.2"
+    react-native-builder-bob: "npm:^0.43.2"
+    react-native-web: "npm:0.21.4"
+    storybook: "npm:10.6.3"
+    test-renderer: "npm:~1.2.0"
+    turbo: "npm:^2.10.8"
+    typescript: "npm:^6.0.3"
+    vite: "npm:^8"
+  languageName: unknown
+  linkType: soft
 
 "fast-deep-equal@npm:^3.1.1, fast-deep-equal@npm:^3.1.3":
   version: 3.1.3

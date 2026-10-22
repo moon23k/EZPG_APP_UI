@@ -1,0 +1,106 @@
+{
+  "name": "@ezpg/native-ui",
+  "version": "0.0.0",
+  "description": "React Native UI components for EZPG partner apps",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "ezpg-native-ui-source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./charts": {
+      "ezpg-native-ui-source": "./src/charts.tsx",
+      "types": "./lib/typescript/src/charts.d.ts",
+      "default": "./lib/module/charts.js"
+    },
+    "./sortable": {
+      "ezpg-native-ui-source": "./src/sortable.tsx",
+      "types": "./lib/typescript/src/sortable.d.ts",
+      "default": "./lib/module/sortable.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/*.stories.tsx",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prepare": "bob build"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "ui",
+    "design-system",
+    "components",
+    "ezpg"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moon23k/EZPG_APP_UI.git",
+    "directory": "packages/native-ui"
+  },
+  "author": "moon23k <d.moon23k@gmail.com> (https://github.com/moon23k)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moon23k/EZPG_APP_UI/issues"
+  },
+  "homepage": "https://github.com/moon23k/EZPG_APP_UI#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.79.0",
+    "react-native-gesture-handler": ">=2.20.0",
+    "react-native-reanimated": ">=3.16.0",
+    "react-native-svg": ">=15.0.0",
+    "react-native-worklets": ">=0.5.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-gesture-handler": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    },
+    "react-native-worklets": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "react-native-builder-bob": "^0.43.2",
+    "typescript": "^6.0.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "exclude": "{**/{__tests__,__fixtures__,__mocks__}/**,**/*.stories.tsx}",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

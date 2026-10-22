@@ -1,0 +1,65 @@
+{
+  "name": "@ezpg/native-blocks",
+  "version": "0.0.0",
+  "private": true,
+  "description": "EZPG domain blocks built on @ezpg/native-ui",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "ezpg-native-blocks-source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/*.stories.tsx",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "prepare": "bob build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moon23k/EZPG_APP_UI.git",
+    "directory": "packages/native-blocks"
+  },
+  "author": "moon23k <d.moon23k@gmail.com> (https://github.com/moon23k)",
+  "license": "MIT",
+  "peerDependencies": {
+    "@ezpg/native-ui": "workspace:^",
+    "react": ">=19.0.0",
+    "react-native": ">=0.79.0"
+  },
+  "devDependencies": {
+    "@ezpg/native-ui": "workspace:^",
+    "react-native-builder-bob": "^0.43.2",
+    "typescript": "^6.0.3"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "exclude": "{**/{__tests__,__fixtures__,__mocks__}/**,**/*.stories.tsx}",
+    "targets": [
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  }
+}

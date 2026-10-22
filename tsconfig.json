@@ -2,18 +2,32 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@ezpg/native-ui": ["./src/index"]
+      "@ezpg/native-ui": [
+        "./packages/native-ui/src/index"
+      ],
+      "@ezpg/native-ui/charts": [
+        "./packages/native-ui/src/charts"
+      ],
+      "@ezpg/native-ui/sortable": [
+        "./packages/native-ui/src/sortable"
+      ],
+      "@ezpg/native-blocks": [
+        "./packages/native-blocks/src/index"
+      ]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "customConditions": [
       "ezpg-native-ui-source",
+      "ezpg-native-blocks-source",
       "react-native-strict-api"
     ],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -26,7 +40,14 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "types": ["jest", "node"],
+    "types": [
+      "jest",
+      "node"
+    ],
     "verbatimModuleSyntax": true
-  }
+  },
+  "exclude": [
+    "**/node_modules",
+    "**/lib"
+  ]
 }

@@ -24,6 +24,16 @@ export default defineConfig([
     },
   },
   {
-    ignores: ['node_modules/', 'lib/'],
+    // 공개 패키지는 도메인 blocks를 알지 못한다.
+    files: ['packages/native-ui/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        { patterns: ['@ezpg/native-blocks', '@ezpg/native-blocks/*'] },
+      ],
+    },
+  },
+  {
+    ignores: ['**/node_modules/', '**/lib/', 'storybook-static/'],
   },
 ]);
