@@ -16,4 +16,7 @@ const config = withMetroConfig(getDefaultConfig(__dirname), {
   conditions: ['ezpg-native-ui-source'],
 });
 
+// 카탈로그가 src/**/*.stories.tsx를 자동으로 읽는다.
+config.transformer.unstable_allowRequireContext = true;
+
 module.exports = config;
