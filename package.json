@@ -10,6 +10,16 @@
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
+    "./charts": {
+      "ezpg-native-ui-source": "./src/charts.tsx",
+      "types": "./lib/typescript/src/charts.d.ts",
+      "default": "./lib/module/charts.js"
+    },
+    "./sortable": {
+      "ezpg-native-ui-source": "./src/sortable.tsx",
+      "types": "./lib/typescript/src/sortable.d.ts",
+      "default": "./lib/module/sortable.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -36,7 +46,8 @@
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "typecheck": "tsc",
-    "lint": "eslint \"**/*.{js,ts,tsx}\""
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "test": "jest"
   },
   "keywords": [
     "react-native",
@@ -77,7 +88,10 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-svg": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*"
   },
   "workspaces": [
     "example"
@@ -115,5 +129,16 @@
       "eslint"
     ],
     "version": "0.63.1"
+  },
+  "peerDependenciesMeta": {
+    "react-native-svg": {
+      "optional": true
+    },
+    "react-native-gesture-handler": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    }
   }
 }
