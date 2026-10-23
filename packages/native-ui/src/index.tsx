@@ -52,3 +52,5 @@ export type {
   TypographyToken,
   TypographyVariant,
 } from './types';
+
+export * from './blocks';

@@ -10,22 +10,12 @@
       ],
       "@ezpg/native-ui/sortable": [
         "./packages/native-ui/src/sortable"
-      ],
-      "@ezpg/native-blocks": [
-        "./packages/native-blocks/src/index"
-      ],
-      "@ezpg/native-blocks/charts": [
-        "./packages/native-blocks/src/charts"
-      ],
-      "@ezpg/native-blocks/sortable": [
-        "./packages/native-blocks/src/sortable"
       ]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "customConditions": [
       "ezpg-native-ui-source",
-      "ezpg-native-blocks-source",
       "react-native-strict-api"
     ],
     "esModuleInterop": true,

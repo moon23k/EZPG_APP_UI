@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { makeStyles } from '../utils/styles';
 
 const useStyles = makeStyles((t) => ({
-  section: { gap: t.space[2], marginBottom: t.space[6] },
+  section: { gap: t.space[2], marginBottom: t.space[6], maxWidth: 420 },
   title: {
     ...t.typography.caption,
     color: t.colors.mutedForeground,
@@ -42,3 +42,7 @@ export function Row({ children }: { children: ReactNode }) {
 export function Column({ children }: { children: ReactNode }) {
   return <View style={useStyles().column}>{children}</View>;
 }
+
+export const sample = (id: number, w = 600, h = w) => ({
+  uri: `https://picsum.photos/id/${id}/${w}/${h}`,
+});

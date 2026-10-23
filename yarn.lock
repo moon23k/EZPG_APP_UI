@@ -2121,36 +2121,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ezpg/native-blocks@workspace:^, @ezpg/native-blocks@workspace:packages/native-blocks":
-  version: 0.0.0-use.local
-  resolution: "@ezpg/native-blocks@workspace:packages/native-blocks"
-  dependencies:
-    "@ezpg/native-ui": "workspace:^"
-    react-native-builder-bob: "npm:^0.43.2"
-    typescript: "npm:^6.0.3"
-  peerDependencies:
-    "@ezpg/native-ui": "workspace:^"
-    react: ">=19.0.0"
-    react-native: ">=0.82.0"
-    react-native-gesture-handler: ">=2.28.0"
-    react-native-reanimated: ">=4.5.5"
-    react-native-sortables: ">=1.10.0"
-    react-native-svg: ">=15.0.0"
-    react-native-worklets: ">=0.10.0"
-  peerDependenciesMeta:
-    react-native-gesture-handler:
-      optional: true
-    react-native-reanimated:
-      optional: true
-    react-native-sortables:
-      optional: true
-    react-native-svg:
-      optional: true
-    react-native-worklets:
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@ezpg/native-ui-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "@ezpg/native-ui-example@workspace:example"
@@ -2158,7 +2128,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@ezpg/native-blocks": "workspace:^"
     "@ezpg/native-ui": "workspace:^"
     "@react-native-community/cli": "npm:20.1.0"
     "@react-native-community/cli-platform-android": "npm:20.1.0"

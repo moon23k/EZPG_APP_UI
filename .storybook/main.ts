@@ -91,7 +91,6 @@ const config: StorybookConfig = {
       ],
       conditions: [
         'ezpg-native-ui-source',
-        'ezpg-native-blocks-source',
         ...(vite.resolve?.conditions ?? []),
       ],
     },
