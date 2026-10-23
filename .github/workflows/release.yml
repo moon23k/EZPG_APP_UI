@@ -31,3 +31,6 @@ jobs:
           version: yarn changeset version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # yarn 4는 .npmrc를 읽지 않으므로 토큰을 따로 넘긴다
+          YARN_NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
