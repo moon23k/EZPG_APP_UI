@@ -11,6 +11,18 @@ const config: StorybookConfig = {
       },
     },
   },
+  // 워크스페이스 패키지는 빌드 결과(lib)가 아니라 소스를 본다.
+  viteFinal: (vite) => ({
+    ...vite,
+    resolve: {
+      ...vite.resolve,
+      conditions: [
+        'ezpg-native-ui-source',
+        'ezpg-native-blocks-source',
+        ...(vite.resolve?.conditions ?? []),
+      ],
+    },
+  }),
 };
 
 export default config;

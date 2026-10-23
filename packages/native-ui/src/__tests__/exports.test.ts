@@ -25,3 +25,5 @@ describe('main entry', () => {
     expect(() => require('../index')).not.toThrow();
   });
 });
+
+export {};

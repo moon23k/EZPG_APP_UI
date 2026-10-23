@@ -12,7 +12,11 @@ export type TextProps = RNTextProps & {
   variant?: TypographyVariant;
   /** 기본 'default' */
   tone?: TextTone;
+  /** 지정하지 않으면 variant의 굵기 */
+  weight?: TextWeight;
 };
+
+export type TextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 const useStyles = makeStyles((t) => ({
   caption: t.typography.caption,
@@ -25,11 +29,16 @@ const useStyles = makeStyles((t) => ({
   destructive: { color: t.colors.destructive },
   success: { color: t.colors.success },
   font: { fontFamily: t.fontFamily },
+  regular: { fontWeight: '400' },
+  medium: { fontWeight: '500' },
+  semibold: { fontWeight: '600' },
+  bold: { fontWeight: '700' },
 }));
 
 export function Text({
   variant = 'body',
   tone = 'default',
+  weight,
   style,
   ...rest
 }: TextProps) {
@@ -39,7 +48,7 @@ export function Text({
     <RNText
       maxFontSizeMultiplier={t.maxFontScale}
       {...rest}
-      style={[s.font, s[variant], s[tone], style]}
+      style={[s.font, s[variant], s[tone], weight && s[weight], style]}
     />
   );
 }

@@ -13,6 +13,12 @@
       ],
       "@ezpg/native-blocks": [
         "./packages/native-blocks/src/index"
+      ],
+      "@ezpg/native-blocks/charts": [
+        "./packages/native-blocks/src/charts"
+      ],
+      "@ezpg/native-blocks/sortable": [
+        "./packages/native-blocks/src/sortable"
       ]
     },
     "allowUnreachableCode": false,

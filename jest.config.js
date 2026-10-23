@@ -13,5 +13,7 @@ module.exports = {
     '^@ezpg/native-ui/(charts|sortable)$':
       '<rootDir>/packages/native-ui/src/$1',
     '^@ezpg/native-blocks$': '<rootDir>/packages/native-blocks/src/index',
+    '^@ezpg/native-blocks/(charts|sortable)$':
+      '<rootDir>/packages/native-blocks/src/$1',
   },
 };

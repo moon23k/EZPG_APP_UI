@@ -1,1 +1,1 @@
-export { Text, type TextProps, type TextTone } from './text';
+export { Text, type TextProps, type TextTone, type TextWeight } from './text';

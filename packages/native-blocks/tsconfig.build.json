@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {},
+    "customConditions": [
+      "react-native-strict-api"
+    ]
   },
   "include": [
     "src"

@@ -1,0 +1,22 @@
+import { formatPrice } from '@ezpg/native-ui';
+
+/** 420000 → '42만', 12345 → '1.2만', 9000 → '9,000' */
+export function formatManwon(value: number): string {
+  const abs = Math.abs(value);
+  if (abs < 10000) return formatPrice(value, '');
+  const man = value / 10000;
+  const digits = Math.abs(man) >= 10 ? 0 : 1;
+  return `${Number(man.toFixed(digits))}만`;
+}
+
+/** 남은 일수 → 'D-3', 'D-day', 'D+2' */
+export function formatDday(days: number): string {
+  if (days === 0) return 'D-day';
+  return days > 0 ? `D-${days}` : `D+${-days}`;
+}
+
+/** 전기 대비 증감률(%). 이전 값이 0이면 null */
+export function changeRate(current: number, previous: number): number | null {
+  if (previous === 0) return null;
+  return ((current - previous) / Math.abs(previous)) * 100;
+}

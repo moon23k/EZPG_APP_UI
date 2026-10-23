@@ -10,10 +10,19 @@ export {
   type PressableBaseProps,
 } from './internal/pressable-base';
 export type { IconRenderProps, IconSlot } from './internal/icon';
+export { renderIcon } from './internal/icon';
+export {
+  CheckGlyph,
+  ChevronGlyph,
+  CloseGlyph,
+  SearchGlyph,
+} from './internal/glyphs';
+export { contrastRatio, pickForeground } from './utils/color';
 
 export * from './components/button';
 export * from './components/checkbox';
 export * from './components/chip';
+export * from './components/chip-group';
 export * from './components/dialog';
 export * from './components/divider';
 export * from './components/empty-state';
@@ -29,6 +38,7 @@ export * from './components/status-badge';
 export * from './components/switch';
 export * from './components/text';
 export * from './components/toast';
+export * from './components/wizard-steps';
 
 export type {
   ColorScheme,
