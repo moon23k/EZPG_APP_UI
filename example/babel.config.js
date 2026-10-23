@@ -10,5 +10,7 @@ module.exports = packages.reduce(
   (config, root) => getConfig(config, { root }),
   {
     presets: ['module:@react-native/babel-preset'],
+    // 반드시 마지막 플러그인
+    plugins: ['react-native-worklets/plugin'],
   }
 );
