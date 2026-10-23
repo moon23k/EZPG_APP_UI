@@ -1,27 +1,49 @@
 import type { Decorator, Preview } from '@storybook/react-native-web-vite';
-import { StyleSheet, View } from 'react-native';
+import type { ReactNode } from 'react';
+import { View } from 'react-native';
+import {
+  createTheme,
+  defaultThemes,
+  makeStyles,
+  ThemeProvider,
+  type Themes,
+} from '../packages/native-ui/src';
 
-// Phase 1에서 ThemeProvider로 교체한다. 지금은 배경만 전환한다.
-const withTheme: Decorator = (Story, context) => (
-  <View
-    style={[
-      styles.canvas,
-      {
-        backgroundColor:
-          context.globals.theme === 'dark' ? '#0a0a0a' : '#ffffff',
-      },
-    ]}
+const brands: Record<string, Themes> = {
+  default: defaultThemes,
+  blue: createTheme({ colors: { primary: '#2563eb' } }),
+  yellow: createTheme({ colors: { primary: '#facc15' } }),
+};
+
+const useStyles = makeStyles((t) => ({
+  canvas: {
+    flex: 1,
+    padding: t.space[4],
+    backgroundColor: t.colors.background,
+  },
+}));
+
+function Canvas({ children }: { children: ReactNode }) {
+  return <View style={useStyles().canvas}>{children}</View>;
+}
+
+const withTheme: Decorator = (Story, { globals }) => (
+  <ThemeProvider
+    themes={brands[globals.brand] ?? defaultThemes}
+    colorScheme={globals.scheme}
   >
-    <Story />
-  </View>
+    <Canvas>
+      <Story />
+    </Canvas>
+  </ThemeProvider>
 );
 
 const preview: Preview = {
   globalTypes: {
-    theme: {
+    scheme: {
       description: 'Color scheme',
       toolbar: {
-        title: 'Theme',
+        title: 'Scheme',
         icon: 'mirror',
         items: [
           { value: 'light', title: 'Light' },
@@ -30,16 +52,23 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
+    brand: {
+      description: 'Brand primary',
+      toolbar: {
+        title: 'Brand',
+        icon: 'paintbrush',
+        items: [
+          { value: 'default', title: 'Default' },
+          { value: 'blue', title: 'Blue #2563eb' },
+          { value: 'yellow', title: 'Yellow #facc15' },
+        ],
+        dynamicTitle: true,
+      },
+    },
   },
-  initialGlobals: { theme: 'light' },
+  initialGlobals: { scheme: 'light', brand: 'default' },
   decorators: [withTheme],
-  parameters: {
-    layout: 'fullscreen',
-  },
+  parameters: { layout: 'fullscreen' },
 };
-
-const styles = StyleSheet.create({
-  canvas: { flex: 1, padding: 16 },
-});
 
 export default preview;

@@ -36,7 +36,7 @@
   "peerDependencies": {
     "@ezpg/native-ui": "workspace:^",
     "react": ">=19.0.0",
-    "react-native": ">=0.79.0"
+    "react-native": ">=0.82.0"
   },
   "devDependencies": {
     "@ezpg/native-ui": "workspace:^",

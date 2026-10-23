@@ -1,1 +1,80 @@
-export {};
+import { Platform } from 'react-native';
+import type { ColorScheme, ThemeColors, ThemeTokens } from '../types';
+
+// shadcn/ui neutral 기준
+const neutral = {
+  50: '#fafafa',
+  100: '#f5f5f5',
+  200: '#e5e5e5',
+  300: '#d4d4d4',
+  400: '#a3a3a3',
+  500: '#737373',
+  700: '#404040',
+  800: '#262626',
+  900: '#171717',
+  950: '#0a0a0a',
+};
+
+export const colors: Record<ColorScheme, ThemeColors> = {
+  light: {
+    background: '#ffffff',
+    foreground: neutral[950],
+    muted: neutral[100],
+    mutedForeground: neutral[500],
+    border: neutral[200],
+    ring: neutral[400],
+    primary: neutral[900],
+    primaryForeground: neutral[50],
+    destructive: '#dc2626',
+    destructiveForeground: '#ffffff',
+    success: '#15803d',
+    successForeground: '#ffffff',
+    warning: '#f59e0b',
+    warningForeground: neutral[950],
+  },
+  dark: {
+    background: neutral[950],
+    foreground: neutral[50],
+    muted: neutral[800],
+    mutedForeground: neutral[400],
+    border: neutral[800],
+    ring: neutral[500],
+    primary: neutral[50],
+    primaryForeground: neutral[900],
+    destructive: '#f87171',
+    destructiveForeground: neutral[950],
+    success: '#4ade80',
+    successForeground: neutral[950],
+    warning: '#fbbf24',
+    warningForeground: neutral[950],
+  },
+};
+
+export const tokens: ThemeTokens = {
+  space: {
+    0: 0,
+    1: 4,
+    2: 8,
+    3: 12,
+    4: 16,
+    5: 20,
+    6: 24,
+    8: 32,
+    10: 40,
+    12: 48,
+    16: 64,
+  },
+  radius: { sm: 6, md: 8, lg: 12, full: 9999 },
+  typography: {
+    caption: { fontSize: 12, lineHeight: 16, fontWeight: '400' },
+    body: { fontSize: 15, lineHeight: 22, fontWeight: '400' },
+    bodyLg: { fontSize: 17, lineHeight: 24, fontWeight: '400' },
+    title: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
+    display: { fontSize: 28, lineHeight: 34, fontWeight: '700' },
+  },
+  fontFamily: undefined,
+  maxFontScale: 1.3,
+  shadow: '0px 4px 12px rgba(0, 0, 0, 0.12)',
+  motion: { duration: 200 },
+  minTouchSize: Platform.OS === 'ios' ? 44 : 48,
+};

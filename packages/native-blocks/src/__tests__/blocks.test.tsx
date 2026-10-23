@@ -1,3 +1,3 @@
 describe('blocks', () => {
-  it.todo('blocks render with fixtures (phase 5)');
+  it.todo('blocks render with fixtures');
 });
