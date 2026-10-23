@@ -16,4 +16,4 @@ export * from './site-preview-frame';
 export * from './stat-card';
 export * from './step-screen';
 export * from './supply-item-card';
-export { formatDday, formatDeadline, formatManwon } from './internal/format';
+export { formatDeadline, formatManwon } from './internal/format';

@@ -9,12 +9,6 @@ export function formatManwon(value: number): string {
   return `${Number(man.toFixed(digits))}만`;
 }
 
-/** 남은 일수 → 'D-3', 'D-day', 'D+2' */
-export function formatDday(days: number): string {
-  if (days === 0) return 'D-day';
-  return days > 0 ? `D-${days}` : `D+${-days}`;
-}
-
 /** 전기 대비 증감률(%). 이전 값이 0이면 null */
 export function changeRate(current: number, previous: number): number | null {
   if (previous === 0) return null;

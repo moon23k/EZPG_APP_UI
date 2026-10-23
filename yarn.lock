@@ -2132,6 +2132,22 @@ __metadata:
     "@ezpg/native-ui": "workspace:^"
     react: ">=19.0.0"
     react-native: ">=0.82.0"
+    react-native-gesture-handler: ">=2.28.0"
+    react-native-reanimated: ">=4.5.5"
+    react-native-sortables: ">=1.10.0"
+    react-native-svg: ">=15.0.0"
+    react-native-worklets: ">=0.10.0"
+  peerDependenciesMeta:
+    react-native-gesture-handler:
+      optional: true
+    react-native-reanimated:
+      optional: true
+    react-native-sortables:
+      optional: true
+    react-native-svg:
+      optional: true
+    react-native-worklets:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4192,48 +4208,6 @@ __metadata:
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
   checksum: 10c0/374bbf9f477fdc278f4bf56d6a27f88b1801c90cce9dffc414777dbf33fb1e421efc7341ee169cb286435bb742076a7899bb463c9927d2acca95aafaa5324820
-  languageName: node
-  linkType: hard
-
-"@turbo/darwin-64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/darwin-64@npm:2.11.9"
-  conditions: os=darwin & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@turbo/darwin-arm64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/darwin-arm64@npm:2.11.9"
-  conditions: os=darwin & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@turbo/linux-64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/linux-64@npm:2.11.9"
-  conditions: (os=android | os=linux) & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@turbo/linux-arm64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/linux-arm64@npm:2.11.9"
-  conditions: (os=android | os=linux) & cpu=arm64
-  languageName: node
-  linkType: hard
-
-"@turbo/windows-64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/windows-64@npm:2.11.9"
-  conditions: os=win32 & cpu=x64
-  languageName: node
-  linkType: hard
-
-"@turbo/windows-arm64@npm:2.11.9":
-  version: 2.11.9
-  resolution: "@turbo/windows-arm64@npm:2.11.9"
-  conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
@@ -7191,7 +7165,6 @@ __metadata:
     react-native-worklets: "npm:0.13.0"
     storybook: "npm:10.6.3"
     test-renderer: "npm:~1.2.0"
-    turbo: "npm:^2.10.8"
     typescript: "npm:^6.0.3"
     vite: "npm:^8"
   languageName: unknown
@@ -12699,35 +12672,6 @@ __metadata:
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
-  languageName: node
-  linkType: hard
-
-"turbo@npm:^2.10.8":
-  version: 2.11.9
-  resolution: "turbo@npm:2.11.9"
-  dependencies:
-    "@turbo/darwin-64": "npm:2.11.9"
-    "@turbo/darwin-arm64": "npm:2.11.9"
-    "@turbo/linux-64": "npm:2.11.9"
-    "@turbo/linux-arm64": "npm:2.11.9"
-    "@turbo/windows-64": "npm:2.11.9"
-    "@turbo/windows-arm64": "npm:2.11.9"
-  dependenciesMeta:
-    "@turbo/darwin-64":
-      optional: true
-    "@turbo/darwin-arm64":
-      optional: true
-    "@turbo/linux-64":
-      optional: true
-    "@turbo/linux-arm64":
-      optional: true
-    "@turbo/windows-64":
-      optional: true
-    "@turbo/windows-arm64":
-      optional: true
-  bin:
-    turbo: bin/turbo
-  checksum: 10c0/37d2e452ea36d27281a04771482529d5d7afc97bffe117b0f9f632158fd22633e0c0783c49893506e639ce98c94610e398920dc04d5c33031e495bcd859c352f
   languageName: node
   linkType: hard
 

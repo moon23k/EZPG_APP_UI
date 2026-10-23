@@ -1,7 +1,6 @@
 {
   "name": "@ezpg/native-blocks",
   "version": "0.0.0",
-  "private": true,
   "description": "EZPG domain blocks built on @ezpg/native-ui",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -48,11 +47,11 @@
     "@ezpg/native-ui": "workspace:^",
     "react": ">=19.0.0",
     "react-native": ">=0.82.0",
-    "react-native-svg": ">=15.0.0",
     "react-native-gesture-handler": ">=2.28.0",
     "react-native-reanimated": ">=4.5.5",
-    "react-native-worklets": ">=0.10.0",
-    "react-native-sortables": ">=1.10.0"
+    "react-native-sortables": ">=1.10.0",
+    "react-native-svg": ">=15.0.0",
+    "react-native-worklets": ">=0.10.0"
   },
   "devDependencies": {
     "@ezpg/native-ui": "workspace:^",
@@ -79,20 +78,23 @@
     ]
   },
   "peerDependenciesMeta": {
-    "react-native-svg": {
-      "optional": true
-    },
     "react-native-gesture-handler": {
       "optional": true
     },
     "react-native-reanimated": {
       "optional": true
     },
-    "react-native-worklets": {
-      "optional": true
-    },
     "react-native-sortables": {
       "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    },
+    "react-native-worklets": {
+      "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
