@@ -2,9 +2,6 @@
 #
 .DS_Store
 
-# XDE
-.expo/
-
 # VSCode
 .vscode/
 jsconfig.json
@@ -69,8 +66,6 @@ android/keystores/debug.keystore
 !.yarn/sdks
 !.yarn/versions
 
-# Expo
-.expo/
 
 # Turborepo
 .turbo/

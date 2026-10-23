@@ -1,5 +1,14 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
-import { Button, Checkbox, formatPrice, Switch } from '../index';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  formatPrice,
+  SegmentedTabs,
+  Switch,
+  ToastProvider,
+  useToast,
+} from '../index';
 
 describe('Button', () => {
   it('does not fire onPress while loading or disabled', async () => {
@@ -55,5 +64,73 @@ describe('formatPrice', () => {
     [-4500, '-4,500원'],
   ])('%p → %s', (value, expected) => {
     expect(formatPrice(value)).toBe(expected);
+  });
+});
+
+describe('Dialog', () => {
+  it('calls onConfirm and closes on cancel', async () => {
+    const onConfirm = jest.fn();
+    const onOpenChange = jest.fn();
+    await render(
+      <Dialog
+        open
+        onOpenChange={onOpenChange}
+        title="삭제할까요?"
+        onConfirm={onConfirm}
+        confirmLabel="삭제"
+      />
+    );
+    await fireEvent.press(screen.getByText('삭제'));
+    expect(onConfirm).toHaveBeenCalledTimes(1);
+    await fireEvent.press(screen.getByText('취소'));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+});
+
+describe('SegmentedTabs', () => {
+  it('reports the pressed tab only when it changes', async () => {
+    const onValueChange = jest.fn();
+    await render(
+      <SegmentedTabs
+        items={[
+          { value: 'day', label: '오늘' },
+          { value: 'week', label: '이번 주' },
+        ]}
+        value="day"
+        onValueChange={onValueChange}
+      />
+    );
+    await fireEvent.press(screen.getByText('오늘'));
+    await fireEvent.press(screen.getByText('이번 주'));
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange).toHaveBeenCalledWith('week');
+  });
+});
+
+describe('Toast', () => {
+  beforeEach(() => jest.useFakeTimers());
+  afterEach(() => jest.useRealTimers());
+
+  function Trigger() {
+    const toast = useToast();
+    return (
+      <Button onPress={() => toast.show({ message: '저장했어요' })}>
+        저장
+      </Button>
+    );
+  }
+
+  it('shows a message and hides it after the duration', async () => {
+    await render(
+      <ToastProvider>
+        <Trigger />
+      </ToastProvider>
+    );
+    await fireEvent.press(screen.getByText('저장'));
+    expect(screen.getByText('저장했어요')).toBeTruthy();
+    await act(async () => {
+      jest.advanceTimersByTime(2500);
+    });
+    expect(screen.queryByText('저장했어요')).toBeNull();
   });
 });

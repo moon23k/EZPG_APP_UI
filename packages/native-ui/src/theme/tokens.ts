@@ -78,7 +78,10 @@ export const tokens: ThemeTokens = {
   },
   fontFamily: undefined,
   maxFontScale: 1.3,
-  shadow: '0px 4px 12px rgba(0, 0, 0, 0.12)',
+  shadow: {
+    sm: '0px 1px 2px rgba(0, 0, 0, 0.08)',
+    md: '0px 4px 12px rgba(0, 0, 0, 0.12)',
+  },
   motion: { duration: 200 },
   opacity: { pressed: 0.8, disabled: 0.5 },
   iconSize: { sm: 16, md: 20 },

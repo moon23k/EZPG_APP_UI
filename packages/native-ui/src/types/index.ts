@@ -51,7 +51,7 @@ export type ThemeTokens = {
   /** 기기 글자 크기 설정이 적용되는 최대 배율 */
   maxFontScale: number;
   /** `boxShadow` 값 (New Architecture) */
-  shadow: string;
+  shadow: { sm: string; md: string };
   motion: { duration: number };
   opacity: { pressed: number; disabled: number };
   iconSize: { sm: number; md: number };

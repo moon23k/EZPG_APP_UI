@@ -1,19 +1,18 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   Animated,
   KeyboardAvoidingView,
   Modal,
-  Platform,
-  Pressable,
-  StyleSheet,
   Text,
   useWindowDimensions,
   View,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import { Backdrop, useOverlayTransition } from '../../internal/overlay';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
+import { ToastHost } from '../toast/toast';
 
 export type SheetProps = {
   open: boolean;
@@ -29,11 +28,8 @@ export type SheetProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-const useNativeDriver = Platform.OS !== 'web';
-
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, justifyContent: 'flex-end' },
-  backdrop: { backgroundColor: 'rgba(0, 0, 0, 0.4)' },
   panel: {
     maxHeight: '90%',
     paddingTop: t.space[2],
@@ -42,7 +38,7 @@ const useStyles = makeStyles((t) => ({
     borderTopLeftRadius: t.radius.lg,
     borderTopRightRadius: t.radius.lg,
     backgroundColor: t.colors.background,
-    boxShadow: t.shadow,
+    boxShadow: t.shadow.md,
   },
   handle: {
     alignSelf: 'center',
@@ -71,21 +67,7 @@ export function Sheet({
   const t = useTheme();
   const s = useStyles();
   const { height } = useWindowDimensions();
-  const progress = useRef(new Animated.Value(0)).current;
-  const [mounted, setMounted] = useState(open);
-
-  useEffect(() => {
-    if (open) setMounted(true);
-    const animation = Animated.timing(progress, {
-      toValue: open ? 1 : 0,
-      duration: t.motion.duration,
-      useNativeDriver,
-    });
-    animation.start(({ finished }) => {
-      if (finished && !open) setMounted(false);
-    });
-    return () => animation.stop();
-  }, [open, progress, t.motion.duration]);
+  const { mounted, progress } = useOverlayTransition(open);
 
   const close = () => {
     if (dismissible) onOpenChange(false);
@@ -101,16 +83,7 @@ export function Sheet({
       onRequestClose={close}
     >
       <KeyboardAvoidingView behavior="padding" style={s.root}>
-        <Animated.View
-          style={[StyleSheet.absoluteFill, s.backdrop, { opacity: progress }]}
-        >
-          <Pressable
-            style={StyleSheet.absoluteFill}
-            onPress={close}
-            accessibilityRole="button"
-            accessibilityLabel={closeLabel}
-          />
-        </Animated.View>
+        <Backdrop progress={progress} onPress={close} label={closeLabel} />
         <Animated.View
           accessibilityViewIsModal
           style={[
@@ -142,6 +115,7 @@ export function Sheet({
           {children}
         </Animated.View>
       </KeyboardAvoidingView>
+      <ToastHost />
     </Modal>
   );
 }

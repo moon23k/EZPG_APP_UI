@@ -77,3 +77,22 @@ const styles = StyleSheet.create({
   absolute: { position: 'absolute' },
   center: { alignItems: 'center', justifyContent: 'center' },
 });
+
+export function ChevronGlyph({ color, size }: IconRenderProps) {
+  const stroke = Math.max(1.5, size / 10);
+  return (
+    <View style={[styles.center, { width: size, height: size }]}>
+      <View
+        style={{
+          width: size * 0.42,
+          height: size * 0.42,
+          marginLeft: -size * 0.16,
+          borderTopWidth: stroke,
+          borderRightWidth: stroke,
+          borderColor: color,
+          transform: [{ rotate: '45deg' }],
+        }}
+      />
+    </View>
+  );
+}
