@@ -11,7 +11,7 @@ export type StatCardProps = {
   value: string;
   /** 직전 기간 대비 증감률(%). 오르면 빨강, 내리면 파랑 */
   change?: number | null;
-  /** 오른쪽 작은 차트. 예) <Sparkline /> (@ezpg/native-ui/charts) */
+  /** 오른쪽 작은 차트. 예) <Sparkline /> (@ezpg/app-ui/charts) */
   chart?: ReactNode;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;

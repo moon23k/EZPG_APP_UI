@@ -17,7 +17,7 @@ const compiled = Object.fromEntries(
   ].map(([name, entry]) => {
     const dir = path.dirname(
       require.resolve(`${name}/package.json`, {
-        paths: [path.resolve('packages/native-ui')],
+        paths: [path.resolve('packages/app-ui')],
       })
     );
     return [name, path.join(dir, entry!)];
@@ -89,10 +89,7 @@ const config: StorybookConfig = {
               })
             )),
       ],
-      conditions: [
-        'ezpg-native-ui-source',
-        ...(vite.resolve?.conditions ?? []),
-      ],
+      conditions: ['ezpg-app-ui-source', ...(vite.resolve?.conditions ?? [])],
     },
   }),
 };

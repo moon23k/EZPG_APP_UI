@@ -1,4 +1,4 @@
-# @ezpg/native-ui
+# @ezpg/app-ui
 
 EZPG partner app UI components
 
@@ -6,7 +6,7 @@ EZPG partner app UI components
 
 
 ```sh
-npm install @ezpg/native-ui
+npm install @ezpg/app-ui
 ```
 
 
@@ -14,7 +14,7 @@ npm install @ezpg/native-ui
 
 
 ```js
-import { multiply } from '@ezpg/native-ui';
+import { multiply } from '@ezpg/app-ui';
 
 // ...
 

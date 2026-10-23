@@ -2,20 +2,20 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "@ezpg/native-ui": [
-        "./packages/native-ui/src/index"
+      "@ezpg/app-ui": [
+        "./packages/app-ui/src/index"
       ],
-      "@ezpg/native-ui/charts": [
-        "./packages/native-ui/src/charts"
+      "@ezpg/app-ui/charts": [
+        "./packages/app-ui/src/charts"
       ],
-      "@ezpg/native-ui/sortable": [
-        "./packages/native-ui/src/sortable"
+      "@ezpg/app-ui/sortable": [
+        "./packages/app-ui/src/sortable"
       ]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "customConditions": [
-      "ezpg-native-ui-source",
+      "ezpg-app-ui-source",
       "react-native-strict-api"
     ],
     "esModuleInterop": true,

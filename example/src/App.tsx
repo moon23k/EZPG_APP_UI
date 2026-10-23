@@ -3,7 +3,7 @@ import {
   ThemeProvider,
   useTheme,
   type ColorScheme,
-} from '@ezpg/native-ui';
+} from '@ezpg/app-ui';
 import { useState } from 'react';
 import {
   Pressable,

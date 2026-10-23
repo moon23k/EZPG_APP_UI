@@ -13,7 +13,7 @@ const root = path.resolve(__dirname, '..');
 const config = withMetroConfig(getDefaultConfig(__dirname), {
   root,
   dirname: __dirname,
-  conditions: ['ezpg-native-ui-source'],
+  conditions: ['ezpg-app-ui-source'],
 });
 
 // 카탈로그가 src/**/*.stories.tsx를 자동으로 읽는다.

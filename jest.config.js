@@ -9,8 +9,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^react-native-sortables$': '<rootDir>/jest/react-native-sortables.js',
-    '^@ezpg/native-ui$': '<rootDir>/packages/native-ui/src/index',
-    '^@ezpg/native-ui/(charts|sortable)$':
-      '<rootDir>/packages/native-ui/src/$1',
+    '^@ezpg/app-ui$': '<rootDir>/packages/app-ui/src/index',
+    '^@ezpg/app-ui/(charts|sortable)$': '<rootDir>/packages/app-ui/src/$1',
   },
 };

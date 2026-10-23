@@ -2,7 +2,7 @@ import { render } from '@testing-library/react-native';
 import fs from 'node:fs';
 import path from 'node:path';
 import type { ComponentType, ReactNode } from 'react';
-import { ThemeProvider } from '../packages/native-ui/src/index';
+import { ThemeProvider } from '../packages/app-ui/src/index';
 
 // 모든 *.stories.tsx의 각 스토리를 light · dark로 렌더한다. 스토리가 곧 smoke test다.
 

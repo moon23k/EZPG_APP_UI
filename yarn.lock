@@ -2121,14 +2121,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ezpg/native-ui-example@workspace:example":
+"@ezpg/app-ui-example@workspace:example":
   version: 0.0.0-use.local
-  resolution: "@ezpg/native-ui-example@workspace:example"
+  resolution: "@ezpg/app-ui-example@workspace:example"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.25.0"
-    "@ezpg/native-ui": "workspace:^"
+    "@ezpg/app-ui": "workspace:^"
     "@react-native-community/cli": "npm:20.1.0"
     "@react-native-community/cli-platform-android": "npm:20.1.0"
     "@react-native-community/cli-platform-ios": "npm:20.1.0"
@@ -2149,9 +2149,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ezpg/native-ui@workspace:^, @ezpg/native-ui@workspace:packages/native-ui":
+"@ezpg/app-ui@workspace:^, @ezpg/app-ui@workspace:packages/app-ui":
   version: 0.0.0-use.local
-  resolution: "@ezpg/native-ui@workspace:packages/native-ui"
+  resolution: "@ezpg/app-ui@workspace:packages/app-ui"
   dependencies:
     react-native-builder-bob: "npm:^0.43.2"
     react-native-sortables: "npm:^1.10.1"
@@ -7099,9 +7099,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ezpg-native-ui-monorepo@workspace:.":
+"ezpg-app-ui-monorepo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "ezpg-native-ui-monorepo@workspace:."
+  resolution: "ezpg-app-ui-monorepo@workspace:."
   dependencies:
     "@changesets/cli": "npm:^3"
     "@eslint/compat": "npm:^2.1.0"

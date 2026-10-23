@@ -7,7 +7,7 @@ import {
   makeStyles,
   ThemeProvider,
   type Themes,
-} from '../packages/native-ui/src';
+} from '../packages/app-ui/src';
 
 const brands: Record<string, Themes> = {
   default: defaultThemes,

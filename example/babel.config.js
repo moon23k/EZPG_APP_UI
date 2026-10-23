@@ -1,7 +1,7 @@
 const path = require('path');
 const { getConfig } = require('react-native-builder-bob/babel-config');
 
-const root = path.resolve(__dirname, '..', 'packages', 'native-ui');
+const root = path.resolve(__dirname, '..', 'packages', 'app-ui');
 
 // 패키지 src를 라이브러리 preset으로 변환한다.
 module.exports = getConfig(
