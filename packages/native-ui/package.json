@@ -26,6 +26,7 @@
     "src",
     "lib",
     "!**/*.stories.tsx",
+    "!**/__stories__",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
@@ -87,7 +88,7 @@
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
-    "exclude": "{**/{__tests__,__fixtures__,__mocks__}/**,**/*.stories.tsx}",
+    "exclude": "{**/{__tests__,__fixtures__,__mocks__,__stories__}/**,**/*.stories.tsx}",
     "targets": [
       [
         "module",

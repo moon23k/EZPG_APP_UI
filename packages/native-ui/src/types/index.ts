@@ -17,6 +17,8 @@ export type ThemeColors = {
   successForeground: string;
   warning: string;
   warningForeground: string;
+  info: string;
+  infoForeground: string;
 };
 
 export type TypographyVariant =
@@ -51,6 +53,8 @@ export type ThemeTokens = {
   /** `boxShadow` 값 (New Architecture) */
   shadow: string;
   motion: { duration: number };
+  opacity: { pressed: number; disabled: number };
+  iconSize: { sm: number; md: number };
   /** 최소 터치 영역 (iOS 44, Android 48) */
   minTouchSize: number;
 };

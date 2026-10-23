@@ -31,6 +31,8 @@ export const colors: Record<ColorScheme, ThemeColors> = {
     successForeground: '#ffffff',
     warning: '#f59e0b',
     warningForeground: neutral[950],
+    info: '#2563eb',
+    infoForeground: '#ffffff',
   },
   dark: {
     background: neutral[950],
@@ -47,6 +49,8 @@ export const colors: Record<ColorScheme, ThemeColors> = {
     successForeground: neutral[950],
     warning: '#fbbf24',
     warningForeground: neutral[950],
+    info: '#60a5fa',
+    infoForeground: neutral[950],
   },
 };
 
@@ -76,5 +80,7 @@ export const tokens: ThemeTokens = {
   maxFontScale: 1.3,
   shadow: '0px 4px 12px rgba(0, 0, 0, 0.12)',
   motion: { duration: 200 },
+  opacity: { pressed: 0.8, disabled: 0.5 },
+  iconSize: { sm: 16, md: 20 },
   minTouchSize: Platform.OS === 'ios' ? 44 : 48,
 };

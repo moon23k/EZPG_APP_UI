@@ -1,6 +1,16 @@
 {
   "extends": "../../tsconfig",
-  "compilerOptions": { "rootDir": "." },
-  "include": ["src"],
-  "exclude": ["lib", "src/__tests__", "src/__fixtures__", "**/*.stories.tsx"]
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "lib",
+    "src/__tests__",
+    "src/__fixtures__",
+    "src/__stories__",
+    "**/*.stories.tsx"
+  ]
 }
