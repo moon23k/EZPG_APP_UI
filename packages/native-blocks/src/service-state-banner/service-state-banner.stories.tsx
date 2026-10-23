@@ -5,11 +5,7 @@ import { ServiceStateBanner } from './service-state-banner';
 function Demo() {
   return (
     <Section title="결제 실패 · 유예 · 정지 · 해지">
-      <ServiceStateBanner
-        state="paymentFailed"
-        nextRetry="10월 26일"
-        onAction={() => {}}
-      />
+      <ServiceStateBanner state="paymentFailed" onAction={() => {}} />
       <ServiceStateBanner state="grace" daysLeft={3} onAction={() => {}} />
       <ServiceStateBanner state="suspended" onAction={() => {}} />
       <ServiceStateBanner state="closed" onAction={() => {}} />

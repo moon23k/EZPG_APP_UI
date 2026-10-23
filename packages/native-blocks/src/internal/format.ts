@@ -20,3 +20,9 @@ export function changeRate(current: number, previous: number): number | null {
   if (previous === 0) return null;
   return ((current - previous) / Math.abs(previous)) * 100;
 }
+
+/** 마감이 임박했을 때만 문구를 돌려준다. 0 → '오늘 마감', 1 → '내일 마감', 2 → '모레 마감', 그 밖 null */
+export function formatDeadline(days: number): string | null {
+  if (days < 0) return '기한 지남';
+  return ['오늘 마감', '내일 마감', '모레 마감'][days] ?? null;
+}

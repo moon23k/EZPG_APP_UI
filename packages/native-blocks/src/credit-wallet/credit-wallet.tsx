@@ -4,19 +4,31 @@ import { Card } from '../internal/card';
 
 export type CreditWalletProps = {
   balance: number;
-  /** 생성 1회에 드는 크레딧 */
-  perGeneration: number;
+  /** 이번 달에 사라지는 크레딧. 0보다 크면 보여준다 */
+  expiring?: number;
   todayUsed: number;
   dailyLimit: number;
-  /** 가장 먼저 사라지는 묶음 */
-  expiring?: { amount: number; date: string };
   onBuy?: () => void;
   onHistory?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
 const useStyles = makeStyles((t) => ({
-  row: { flexDirection: 'row', alignItems: 'baseline', gap: t.space[2] },
+  root: { gap: t.space[3] },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+  },
+  expiring: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    minHeight: 44,
+    paddingHorizontal: t.space[3],
+    borderRadius: t.radius.md,
+    backgroundColor: `${t.colors.warning}24`,
+  },
   meter: {
     height: 6,
     borderRadius: t.radius.full,
@@ -28,67 +40,63 @@ const useStyles = makeStyles((t) => ({
   action: { flex: 1 },
 }));
 
-/** 크레딧 잔액과 오늘 남은 생성 횟수 */
+/** 보유 크레딧과 오늘 생성 횟수 */
 export function CreditWallet({
   balance,
-  perGeneration,
+  expiring,
   todayUsed,
   dailyLimit,
-  expiring,
   onBuy,
   onHistory,
   style,
 }: CreditWalletProps) {
   const s = useStyles();
-  const possible = perGeneration > 0 ? Math.floor(balance / perGeneration) : 0;
-  const left = Math.max(0, dailyLimit - todayUsed);
   const ratio = dailyLimit > 0 ? Math.min(1, todayUsed / dailyLimit) : 1;
   return (
-    <Card style={style}>
-      <Text variant="caption" tone="muted">
-        크레딧
-      </Text>
-      <View style={s.row}>
-        <Text variant="display">{formatPrice(balance, '')}</Text>
-        <Text tone="muted">약 {possible}회 만들 수 있어요</Text>
-      </View>
-      {expiring && expiring.amount > 0 ? (
-        <Text variant="caption" tone="destructive">
-          {formatPrice(expiring.amount, '')}개가 {expiring.date}에 사라져요
-        </Text>
-      ) : null}
-      <View
-        accessible
-        accessibilityRole="progressbar"
-        accessibilityLabel={`오늘 ${dailyLimit}회 중 ${todayUsed}회 사용`}
-        accessibilityValue={{ min: 0, max: dailyLimit, now: todayUsed }}
-      >
-        <Text variant="caption" tone="muted">
-          오늘 남은 생성 {left}/{dailyLimit}회
-        </Text>
-      </View>
-      <View style={s.meter}>
-        <View style={[s.fill, { width: `${ratio * 100}%` }]} />
-      </View>
-      {onBuy || onHistory ? (
-        <View style={s.actions}>
-          {onHistory ? (
-            <Button
-              variant="outline"
-              size="sm"
-              style={s.action}
-              onPress={onHistory}
-            >
-              사용 내역
-            </Button>
-          ) : null}
-          {onBuy ? (
-            <Button size="sm" style={s.action} onPress={onBuy}>
-              크레딧 충전
-            </Button>
-          ) : null}
+    <View style={[s.root, style]}>
+      <Card>
+        <View style={s.row}>
+          <Text weight="semibold">보유 크레딧</Text>
+          <Text variant="display">{formatPrice(balance, '')}</Text>
         </View>
-      ) : null}
-    </Card>
+        {expiring !== undefined && expiring > 0 ? (
+          <View style={s.expiring}>
+            <Text>이번 달 소멸</Text>
+            <Text weight="bold">{formatPrice(expiring, '')}개</Text>
+          </View>
+        ) : null}
+        {onBuy || onHistory ? (
+          <View style={s.actions}>
+            {onHistory ? (
+              <Button variant="secondary" style={s.action} onPress={onHistory}>
+                내역
+              </Button>
+            ) : null}
+            {onBuy ? (
+              <Button style={s.action} onPress={onBuy}>
+                충전
+              </Button>
+            ) : null}
+          </View>
+        ) : null}
+      </Card>
+      <Card>
+        <View style={s.row}>
+          <Text weight="semibold">오늘 생성</Text>
+          <Text>
+            <Text weight="bold">{todayUsed}</Text> / {dailyLimit}
+          </Text>
+        </View>
+        <View
+          accessible
+          accessibilityRole="progressbar"
+          accessibilityLabel="오늘 생성"
+          accessibilityValue={{ min: 0, max: dailyLimit, now: todayUsed }}
+          style={s.meter}
+        >
+          <View style={[s.fill, { width: `${ratio * 100}%` }]} />
+        </View>
+      </Card>
+    </View>
   );
 }

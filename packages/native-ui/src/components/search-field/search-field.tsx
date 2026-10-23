@@ -5,12 +5,7 @@ import { Field, type FieldProps } from '../field/field';
 
 export type SearchFieldProps = Omit<
   FieldProps,
-  | 'leading'
-  | 'trailing'
-  | 'showCount'
-  | 'value'
-  | 'onChangeText'
-  | 'defaultValue'
+  'leading' | 'trailing' | 'value' | 'onChangeText' | 'defaultValue'
 > & {
   value: string;
   onChangeText: (text: string) => void;

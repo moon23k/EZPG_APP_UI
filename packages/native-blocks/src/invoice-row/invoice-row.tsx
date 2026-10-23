@@ -1,101 +1,124 @@
 import {
+  AlertGlyph,
+  Button,
   formatPrice,
   ListRow,
   makeStyles,
-  StatusBadge,
   Text,
-  type StatusBadgeTone,
+  useTheme,
 } from '@ezpg/native-ui';
-import { View } from 'react-native';
+import { View, type StyleProp, type ViewStyle } from 'react-native';
+import { Card } from '../internal/card';
 
-export type InvoiceKind = 'subscription' | 'credits' | 'proration';
-export type InvoiceStatus =
-  | 'paid'
-  | 'failed'
-  | 'retrying'
-  | 'refunded'
-  | 'partiallyRefunded'
-  | 'incomplete';
-/** hard: 카드 문제(교체 필요) · soft: 일시 오류(재시도) · ours: 우리 쪽 오류 */
-export type PaymentFailure = 'hard' | 'soft' | 'ours';
+export type InvoiceStatus = 'paid' | 'failed' | 'refunded';
 
 export type InvoiceRowProps = {
-  kind: InvoiceKind;
-  /** 예) '베이직 · 11월' */
+  /** 예) '베이직 · 10월' */
   title: string;
   amount: number;
-  /** 예) '10월 23일' */
-  date: string;
-  status: InvoiceStatus;
-  failure?: PaymentFailure;
-  /** 예) '10월 26일' */
-  nextRetry?: string;
-  graceDaysLeft?: number;
-  cardLast4?: string;
+  /** 기본 'paid' */
+  status?: InvoiceStatus;
+  /** 환불된 금액. 없으면 전액 환불 */
   refundedAmount?: number;
+  /** 실패일 때 [결제수단 변경] */
+  onChangePaymentMethod?: () => void;
+  /** 실패일 때 [다시 결제] */
+  onRetry?: () => void;
+  /** 다시 결제 진행 중 */
+  retrying?: boolean;
   onPress?: () => void;
-};
-
-const KIND: Record<InvoiceKind, string> = {
-  subscription: '구독',
-  credits: '크레딧 구매',
-  proration: '요금제 변경',
-};
-const STATUS: Record<InvoiceStatus, { label: string; tone: StatusBadgeTone }> =
-  {
-    paid: { label: '결제 완료', tone: 'success' },
-    failed: { label: '결제 실패', tone: 'destructive' },
-    retrying: { label: '재시도 예정', tone: 'warning' },
-    refunded: { label: '환불', tone: 'neutral' },
-    partiallyRefunded: { label: '부분 환불', tone: 'neutral' },
-    incomplete: { label: '결제 미완료', tone: 'warning' },
-  };
-const FAILURE: Record<PaymentFailure, string> = {
-  hard: '카드를 바꿔야 해요',
-  soft: '일시적인 오류예요',
-  ours: '저희 쪽 오류예요. 자동으로 다시 시도해요',
+  style?: StyleProp<ViewStyle>;
 };
 
 const useStyles = makeStyles((t) => ({
-  trailing: { alignItems: 'flex-end', gap: t.space[1] },
+  row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
+  grow: { flex: 1 },
+  head: { fontSize: 16, lineHeight: 24, fontVariant: ['tabular-nums'] },
+  action: { flex: 1 },
 }));
 
-/** 결제 내역 한 건 */
+/** 결제 내역 한 건. 실패한 결제는 해결 버튼이 있는 카드로 보여준다 */
 export function InvoiceRow({
-  kind,
   title,
   amount,
-  date,
-  status,
-  failure,
-  nextRetry,
-  graceDaysLeft,
-  cardLast4,
+  status = 'paid',
   refundedAmount,
+  onChangePaymentMethod,
+  onRetry,
+  retrying,
   onPress,
+  style,
 }: InvoiceRowProps) {
+  const t = useTheme();
   const s = useStyles();
-  const st = STATUS[status];
-  const lines = [
-    `${KIND[kind]} · ${date}${cardLast4 ? ` · 카드 ${cardLast4}` : ''}`,
-  ];
-  if (failure && (status === 'failed' || status === 'retrying'))
-    lines.push(FAILURE[failure]);
-  if (nextRetry && status === 'retrying') lines.push(`${nextRetry} 다시 결제`);
-  if (graceDaysLeft !== undefined && status !== 'paid')
-    lines.push(`유예 ${graceDaysLeft}일 남음`);
-  if (refundedAmount) lines.push(`${formatPrice(refundedAmount)} 환불`);
+
+  if (status !== 'failed') {
+    const value =
+      status === 'refunded'
+        ? `환불 ${formatPrice(refundedAmount ?? amount)}`
+        : formatPrice(amount);
+    return (
+      <ListRow
+        title={title}
+        onPress={onPress}
+        style={style}
+        trailing={
+          <Text
+            weight="semibold"
+            tone={status === 'refunded' ? 'muted' : 'default'}
+          >
+            {value}
+          </Text>
+        }
+      />
+    );
+  }
+
   return (
-    <ListRow
-      title={title}
-      description={lines.join(' · ')}
+    <Card
       onPress={onPress}
-      trailing={
-        <View style={s.trailing}>
-          <Text weight="semibold">{formatPrice(amount)}</Text>
-          <StatusBadge tone={st.tone}>{st.label}</StatusBadge>
+      accessibilityLabel={`결제 실패, ${formatPrice(amount)}, ${title}`}
+      style={style}
+    >
+      <View style={s.row}>
+        <AlertGlyph
+          filled
+          color={t.colors.destructive}
+          onColor={t.colors.destructiveForeground}
+          size={t.iconSize.md}
+        />
+        <Text weight="bold" tone="destructive" style={[s.head, s.grow]}>
+          결제 실패
+        </Text>
+        <Text weight="bold" style={s.head}>
+          {formatPrice(amount)}
+        </Text>
+      </View>
+      <Text numberOfLines={1}>{title}</Text>
+      {onChangePaymentMethod || onRetry ? (
+        <View style={s.row}>
+          {onChangePaymentMethod ? (
+            <Button
+              size="sm"
+              variant="outline"
+              style={s.action}
+              onPress={onChangePaymentMethod}
+            >
+              결제수단 변경
+            </Button>
+          ) : null}
+          {onRetry ? (
+            <Button
+              size="sm"
+              loading={retrying}
+              style={s.action}
+              onPress={onRetry}
+            >
+              다시 결제
+            </Button>
+          ) : null}
         </View>
-      }
-    />
+      ) : null}
+    </Card>
   );
 }

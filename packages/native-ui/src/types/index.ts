@@ -8,6 +8,8 @@ export type ThemeColors = {
   muted: string;
   mutedForeground: string;
   border: string;
+  /** 입력칸 · outline 버튼 테두리 */
+  input: string;
   ring: string;
   primary: string;
   primaryForeground: string;

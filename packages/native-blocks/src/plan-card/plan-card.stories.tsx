@@ -1,3 +1,4 @@
+import { Text } from '@ezpg/native-ui';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { Section } from '../__stories__/helpers';
 import { PlanCard } from './plan-card';
@@ -5,7 +6,8 @@ import { PlanCard } from './plan-card';
 function Demo() {
   return (
     <>
-      <Section title="현재 요금제 · 가격 인상 예정">
+      <Section title="이용 중 · 인상 예정 · 업그레이드">
+        <Text weight="bold">이용 중인 플랜</Text>
         <PlanCard
           name="베이직"
           price={19900}
@@ -19,20 +21,38 @@ function Demo() {
           }}
           onConsent={() => {}}
         />
-      </Section>
-      <Section title="추천 · 업그레이드 일할">
+        <Text weight="bold">다른 플랜</Text>
         <PlanCard
           name="프로"
           price={49900}
-          monthlyCredits={400}
+          monthlyCredits={300}
           dailyLimit={30}
-          features={['연결 도메인', '멤버 3명']}
           recommended
           proratedAmount={18700}
+          actionLabel="업그레이드"
+          onSelect={() => {}}
+        />
+        <PlanCard
+          name="라이트"
+          price={9900}
+          monthlyCredits={40}
+          dailyLimit={5}
           onSelect={() => {}}
         />
       </Section>
-      <Section title="해지 예약 · 결제 실패">
+      <Section title="인상 동의함 · 해지 예약 · 결제 실패">
+        <PlanCard
+          name="베이직"
+          price={19900}
+          monthlyCredits={100}
+          dailyLimit={10}
+          current
+          priceChange={{
+            newPrice: 24900,
+            effectiveDate: '12월 1일',
+            consented: true,
+          }}
+        />
         <PlanCard
           name="베이직"
           price={19900}

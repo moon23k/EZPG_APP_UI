@@ -16,6 +16,7 @@ import {
   View,
 } from 'react-native';
 import { useNativeDriver } from '../../internal/overlay';
+import { PressableBase } from '../../internal/pressable-base';
 import { useReducedMotion } from '../../internal/use-reduced-motion';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
@@ -26,11 +27,20 @@ export type ToastOptions = {
   message: string;
   /** 기본 'neutral' */
   tone?: ToastTone;
-  /** ms. 기본 2500 */
+  /** ms. 기본 2500, action이 있으면 4000 */
   duration?: number;
+  /** 메시지 오른쪽 텍스트 버튼 (예: 실행 취소). 누르면 Toast가 닫힌다 */
+  action?: ToastAction;
 };
 
-type Current = { id: number; message: string; tone: ToastTone };
+export type ToastAction = { label: string; onPress: () => void };
+
+type Current = {
+  id: number;
+  message: string;
+  tone: ToastTone;
+  action?: ToastAction;
+};
 
 /** Provider 하나가 가진 상태. show를 불러도 Provider 아래 화면은 다시 렌더링되지 않는다. */
 function createToastStore() {
@@ -66,10 +76,10 @@ function createToastStore() {
         emit();
       };
     },
-    show({ message, tone = 'neutral', duration = 2500 }: ToastOptions) {
+    show({ message, tone = 'neutral', duration, action }: ToastOptions) {
       clearTimeout(timer);
-      current = { id: ++seq, message, tone };
-      timer = setTimeout(hide, duration);
+      current = { id: ++seq, message, tone, action };
+      timer = setTimeout(hide, duration ?? (action ? 4000 : 2500));
       emit();
       if (Platform.OS === 'ios')
         AccessibilityInfo.announceForAccessibility(message);
@@ -117,13 +127,29 @@ const useStyles = makeStyles((t) => ({
     alignItems: 'center',
   },
   toast: {
+    flexDirection: 'row',
+    alignItems: 'center',
     maxWidth: 480,
+    minHeight: 48,
     paddingHorizontal: t.space[4],
     paddingVertical: t.space[3],
     borderRadius: t.radius.md,
     boxShadow: t.shadow.md,
   },
-  message: { ...t.typography.body, fontFamily: t.fontFamily },
+  withAction: {
+    alignSelf: 'stretch',
+    paddingVertical: 0,
+    paddingRight: t.space[2],
+  },
+  message: { ...t.typography.body, flexShrink: 1, fontFamily: t.fontFamily },
+  messageFill: { flex: 1, fontSize: 14 },
+  action: { paddingHorizontal: t.space[3], justifyContent: 'center' },
+  actionLabel: {
+    fontFamily: t.fontFamily,
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '700',
+  },
 }));
 
 /**
@@ -169,6 +195,13 @@ function ToastHostInner({ store }: { store: ToastStore }) {
     success: [t.colors.success, t.colors.successForeground],
     destructive: [t.colors.destructive, t.colors.destructiveForeground],
   }[current.tone];
+  // 어두운 바탕(light) 위에서는 밝은 파랑, 밝은 바탕(dark) 위에서는 진한 파랑
+  const actionColor =
+    current.tone !== 'neutral'
+      ? fg
+      : t.scheme === 'light'
+        ? '#93c5fd'
+        : '#1d4ed8';
 
   return (
     <View
@@ -178,14 +211,37 @@ function ToastHostInner({ store }: { store: ToastStore }) {
       <Animated.View
         accessibilityRole="alert"
         accessibilityLiveRegion="polite"
-        style={[s.toast, { backgroundColor: bg, opacity }]}
+        style={[
+          s.toast,
+          !!current.action && s.withAction,
+          { backgroundColor: bg, opacity },
+        ]}
       >
         <Text
           maxFontSizeMultiplier={t.maxFontScale}
-          style={[s.message, { color: fg }]}
+          style={[s.message, !!current.action && s.messageFill, { color: fg }]}
         >
           {current.message}
         </Text>
+        {current.action ? (
+          <PressableBase
+            accessibilityRole="button"
+            accessibilityLabel={current.action.label}
+            touchHeight={44}
+            style={s.action}
+            onPress={() => {
+              current.action?.onPress();
+              store.hide();
+            }}
+          >
+            <Text
+              maxFontSizeMultiplier={t.maxFontScale}
+              style={[s.actionLabel, { color: actionColor }]}
+            >
+              {current.action.label}
+            </Text>
+          </PressableBase>
+        ) : null}
       </Animated.View>
     </View>
   );

@@ -4,13 +4,12 @@ import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { Card } from '../internal/card';
 
 export type StatCardProps = {
+  /** 예) '오늘 매출' */
   label: string;
-  /** 이미 포맷된 값. 예) '128만원', '42건' */
+  /** 이미 포맷된 값. 예) '1,234,000원', '42건' */
   value: string;
-  /** 전기 대비 증감률(%) */
+  /** 직전 기간 대비 증감률(%). 오르면 빨강, 내리면 파랑 */
   change?: number | null;
-  /** 기본 '지난 기간 대비' */
-  changeLabel?: string;
   /** 오른쪽 작은 차트. 예) <Sparkline /> (@ezpg/native-ui/charts) */
   chart?: ReactNode;
   onPress?: () => void;
@@ -20,6 +19,13 @@ export type StatCardProps = {
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'flex-end', gap: t.space[3] },
   body: { flex: 1, gap: t.space[1] },
+  value: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'baseline',
+    columnGap: t.space[2],
+  },
+  down: { color: t.colors.info },
 }));
 
 /** 핵심 숫자 하나와 증감 */
@@ -27,7 +33,6 @@ export function StatCard({
   label,
   value,
   change,
-  changeLabel = '지난 기간 대비',
   chart,
   onPress,
   style,
@@ -35,34 +40,34 @@ export function StatCard({
   const s = useStyles();
   const hasChange =
     change !== undefined && change !== null && Number.isFinite(change);
-  const up = hasChange && change > 0;
   const flat = hasChange && Math.abs(change) < 0.05;
+  const up = hasChange && change > 0;
+  const rate = hasChange ? `${Math.abs(change).toFixed(1)}%` : '';
   return (
     <Card
       onPress={onPress}
-      accessibilityLabel={`${label} ${value}`}
+      accessibilityLabel={`${label} ${value}${
+        hasChange && !flat ? ` ${rate} ${up ? '증가' : '감소'}` : ''
+      }`}
       style={style}
     >
       <View style={s.row}>
         <View style={s.body}>
-          <Text variant="caption" tone="muted">
-            {label}
-          </Text>
-          <Text variant="title">{value}</Text>
-          {hasChange ? (
-            <Text
-              variant="caption"
-              tone={flat ? 'muted' : up ? 'success' : 'destructive'}
-            >
-              {flat
-                ? '변동 없음'
-                : `${up ? '▲' : '▼'} ${Math.abs(change).toFixed(1)}%`}
-              <Text variant="caption" tone="muted">
-                {'  '}
-                {changeLabel}
-              </Text>
+          <Text tone="muted">{label}</Text>
+          <View style={s.value}>
+            <Text variant="title" weight="bold">
+              {value}
             </Text>
-          ) : null}
+            {hasChange ? (
+              <Text
+                weight="bold"
+                tone={flat ? 'muted' : up ? 'destructive' : 'default'}
+                style={!flat && !up && s.down}
+              >
+                {flat ? '변동 없음' : `${up ? '▲' : '▼'} ${rate}`}
+              </Text>
+            ) : null}
+          </View>
         </View>
         {chart}
       </View>

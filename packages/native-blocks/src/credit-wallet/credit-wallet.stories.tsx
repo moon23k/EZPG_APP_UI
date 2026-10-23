@@ -6,10 +6,9 @@ const meta = {
   component: CreditWallet,
   args: {
     balance: 86,
-    perGeneration: 2,
+    expiring: 20,
     todayUsed: 7,
     dailyLimit: 10,
-    expiring: { amount: 20, date: '10월 31일' },
     onBuy: () => {},
     onHistory: () => {},
   },
@@ -17,6 +16,9 @@ const meta = {
 export default meta;
 
 export const AllVariants: StoryObj<typeof meta> = {};
+export const NoExpiring: StoryObj<typeof meta> = {
+  args: { balance: 240, expiring: undefined, todayUsed: 2 },
+};
 export const LimitReached: StoryObj<typeof meta> = {
-  args: { balance: 3, todayUsed: 10, expiring: undefined },
+  args: { balance: 3, expiring: undefined, todayUsed: 10 },
 };

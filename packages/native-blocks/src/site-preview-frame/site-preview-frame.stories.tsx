@@ -7,19 +7,24 @@ const shot = sample(152, 390, 845);
 function Demo() {
   return (
     <>
-      <Section title="초안">
+      <Section title="게시 안 된 변경사항">
+        <SitePreviewFrame
+          status="unpublishedChanges"
+          screenshot={shot}
+          onPublish={() => {}}
+        />
+      </Section>
+      <Section title="처음 게시">
         <SitePreviewFrame
           status="draft"
           screenshot={shot}
           onPublish={() => {}}
         />
       </Section>
-      <Section title="게시 안 된 변경">
+      <Section title="게시됨">
         <SitePreviewFrame
-          status="unpublishedChanges"
+          status="published"
           screenshot={shot}
-          publishedLabel="10월 22일 18:40 게시"
-          onPublish={() => {}}
           onRevert={() => {}}
         />
       </Section>

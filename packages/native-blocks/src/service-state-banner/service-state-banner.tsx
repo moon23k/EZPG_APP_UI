@@ -7,34 +7,21 @@ export type ServiceStateBannerProps = {
   state: ServiceState;
   /** 유예 남은 일수 (grace) */
   daysLeft?: number;
-  /** 다음 결제 재시도일. 예) '10월 26일' */
-  nextRetry?: string;
   actionLabel?: string;
   onAction?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
-function message(state: ServiceState, daysLeft?: number, nextRetry?: string) {
+function title(state: ServiceState, daysLeft?: number) {
   switch (state) {
     case 'paymentFailed':
-      return {
-        title: '구독 결제에 실패했어요',
-        body: nextRetry
-          ? `${nextRetry}에 다시 결제를 시도해요. 카드를 확인해 주세요.`
-          : '카드를 확인해 주세요.',
-      };
+      return '구독 결제에 실패했어요';
     case 'grace':
-      return {
-        title: `${daysLeft ?? 0}일 뒤 사이트가 멈춰요`,
-        body: '결제가 되지 않으면 손님이 사이트에 들어올 수 없어요.',
-      };
+      return `${daysLeft ?? 0}일 뒤 사이트가 멈춰요`;
     case 'suspended':
-      return { title: '사이트가 멈췄어요', body: '결제하면 바로 다시 열려요.' };
+      return '사이트가 멈췄어요';
     case 'closed':
-      return {
-        title: '해지된 사이트예요',
-        body: '손님에게는 더 이상 보이지 않아요.',
-      };
+      return '해지된 사이트예요';
   }
 }
 
@@ -47,7 +34,6 @@ const useStyles = makeStyles((t) => ({
 export function ServiceStateBanner({
   state,
   daysLeft,
-  nextRetry,
   actionLabel,
   onAction,
   style,
@@ -58,16 +44,14 @@ export function ServiceStateBanner({
   const [bg, fg] = severe
     ? [t.colors.destructive, t.colors.destructiveForeground]
     : [t.colors.warning, t.colors.warningForeground];
-  const { title, body } = message(state, daysLeft, nextRetry);
   return (
     <View
       accessibilityRole="alert"
       style={[s.root, { backgroundColor: bg }, style]}
     >
       <Text weight="bold" style={{ color: fg }}>
-        {title}
+        {title(state, daysLeft)}
       </Text>
-      <Text style={{ color: fg }}>{body}</Text>
       {onAction ? (
         <Button size="sm" variant="outline" onPress={onAction} style={s.start}>
           {actionLabel ??

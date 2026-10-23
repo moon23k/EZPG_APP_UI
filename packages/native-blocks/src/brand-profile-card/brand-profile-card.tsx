@@ -1,4 +1,4 @@
-import { Button, makeStyles, Photo, StatusBadge, Text } from '@ezpg/native-ui';
+import { Button, makeStyles, Photo, Text } from '@ezpg/native-ui';
 import {
   View,
   type ImageSourcePropType,
@@ -78,13 +78,7 @@ export function BrandProfileCard({
           ))}
         </View>
       ) : null}
-      {keywords.length ? (
-        <View style={s.row}>
-          {keywords.map((k) => (
-            <StatusBadge key={k}>{k}</StatusBadge>
-          ))}
-        </View>
-      ) : null}
+      {keywords.length ? <Text>{keywords.join(' · ')}</Text> : null}
     </Card>
   );
 }

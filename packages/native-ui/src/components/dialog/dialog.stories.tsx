@@ -31,7 +31,6 @@ function Demo() {
         open={basic}
         onOpenChange={setBasic}
         title="주문을 접수할까요?"
-        description="접수하면 고객에게 알림이 가요."
         confirmLabel="접수"
         onConfirm={() => {
           setBasic(false);
@@ -43,7 +42,6 @@ function Demo() {
         open={danger}
         onOpenChange={setDanger}
         title="상품을 삭제할까요?"
-        description="삭제한 상품은 되돌릴 수 없어요."
         confirmLabel="삭제"
         destructive
         loading={loading}

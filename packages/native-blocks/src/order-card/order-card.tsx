@@ -1,15 +1,16 @@
 import {
   Button,
+  ChevronGlyph,
   formatPrice,
   makeStyles,
-  StatusBadge,
   Text,
+  useTheme,
   type ButtonVariant,
-  type StatusBadgeTone,
 } from '@ezpg/native-ui';
+import type { ReactNode } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { Card } from '../internal/card';
-import { formatDday } from '../internal/format';
+import { formatDeadline } from '../internal/format';
 
 export type OrderStatus =
   | 'pending'
@@ -25,23 +26,20 @@ export type OrderStatus =
   | 'canceled'
   | 'refunded';
 
-/** 주문 상태 → 라벨 · 색 */
-export const orderStatusMeta: Record<
-  OrderStatus,
-  { label: string; tone: StatusBadgeTone }
-> = {
-  pending: { label: '결제 대기', tone: 'neutral' },
-  paid: { label: '결제 완료', tone: 'info' },
-  preparing: { label: '배송 준비', tone: 'info' },
-  shipping: { label: '배송 중', tone: 'info' },
-  delivered: { label: '배송 완료', tone: 'success' },
-  confirmed: { label: '구매 확정', tone: 'success' },
-  partiallyCanceled: { label: '부분 취소', tone: 'neutral' },
-  cancelRequested: { label: '취소 요청', tone: 'warning' },
-  returnRequested: { label: '반품 요청', tone: 'warning' },
-  exchangeRequested: { label: '교환 요청', tone: 'warning' },
-  canceled: { label: '취소', tone: 'destructive' },
-  refunded: { label: '환불 완료', tone: 'neutral' },
+/** 주문 상태 → 묶음 제목 (OrderSection) */
+export const orderStatusLabel: Record<OrderStatus, string> = {
+  pending: '결제 대기',
+  paid: '신규',
+  preparing: '배송 준비',
+  shipping: '배송 중',
+  delivered: '배송 완료',
+  confirmed: '구매 확정',
+  partiallyCanceled: '부분 취소',
+  cancelRequested: '취소 요청',
+  returnRequested: '반품 요청',
+  exchangeRequested: '교환 요청',
+  canceled: '취소',
+  refunded: '환불 완료',
 };
 
 export type OrderItem = { name: string; option?: string; quantity: number };
@@ -49,109 +47,104 @@ export type OrderItem = { name: string; option?: string; quantity: number };
 export type OrderAction = {
   label: string;
   onPress: () => void;
+  /** 기본 'outline' */
   variant?: ButtonVariant;
   loading?: boolean;
 };
 
 export type OrderCardProps = {
-  orderNo: string;
-  status: OrderStatus;
-  /** 예) '10월 23일 14:02' */
-  orderedAt: string;
-  buyer: string;
   items: readonly OrderItem[];
   /** 결제 금액 */
   total: number;
-  /** 부분 취소된 금액 */
-  canceledAmount?: number;
-  /** 처리 기한까지 남은 영업일 */
+  /** 처리 기한까지 남은 영업일. 임박했을 때만 표시한다 */
   dueInDays?: number;
+  /** 없고 기한도 임박하지 않으면 한 줄로 줄여 보여준다 */
   actions?: readonly OrderAction[];
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
 const useStyles = makeStyles((t) => ({
-  head: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
-  no: { flex: 1 },
-  foot: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-    justifyContent: 'space-between',
-    gap: t.space[2],
-  },
-  actions: { flexDirection: 'row', gap: t.space[2] },
+  row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
+  grow: { flex: 1 },
+  title: { fontSize: 16, lineHeight: 24 },
+  amount: { fontVariant: ['tabular-nums'] },
+  deadline: { fontSize: 14, lineHeight: 20 },
   action: { flex: 1 },
+  compact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: t.space[2],
+    minHeight: Math.max(t.minTouchSize, 56),
+    paddingVertical: t.space[2],
+  },
+  section: { gap: t.space[3] },
 }));
 
-function summarizeItems(items: readonly OrderItem[]) {
+/** '장미 꽃다발 (중) 외 1건', '튤립 다발 × 2' */
+export function summarizeItems(items: readonly OrderItem[]): string {
   const [first, ...rest] = items;
   if (!first) return '';
   const name = first.option ? `${first.name} (${first.option})` : first.name;
-  return rest.length
-    ? `${name} 외 ${rest.length}건`
-    : `${name} × ${first.quantity}`;
+  if (rest.length) return `${name} 외 ${rest.length}건`;
+  return first.quantity > 1 ? `${name} × ${first.quantity}` : name;
 }
 
-/** 주문 목록의 한 건 */
+/** 주문 목록의 한 건. 처리할 일이 없으면 누를 수 있는 한 줄로 보여준다 */
 export function OrderCard({
-  orderNo,
-  status,
-  orderedAt,
-  buyer,
   items,
   total,
-  canceledAmount,
   dueInDays,
   actions = [],
   onPress,
   style,
 }: OrderCardProps) {
+  const t = useTheme();
   const s = useStyles();
-  const meta = orderStatusMeta[status];
   const summary = summarizeItems(items);
-  return (
-    <Card
-      onPress={onPress}
-      accessibilityLabel={`주문 ${orderNo}, ${meta.label}, ${summary}`}
-      style={style}
-    >
-      <View style={s.head}>
-        <Text variant="caption" tone="muted" style={s.no}>
-          {orderNo}
+  const deadline = dueInDays !== undefined ? formatDeadline(dueInDays) : null;
+  const label = `${summary}, ${formatPrice(total)}${deadline ? `, ${deadline}` : ''}`;
+
+  if (!actions.length && !deadline) {
+    return (
+      <Card
+        onPress={onPress}
+        accessibilityLabel={label}
+        style={[s.compact, style]}
+      >
+        <Text style={s.grow} numberOfLines={1}>
+          {summary}
         </Text>
-        {dueInDays !== undefined ? (
-          <Text
-            variant="caption"
-            tone={dueInDays <= 1 ? 'destructive' : 'muted'}
-          >
-            처리 기한 {formatDday(dueInDays)}
-          </Text>
+        <Text weight="bold" style={s.amount}>
+          {formatPrice(total)}
+        </Text>
+        {onPress ? (
+          <ChevronGlyph color={t.colors.mutedForeground} size={t.iconSize.sm} />
         ) : null}
-        <StatusBadge tone={meta.tone}>{meta.label}</StatusBadge>
-      </View>
-      <Text variant="bodyLg" numberOfLines={1}>
-        {summary}
-      </Text>
-      <View style={s.foot}>
-        <Text variant="caption" tone="muted">
-          {buyer} · {orderedAt}
+      </Card>
+    );
+  }
+
+  return (
+    <Card onPress={onPress} accessibilityLabel={label} style={style}>
+      <View style={s.row}>
+        <Text weight="semibold" style={[s.title, s.grow]} numberOfLines={1}>
+          {summary}
         </Text>
-        <View>
-          <Text weight="bold">{formatPrice(total)}</Text>
-          {canceledAmount ? (
-            <Text variant="caption" tone="muted">
-              -{formatPrice(canceledAmount)} 취소
-            </Text>
-          ) : null}
-        </View>
+        <Text variant="bodyLg" weight="bold" style={s.amount}>
+          {formatPrice(total)}
+        </Text>
       </View>
+      {deadline ? (
+        <Text weight="bold" tone="destructive" style={s.deadline}>
+          {deadline}
+        </Text>
+      ) : null}
       {actions.length ? (
-        <View style={s.actions}>
+        <View style={s.row}>
           {actions.map((a) => (
             <Button
               key={a.label}
-              size="sm"
               variant={a.variant ?? 'outline'}
               loading={a.loading}
               style={s.action}
@@ -163,5 +156,32 @@ export function OrderCard({
         </View>
       ) : null}
     </Card>
+  );
+}
+
+export type OrderSectionProps = {
+  /** 예) '신규', orderStatusLabel[status] */
+  title: string;
+  /** 제목 옆 건수 */
+  count?: number;
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
+};
+
+/** 같은 상태의 주문을 묶는 제목과 목록 */
+export function OrderSection({
+  title,
+  count,
+  children,
+  style,
+}: OrderSectionProps) {
+  const s = useStyles();
+  return (
+    <View style={[s.section, style]}>
+      <Text weight="bold" accessibilityRole="header">
+        {count === undefined ? title : `${title} ${count}`}
+      </Text>
+      {children}
+    </View>
   );
 }

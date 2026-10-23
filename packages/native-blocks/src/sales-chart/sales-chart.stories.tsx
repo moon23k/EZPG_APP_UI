@@ -20,36 +20,43 @@ const month = Array.from({ length: 30 }, (_, i) => ({
   value: Math.round(200000 + Math.sin(i / 3) * 120000 + i * 6000),
 }));
 
+const SUMMARY: Record<
+  SalesPeriod,
+  { total: number; previousTotal: number; refundTotal: number }
+> = {
+  today: { total: 388000, previousTotal: 420000, refundTotal: 0 },
+  week: { total: 1911000, previousTotal: 1682000, refundTotal: 42000 },
+  month: { total: 8240000, previousTotal: 7310000, refundTotal: 186000 },
+};
+
 function Demo() {
   const [period, setPeriod] = useState<SalesPeriod>('week');
-  const data = period === 'week' ? week : month;
-  const total = data.reduce((sum, d) => sum + d.value, 0);
   return (
     <>
       <Section title="기본">
         <SalesChart
           period={period}
           onPeriodChange={setPeriod}
-          data={data}
-          total={total}
-          previousTotal={total * 0.88}
-          refundTotal={42000}
+          {...SUMMARY[period]}
+        />
+      </Section>
+      <Section title="추이 차트">
+        <SalesChart
+          period="month"
+          onPeriodChange={() => {}}
+          {...SUMMARY.month}
+          data={month}
+        />
+        <SalesChart
+          period="week"
+          onPeriodChange={() => {}}
+          {...SUMMARY.week}
+          data={week}
         />
       </Section>
       <Section title="불러오는 중 · 매출 없음">
-        <SalesChart
-          period="week"
-          onPeriodChange={() => {}}
-          data={[]}
-          total={0}
-          loading
-        />
-        <SalesChart
-          period="week"
-          onPeriodChange={() => {}}
-          data={week.map((d) => ({ ...d, value: 0 }))}
-          total={0}
-        />
+        <SalesChart period="week" onPeriodChange={() => {}} total={0} loading />
+        <SalesChart period="today" onPeriodChange={() => {}} total={0} />
       </Section>
     </>
   );

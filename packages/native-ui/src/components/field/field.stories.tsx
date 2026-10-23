@@ -14,21 +14,15 @@ export const AllVariants: StoryObj<typeof meta> = {
   render: () => (
     <Column>
       <Field label="상품명" placeholder="예) 장미 꽃다발" />
-      <Field
-        label="상호"
-        description="사이트 상단에 표시돼요."
-        defaultValue="꽃집 모먼트"
-      />
+      <Field label="상호" defaultValue="꽃집 모먼트" />
       <Field
         label="연락처"
         defaultValue="010-12"
-        error="휴대폰 번호 형식이 아니에요."
+        error="번호를 끝까지 입력해 주세요"
       />
       <Field
         label="한 줄 소개"
-        placeholder="최대 40자"
         maxLength={40}
-        showCount
         defaultValue="계절 꽃으로 만드는 작은 꽃다발"
       />
       <Field

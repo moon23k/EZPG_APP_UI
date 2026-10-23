@@ -1,12 +1,11 @@
 import {
+  AlertGlyph,
   Button,
   CheckGlyph,
   makeStyles,
   Photo,
   PressableBase,
   Skeleton,
-  StatusBadge,
-  Text,
   useTheme,
 } from '@ezpg/native-ui';
 import {
@@ -26,12 +25,8 @@ export type LogoCandidateGridProps = {
   candidates: readonly LogoCandidate[];
   selectedId: string | null;
   onSelect: (id: string) => void;
-  /** 대표 로고로 지정된 후보 */
-  coverId?: string | null;
   /** 실패한 후보 다시 만들기 */
   onRetry?: (id: string) => void;
-  /** 실패 시 안내. 기본 '만들지 못했어요 · 크레딧은 돌려드렸어요' */
-  failedLabel?: string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -39,12 +34,11 @@ const useStyles = makeStyles((t) => ({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: t.space[3] },
   cell: {
     width: '47%',
+    aspectRatio: 1,
+    overflow: 'hidden',
     borderRadius: t.radius.lg,
-    borderWidth: 2,
-    borderColor: 'transparent',
-    padding: 2,
   },
-  selected: { borderColor: t.colors.primary },
+  selected: { borderWidth: 2, borderColor: t.colors.primary },
   check: {
     position: 'absolute',
     top: t.space[2],
@@ -56,18 +50,15 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
     backgroundColor: t.colors.primary,
   },
-  cover: { position: 'absolute', top: t.space[2], left: t.space[2] },
   failed: {
-    aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: t.space[2],
-    padding: t.space[3],
-    borderRadius: t.radius.md,
+    gap: t.space[3],
+    borderWidth: 1,
+    borderColor: t.colors.border,
     backgroundColor: t.colors.muted,
   },
-  center: { textAlign: 'center' },
-  square: { aspectRatio: 1 },
+  retry: { paddingHorizontal: t.space[4] },
 }));
 
 /** AI가 만든 로고 후보 고르기 */
@@ -75,9 +66,7 @@ export function LogoCandidateGrid({
   candidates,
   selectedId,
   onSelect,
-  coverId,
   onRetry,
-  failedLabel = '만들지 못했어요 · 크레딧은 돌려드렸어요',
   style,
 }: LogoCandidateGridProps) {
   const t = useTheme();
@@ -90,29 +79,31 @@ export function LogoCandidateGrid({
             <View
               key={c.id}
               style={s.cell}
-              accessibilityLabel={`후보 ${i + 1} 만드는 중`}
+              accessibilityLabel={`로고 후보 ${i + 1} 만드는 중`}
             >
-              <Skeleton height="auto" style={s.square} radius={t.radius.md} />
+              <Skeleton height="100%" radius={t.radius.lg} />
             </View>
           );
         }
         if (c.status === 'failed' || !c.image) {
           return (
-            <View key={c.id} style={s.cell}>
-              <View style={s.failed}>
-                <Text variant="caption" tone="muted" style={s.center}>
-                  {failedLabel}
-                </Text>
-                {onRetry ? (
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onPress={() => onRetry(c.id)}
-                  >
-                    다시 만들기
-                  </Button>
-                ) : null}
-              </View>
+            <View
+              key={c.id}
+              accessibilityLabel={`로고 후보 ${i + 1} 만들지 못함`}
+              style={[s.cell, s.failed]}
+            >
+              <AlertGlyph color={t.colors.mutedForeground} size={28} />
+              {onRetry ? (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  accessibilityLabel="로고 다시 만들기"
+                  onPress={() => onRetry(c.id)}
+                  style={s.retry}
+                >
+                  다시 시도
+                </Button>
+              ) : null}
             </View>
           );
         }
@@ -127,10 +118,7 @@ export function LogoCandidateGrid({
             onPress={() => onSelect(c.id)}
             style={[s.cell, selected && s.selected]}
           >
-            <Photo source={c.image} />
-            {c.id === coverId ? (
-              <StatusBadge style={s.cover}>대표</StatusBadge>
-            ) : null}
+            <Photo source={c.image} radius={0} />
             {selected ? (
               <View style={s.check}>
                 <CheckGlyph color={t.colors.primaryForeground} size={14} />

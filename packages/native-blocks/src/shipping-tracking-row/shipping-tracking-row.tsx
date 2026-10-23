@@ -16,8 +16,6 @@ export type ShippingTrackingRowProps = {
   carrier: string;
   trackingNumber: string;
   step: ShippingStep;
-  /** 예) '10월 23일 09:12 · 성수 대리점' */
-  updatedLabel?: string;
   onCopy?: () => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -51,7 +49,6 @@ export function ShippingTrackingRow({
   carrier,
   trackingNumber,
   step,
-  updatedLabel,
   onCopy,
   style,
 }: ShippingTrackingRowProps) {
@@ -89,11 +86,6 @@ export function ShippingTrackingRow({
           </View>
         ))}
       </View>
-      {updatedLabel ? (
-        <Text variant="caption" tone="muted">
-          {updatedLabel}
-        </Text>
-      ) : null}
     </View>
   );
 }

@@ -1,10 +1,9 @@
-import { ChipGroup, SearchField, Text } from '@ezpg/native-ui';
+import { ChipGroup, SearchField } from '@ezpg/native-ui';
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { StepScreen } from './step-screen';
 
-const steps = ['업종', '브랜드 인터뷰', '로고', '색상', '사이트 미리보기'];
 const industries = [
   { value: 'flower', label: '꽃집' },
   { value: 'bakery', label: '베이커리' },
@@ -24,31 +23,26 @@ function Demo() {
   return (
     <View style={frame}>
       <StepScreen
-        steps={steps}
+        total={5}
         current={0}
         onBack={() => {}}
-        title="어떤 가게를 운영하세요?"
-        description="업종에 맞춰 브랜드와 사이트 구성을 추천해 드려요."
+        title={'어떤 가게를\n운영하세요?'}
         primaryAction={{
           label: '다음',
           onPress: () => {},
           disabled: !industry,
         }}
-        secondaryAction={{ label: '나중에 정할게요', onPress: () => {} }}
       >
         <SearchField
           value={query}
           onChangeText={setQuery}
-          placeholder="업종 검색 (예: 꽃, ㄲㅈ)"
+          placeholder="업종 검색"
         />
         <ChipGroup<Industry>
           items={shown}
           value={industry}
           onValueChange={setIndustry}
         />
-        <Text variant="caption" tone="muted">
-          세무사 · 변호사 · 의료 · 약국 업종은 아직 지원하지 않아요.
-        </Text>
       </StepScreen>
     </View>
   );

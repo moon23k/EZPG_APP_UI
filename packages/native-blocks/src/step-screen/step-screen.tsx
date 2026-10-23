@@ -1,9 +1,10 @@
 import {
   Button,
+  ChevronGlyph,
   makeStyles,
   PressableBase,
   Text,
-  WizardSteps,
+  useTheme,
 } from '@ezpg/native-ui';
 import type { ReactNode } from 'react';
 import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
@@ -17,13 +18,13 @@ export type StepAction = {
 
 export type StepScreenProps = {
   title: string;
-  description?: string;
-  /** 넘기면 상단에 진행 표시 */
-  steps?: readonly string[];
+  /** 넘기면 상단에 진행 막대 */
+  total?: number;
+  /** 0부터 */
   current?: number;
   /** 넘기면 상단에 이전 버튼 */
   onBack?: () => void;
-  /** 기본 '이전' */
+  /** 이전 버튼의 접근성 라벨. 기본 '이전' */
   backLabel?: string;
   primaryAction: StepAction;
   secondaryAction?: StepAction;
@@ -35,28 +36,39 @@ export type StepScreenProps = {
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, backgroundColor: t.colors.background },
   header: {
-    gap: t.space[3],
-    paddingHorizontal: t.space[4],
-    paddingTop: t.space[3],
+    height: 52,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: t.space[1],
   },
-  back: { alignSelf: 'flex-start' },
-  body: { padding: t.space[4], gap: t.space[4] },
-  heading: { gap: t.space[2] },
+  back: {
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backIcon: { transform: [{ scaleX: -1 }] },
+  track: { height: 3, backgroundColor: t.colors.muted },
+  fill: { height: 3, backgroundColor: t.colors.primary },
+  body: {
+    gap: t.space[5],
+    paddingTop: t.space[6],
+    paddingHorizontal: t.space[5],
+    paddingBottom: t.space[4],
+  },
+  title: { fontSize: 24, lineHeight: 32 },
   footer: {
     gap: t.space[2],
-    paddingHorizontal: t.space[4],
+    paddingHorizontal: t.space[5],
     paddingTop: t.space[3],
-    borderTopWidth: 1,
-    borderColor: t.colors.border,
     backgroundColor: t.colors.background,
   },
 }));
 
-/** 온보딩 한 단계의 화면 틀: 진행 표시 · 제목 · 내용 · 하단 버튼 */
+/** 온보딩 한 단계의 화면 틀: 이전 · 진행 막대 · 제목 · 내용 · 하단 버튼 */
 export function StepScreen({
   title,
-  description,
-  steps,
+  total,
   current = 0,
   onBack,
   backLabel = '이전',
@@ -65,37 +77,44 @@ export function StepScreen({
   bottomInset = 0,
   children,
 }: StepScreenProps) {
+  const t = useTheme();
   const s = useStyles();
+  const step = total ? Math.min(total, Math.max(1, current + 1)) : 0;
   return (
     <KeyboardAvoidingView behavior="padding" style={s.root}>
-      {onBack || steps ? (
+      {onBack ? (
         <View style={s.header}>
-          {onBack ? (
-            <PressableBase
-              onPress={onBack}
-              accessibilityLabel={backLabel}
-              touchHeight={24}
-              style={s.back}
-            >
-              <Text tone="muted">‹ {backLabel}</Text>
-            </PressableBase>
-          ) : null}
-          {steps ? <WizardSteps steps={steps} current={current} /> : null}
+          <PressableBase
+            onPress={onBack}
+            accessibilityLabel={backLabel}
+            style={s.back}
+          >
+            <View style={s.backIcon}>
+              <ChevronGlyph color={t.colors.foreground} size={24} />
+            </View>
+          </PressableBase>
+        </View>
+      ) : null}
+      {total ? (
+        <View
+          accessibilityRole="progressbar"
+          accessibilityLabel={`${total}단계 중 ${step}단계`}
+          accessibilityValue={{ min: 1, max: total, now: step }}
+          style={s.track}
+        >
+          <View style={[s.fill, { width: `${(step / total) * 100}%` }]} />
         </View>
       ) : null}
       <ScrollView
         contentContainerStyle={s.body}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={s.heading}>
-          <Text variant="title" accessibilityRole="header">
-            {title}
-          </Text>
-          {description ? <Text tone="muted">{description}</Text> : null}
-        </View>
+        <Text weight="bold" accessibilityRole="header" style={s.title}>
+          {title}
+        </Text>
         {children}
       </ScrollView>
-      <View style={[s.footer, { paddingBottom: 12 + bottomInset }]}>
+      <View style={[s.footer, { paddingBottom: t.space[4] + bottomInset }]}>
         <Button
           size="lg"
           onPress={primaryAction.onPress}

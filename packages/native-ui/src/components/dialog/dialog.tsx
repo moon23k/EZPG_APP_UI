@@ -9,7 +9,6 @@ export type DialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  description?: string;
   /** 확인을 눌렀을 때. 닫는 것은 부모가 onOpenChange로 정한다 */
   onConfirm: () => void;
   /** 기본 '확인' */
@@ -29,33 +28,32 @@ const useStyles = makeStyles((t) => ({
   panel: {
     alignSelf: 'center',
     width: '100%',
-    maxWidth: 400,
-    padding: t.space[5],
-    gap: t.space[2],
-    borderRadius: t.radius.lg,
+    maxWidth: 360,
+    paddingTop: 28,
+    paddingHorizontal: t.space[5],
+    paddingBottom: t.space[5],
+    gap: t.space[5],
+    borderRadius: 16,
     backgroundColor: t.colors.background,
     boxShadow: t.shadow.md,
   },
   title: {
-    ...t.typography.title,
     fontFamily: t.fontFamily,
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: '700',
+    textAlign: 'center',
     color: t.colors.foreground,
   },
-  description: {
-    ...t.typography.body,
-    fontFamily: t.fontFamily,
-    color: t.colors.mutedForeground,
-  },
-  actions: { flexDirection: 'row', gap: t.space[2], marginTop: t.space[4] },
-  action: { flex: 1 },
+  actions: { flexDirection: 'row', gap: t.space[2] },
+  action: { flex: 1, borderRadius: t.radius.lg },
 }));
 
-/** 확인 · 취소를 묻는 대화상자 */
+/** 확인 · 취소를 묻는 대화상자. 제목 한 줄로 무엇을 하는지 말한다 */
 export function Dialog({
   open,
   onOpenChange,
   title,
-  description,
   onConfirm,
   confirmLabel = '확인',
   cancelLabel = '취소',
@@ -107,14 +105,9 @@ export function Dialog({
           >
             {title}
           </Text>
-          {description ? (
-            <Text maxFontSizeMultiplier={t.maxFontScale} style={s.description}>
-              {description}
-            </Text>
-          ) : null}
           <View style={s.actions}>
             <Button
-              variant="outline"
+              variant="secondary"
               style={s.action}
               disabled={loading}
               onPress={() => onOpenChange(false)}

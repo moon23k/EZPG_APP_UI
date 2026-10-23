@@ -2,7 +2,6 @@ import {
   Button,
   makeStyles,
   PressableBase,
-  StatusBadge,
   Text,
   useTheme,
 } from '@ezpg/native-ui';
@@ -120,7 +119,6 @@ export function CopyVariantPicker({
                 <Text>{v.text}</Text>
                 {v.locked || onToggleLock ? (
                   <View style={s.meta}>
-                    {v.locked ? <StatusBadge>잠금</StatusBadge> : null}
                     {onToggleLock ? (
                       <Button
                         size="sm"
@@ -129,7 +127,9 @@ export function CopyVariantPicker({
                       >
                         {v.locked ? '잠금 해제' : '잠그기'}
                       </Button>
-                    ) : null}
+                    ) : (
+                      <Text tone="muted">잠김</Text>
+                    )}
                   </View>
                 ) : null}
               </View>

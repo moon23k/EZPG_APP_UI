@@ -1,25 +1,21 @@
 import {
   Button,
   formatPrice,
-  ListRow,
   makeStyles,
+  PressableBase,
   Switch,
   Text,
 } from '@ezpg/native-ui';
 import { SortableHandle, SortableList } from '@ezpg/native-ui/sortable';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { StockBadge } from '../stock-badge/stock-badge';
 
 export type ProductOption = {
   id: string;
   name: string;
   /** 기본 가격에 더하는 금액 */
   priceDelta: number;
-  /** null이면 재고 관리 안 함 */
-  stock: number | null;
+  /** false면 판매 중지(품절) */
   active: boolean;
-  /** 주문이 있으면 삭제 대신 비활성만 가능 */
-  hasOrders?: boolean;
 };
 
 export type OptionEditorProps = {
@@ -33,8 +29,36 @@ export type OptionEditorProps = {
 
 const useStyles = makeStyles((t) => ({
   root: { gap: t.space[2] },
-  trailing: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
-  grip: { paddingHorizontal: t.space[1] },
+  list: {
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    borderRadius: t.radius.lg,
+    overflow: 'hidden',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: t.space[3],
+    minHeight: Math.max(t.minTouchSize, 56),
+    paddingHorizontal: t.space[4],
+    backgroundColor: t.colors.background,
+  },
+  separator: { borderTopWidth: 1, borderTopColor: t.colors.border },
+  pressed: { backgroundColor: t.colors.muted },
+  name: { flex: 1 },
+  price: { fontVariant: ['tabular-nums'] },
+  grip: {
+    width: 20,
+    height: t.minTouchSize,
+    justifyContent: 'center',
+    gap: 4,
+  },
+  bar: {
+    height: 2,
+    marginHorizontal: 3,
+    borderRadius: 1,
+    backgroundColor: t.colors.mutedForeground,
+  },
 }));
 
 /** 상품 옵션(1단) 목록. 손잡이로 순서를 바꾼다. 앱 최상단이 GestureHandlerRootView로 감싸져 있어야 한다 */
@@ -50,46 +74,58 @@ export function OptionEditor({
     onOptionsChange(options.map((o) => (o.id === id ? { ...o, active } : o)));
   return (
     <View style={[s.root, style]}>
-      <SortableList
-        data={options}
-        keyExtractor={(o) => o.id}
-        onDataChange={onOptionsChange}
-        handle
-        gap={0}
-        itemLabel={(o) => o.name}
-        renderItem={({ item }) => (
-          <ListRow
-            title={item.name}
-            description={[
-              item.priceDelta
-                ? `+${formatPrice(item.priceDelta)}`
-                : '추가 금액 없음',
-              item.hasOrders ? '주문 있음 · 삭제 대신 판매 중지' : null,
-            ]
-              .filter(Boolean)
-              .join(' · ')}
-            onPress={onEdit ? () => onEdit(item.id) : undefined}
-            chevron={false}
-            leading={
-              <SortableHandle>
-                <Text variant="title" tone="muted" style={s.grip}>
-                  ≡
+      <View style={s.list}>
+        <SortableList
+          data={options}
+          keyExtractor={(o) => o.id}
+          onDataChange={onOptionsChange}
+          handle
+          gap={0}
+          itemLabel={(o) => o.name}
+          renderItem={({ item, index }) => {
+            const tone = item.active ? 'default' : 'muted';
+            const rowStyle = [s.row, index > 0 && s.separator];
+            const content = (
+              <>
+                <SortableHandle>
+                  <View
+                    style={s.grip}
+                    accessibilityRole="image"
+                    accessibilityLabel="순서 변경"
+                  >
+                    <View style={s.bar} />
+                    <View style={s.bar} />
+                  </View>
+                </SortableHandle>
+                <Text tone={tone} style={s.name} numberOfLines={1}>
+                  {item.name}
                 </Text>
-              </SortableHandle>
-            }
-            trailing={
-              <View style={s.trailing}>
-                <StockBadge stock={item.stock} />
+                {item.priceDelta ? (
+                  <Text tone={tone} style={s.price}>
+                    +{formatPrice(item.priceDelta)}
+                  </Text>
+                ) : null}
                 <Switch
                   value={item.active}
                   onValueChange={(v) => setActive(item.id, v)}
                   accessibilityLabel={`${item.name} 판매`}
                 />
-              </View>
-            }
-          />
-        )}
-      />
+              </>
+            );
+            return onEdit ? (
+              <PressableBase
+                onPress={() => onEdit(item.id)}
+                pressedStyle={s.pressed}
+                style={rowStyle}
+              >
+                {content}
+              </PressableBase>
+            ) : (
+              <View style={rowStyle}>{content}</View>
+            );
+          }}
+        />
+      </View>
       {onAdd ? (
         <Button variant="outline" onPress={onAdd}>
           옵션 추가

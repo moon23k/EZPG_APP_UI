@@ -15,6 +15,5 @@ export * from './shipping-tracking-row';
 export * from './site-preview-frame';
 export * from './stat-card';
 export * from './step-screen';
-export * from './stock-badge';
 export * from './supply-item-card';
-export { formatDday, formatManwon } from './internal/format';
+export { formatDday, formatDeadline, formatManwon } from './internal/format';

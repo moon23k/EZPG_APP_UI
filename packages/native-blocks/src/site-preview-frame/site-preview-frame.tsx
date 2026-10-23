@@ -1,11 +1,4 @@
-import {
-  Button,
-  makeStyles,
-  Photo,
-  StatusBadge,
-  Text,
-  type StatusBadgeTone,
-} from '@ezpg/native-ui';
+import { Button, makeStyles, Photo, Text } from '@ezpg/native-ui';
 import type { ReactNode } from 'react';
 import {
   View,
@@ -22,8 +15,6 @@ export type SitePreviewFrameProps = {
   /** 실제 사이트를 띄울 때(WebView 등). screenshot보다 우선 */
   renderPreview?: () => ReactNode;
   status: SitePublishStatus;
-  /** 예) '10월 23일 14:02 게시' */
-  publishedLabel?: string;
   onPublish?: () => void;
   publishing?: boolean;
   /** 직전 게시본으로 되돌리기 */
@@ -31,18 +22,8 @@ export type SitePreviewFrameProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-const STATUS: Record<
-  SitePublishStatus,
-  { label: string; tone: StatusBadgeTone }
-> = {
-  draft: { label: '초안', tone: 'neutral' },
-  published: { label: '게시됨', tone: 'success' },
-  unpublishedChanges: { label: '게시 안 된 변경', tone: 'warning' },
-};
-
 const useStyles = makeStyles((t) => ({
   root: { gap: t.space[3] },
-  head: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   device: {
     alignSelf: 'center',
     width: '72%',
@@ -59,32 +40,40 @@ const useStyles = makeStyles((t) => ({
     borderRadius: 28,
     backgroundColor: t.colors.background,
   },
+  bar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    minHeight: 60,
+    paddingLeft: t.space[4],
+    paddingRight: t.space[2],
+    borderRadius: t.radius.lg,
+    backgroundColor: t.colors.muted,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: t.colors.warning,
+  },
+  barLabel: { flex: 1 },
+  barButton: { paddingHorizontal: t.space[4] },
   actions: { gap: t.space[2] },
 }));
 
-/** 만든 사이트 미리보기와 게시 상태 */
+/** 만든 사이트 미리보기와 게시 */
 export function SitePreviewFrame({
   screenshot,
   renderPreview,
   status,
-  publishedLabel,
   onPublish,
   publishing,
   onRevert,
   style,
 }: SitePreviewFrameProps) {
   const s = useStyles();
-  const meta = STATUS[status];
   return (
     <View style={[s.root, style]}>
-      <View style={s.head}>
-        <StatusBadge tone={meta.tone}>{meta.label}</StatusBadge>
-        {publishedLabel ? (
-          <Text variant="caption" tone="muted">
-            {publishedLabel}
-          </Text>
-        ) : null}
-      </View>
       <View style={s.device} accessibilityLabel="사이트 미리보기">
         <View style={s.screen}>
           {renderPreview ? (
@@ -94,10 +83,28 @@ export function SitePreviewFrame({
           ) : null}
         </View>
       </View>
+      {status === 'unpublishedChanges' ? (
+        <View accessibilityLiveRegion="polite" style={s.bar}>
+          <View style={s.dot} />
+          <Text weight="semibold" style={s.barLabel}>
+            게시 안 된 변경사항
+          </Text>
+          {onPublish ? (
+            <Button
+              size="sm"
+              onPress={onPublish}
+              loading={publishing}
+              style={s.barButton}
+            >
+              게시
+            </Button>
+          ) : null}
+        </View>
+      ) : null}
       <View style={s.actions}>
-        {onPublish && status !== 'published' ? (
+        {onPublish && status === 'draft' ? (
           <Button size="lg" onPress={onPublish} loading={publishing}>
-            {status === 'draft' ? '사이트 게시하기' : '변경 사항 게시하기'}
+            사이트 게시하기
           </Button>
         ) : null}
         {onRevert && status !== 'draft' ? (

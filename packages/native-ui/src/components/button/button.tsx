@@ -8,7 +8,8 @@ import {
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'destructive';
+export type ButtonVariant =
+  'solid' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonProps = Omit<
@@ -26,7 +27,7 @@ export type ButtonProps = Omit<
   children: ReactNode;
 };
 
-const heights: Record<ButtonSize, number> = { sm: 36, md: 44, lg: 52 };
+const heights: Record<ButtonSize, number> = { sm: 44, md: 48, lg: 52 };
 
 const useStyles = makeStyles((t) => ({
   base: {
@@ -34,17 +35,25 @@ const useStyles = makeStyles((t) => ({
     alignItems: 'center',
     justifyContent: 'center',
     gap: t.space[2],
-    borderRadius: t.radius.md,
     borderWidth: 1,
     borderColor: 'transparent',
   },
-  sm: { height: heights.sm, paddingHorizontal: t.space[3] },
-  md: { height: heights.md, paddingHorizontal: t.space[4] },
-  lg: { height: heights.lg, paddingHorizontal: t.space[5] },
+  sm: {
+    height: heights.sm,
+    paddingHorizontal: t.space[3],
+    borderRadius: t.radius.md,
+  },
+  md: { height: heights.md, paddingHorizontal: t.space[4], borderRadius: 10 },
+  lg: {
+    height: heights.lg,
+    paddingHorizontal: t.space[5],
+    borderRadius: t.radius.lg,
+  },
   solid: { backgroundColor: t.colors.primary },
+  secondary: { backgroundColor: t.colors.muted },
   outline: {
     backgroundColor: t.colors.background,
-    borderColor: t.colors.border,
+    borderColor: t.colors.input,
   },
   ghost: { backgroundColor: 'transparent' },
   destructive: { backgroundColor: t.colors.destructive },
@@ -54,10 +63,7 @@ const useStyles = makeStyles((t) => ({
     fontSize: t.typography.body.fontSize,
     lineHeight: t.typography.body.lineHeight,
   },
-  lgLabel: {
-    fontSize: t.typography.bodyLg.fontSize,
-    lineHeight: t.typography.bodyLg.lineHeight,
-  },
+  lgLabel: { fontSize: 16, lineHeight: 24 },
 }));
 
 export function Button({
@@ -76,6 +82,7 @@ export function Button({
   const s = useStyles();
   const color = {
     solid: t.colors.primaryForeground,
+    secondary: t.colors.foreground,
     outline: t.colors.foreground,
     ghost: t.colors.foreground,
     destructive: t.colors.destructiveForeground,

@@ -97,8 +97,16 @@ export function ChevronGlyph({ color, size }: IconRenderProps) {
   );
 }
 
-export function AlertGlyph({ color, size }: IconRenderProps) {
-  const stroke = Math.max(1.5, size / 16);
+/** filled면 원을 칠하고 느낌표를 onColor로 그린다 */
+export function AlertGlyph({
+  color,
+  size,
+  filled = false,
+  onColor = '#ffffff',
+}: IconRenderProps & { filled?: boolean; onColor?: string }) {
+  const stroke = Math.max(1.5, size / (filled ? 10 : 16));
+  const mark = filled ? onColor : color;
+  const ring = filled ? 0 : stroke;
   return (
     <View
       style={[
@@ -107,8 +115,9 @@ export function AlertGlyph({ color, size }: IconRenderProps) {
           width: size,
           height: size,
           borderRadius: size / 2,
-          borderWidth: stroke,
+          borderWidth: ring,
           borderColor: color,
+          backgroundColor: filled ? color : undefined,
         },
       ]}
     >
@@ -117,7 +126,7 @@ export function AlertGlyph({ color, size }: IconRenderProps) {
           width: stroke,
           height: size * 0.28,
           borderRadius: stroke,
-          backgroundColor: color,
+          backgroundColor: mark,
         }}
       />
       <View
@@ -126,7 +135,7 @@ export function AlertGlyph({ color, size }: IconRenderProps) {
           height: stroke * 1.4,
           marginTop: size * 0.08,
           borderRadius: stroke,
-          backgroundColor: color,
+          backgroundColor: mark,
         }}
       />
     </View>

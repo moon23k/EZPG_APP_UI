@@ -36,6 +36,17 @@ function Demo() {
       >
         destructive (4초)
       </Button>
+      <Button
+        variant="outline"
+        onPress={() =>
+          toast.show({
+            message: '옵션 삭제됨',
+            action: { label: '실행 취소', onPress: () => {} },
+          })
+        }
+      >
+        실행 취소
+      </Button>
       <Button variant="outline" onPress={() => setSheet(true)}>
         Sheet 안에서
       </Button>
