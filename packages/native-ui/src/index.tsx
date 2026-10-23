@@ -12,9 +12,11 @@ export {
 export type { IconRenderProps, IconSlot } from './internal/icon';
 export { renderIcon } from './internal/icon';
 export {
+  AlertGlyph,
   CheckGlyph,
   ChevronGlyph,
   CloseGlyph,
+  PlusGlyph,
   SearchGlyph,
 } from './internal/glyphs';
 export { contrastRatio, pickForeground } from './utils/color';

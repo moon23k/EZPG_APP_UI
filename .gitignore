@@ -83,3 +83,6 @@ nitrogen/
 # Storybook
 storybook-static/
 *storybook.log
+
+# 소스 폴더에 생성된 선언 파일
+packages/*/src/**/*.d.ts

@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   Dialog,
+  EmptyState,
   formatPrice,
   SegmentedTabs,
   Switch,
@@ -132,5 +133,35 @@ describe('Toast', () => {
       jest.advanceTimersByTime(2500);
     });
     expect(screen.queryByText('저장했어요')).toBeNull();
+  });
+});
+
+describe('EmptyState', () => {
+  it('announces errors and shows one action', async () => {
+    const onPress = jest.fn();
+    await render(
+      <EmptyState
+        variant="error"
+        title="리뷰를 불러오지 못했어요"
+        action={{ label: '다시 불러오기', onPress }}
+      />
+    );
+    // 컨테이너는 버튼을 품고 있어 accessible로 묶지 않는다. 역할만 확인한다.
+    expect(screen.toJSON()).toMatchObject({
+      props: { accessibilityRole: 'alert' },
+    });
+    await fireEvent.press(screen.getByText('다시 불러오기'));
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders the section variant action as a link', async () => {
+    await render(
+      <EmptyState
+        variant="section"
+        title="아직 없어요"
+        action={{ label: '링크 공유', onPress: () => {} }}
+      />
+    );
+    expect(screen.getByRole('link')).toBeTruthy();
   });
 });

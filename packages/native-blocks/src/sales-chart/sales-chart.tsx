@@ -67,10 +67,7 @@ export function SalesChart({
           <Skeleton height={180} />
         </>
       ) : empty ? (
-        <EmptyState
-          title="이 기간 매출이 없어요"
-          description="주문이 들어오면 매출이 여기에 표시돼요."
-        />
+        <EmptyState variant="section" title="이 기간 매출이 없어요" />
       ) : (
         <>
           <View style={s.head}>

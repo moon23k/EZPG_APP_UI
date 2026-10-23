@@ -1,43 +1,103 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
+import type { ReactNode } from 'react';
+import { View } from 'react-native';
 import { Section } from '../../__stories__/helpers';
-import { SearchGlyph } from '../../internal/glyphs';
+import type { IconRenderProps } from '../../internal/icon';
+import { makeStyles } from '../../utils/styles';
 import { EmptyState } from './empty-state';
 
-const meta = {
-  title: 'Components/EmptyState',
-  component: EmptyState,
-  args: {
-    title: '아직 주문이 없어요',
-    description: '첫 주문이 들어오면 여기에 표시돼요.',
+const useStyles = makeStyles((t) => ({
+  screen: {
+    height: 360,
+    maxWidth: 390,
+    borderRadius: t.radius.lg,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    backgroundColor: t.colors.background,
   },
-} satisfies Meta<typeof EmptyState>;
-export default meta;
+  card: {
+    maxWidth: 390,
+    borderRadius: t.radius.lg,
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    backgroundColor: t.colors.background,
+  },
+  trayBox: { justifyContent: 'flex-end' },
+  tray: {
+    borderWidth: 1.5,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+  },
+}));
 
-export const AllVariants: StoryObj<typeof meta> = {
-  render: () => (
+// 스토리용 아이콘. 실제 앱은 자기 아이콘 세트를 슬롯으로 넘긴다.
+function TrayIcon({ color, size }: IconRenderProps) {
+  const s = useStyles();
+  return (
+    <View
+      style={[
+        s.trayBox,
+        { width: size, height: size, paddingBottom: size * 0.15 },
+      ]}
+    >
+      <View style={[s.tray, { height: size * 0.45, borderColor: color }]} />
+    </View>
+  );
+}
+
+function Screen({ children }: { children: ReactNode }) {
+  return <View style={useStyles().screen}>{children}</View>;
+}
+
+function Demo() {
+  const s = useStyles();
+  return (
     <>
-      <Section title="비어 있음">
-        <EmptyState
-          title="아직 주문이 없어요"
-          description="첫 주문이 들어오면 여기에 표시돼요."
-        />
+      <Section title="default · 목록이 비었을 때">
+        <Screen>
+          <EmptyState
+            icon={TrayIcon}
+            title="아직 주문이 없어요"
+            action={{ label: '내 가게 링크 공유', onPress: () => {} }}
+          />
+        </Screen>
       </Section>
-      <Section title="검색 결과 없음">
-        <EmptyState
-          icon={SearchGlyph}
-          title="검색 결과가 없어요"
-          description="다른 이름이나 주문번호로 찾아보세요."
-        />
+      <Section title="search · 검색 · 필터 결과 없음">
+        <Screen>
+          <EmptyState
+            variant="search"
+            title="‘장미 리스’ 배송중 주문이 없어요"
+            action={{ label: '조건 초기화', onPress: () => {} }}
+          />
+        </Screen>
       </Section>
-      <Section title="불러오기 실패">
-        <EmptyState
-          title="불러오지 못했어요"
-          description="네트워크 연결을 확인해 주세요."
-          action={{ label: '다시 시도', onPress: () => {} }}
-        />
+      <Section title="error · 불러오지 못했을 때">
+        <Screen>
+          <EmptyState
+            variant="error"
+            title="리뷰를 불러오지 못했어요"
+            action={{ label: '다시 불러오기', onPress: () => {} }}
+          />
+        </Screen>
+      </Section>
+      <Section title="section · 화면 안 한 섹션">
+        <View style={s.card}>
+          <EmptyState
+            variant="section"
+            icon={TrayIcon}
+            title="아직 없어요"
+            action={{ label: '링크 공유', onPress: () => {} }}
+          />
+        </View>
       </Section>
     </>
-  ),
-};
+  );
+}
 
-export const Playground: StoryObj<typeof meta> = {};
+const meta = { title: 'Components/EmptyState', component: Demo } satisfies Meta<
+  typeof Demo
+>;
+export default meta;
+
+export const AllVariants: StoryObj<typeof meta> = {};

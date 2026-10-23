@@ -96,3 +96,54 @@ export function ChevronGlyph({ color, size }: IconRenderProps) {
     </View>
   );
 }
+
+export function AlertGlyph({ color, size }: IconRenderProps) {
+  const stroke = Math.max(1.5, size / 16);
+  return (
+    <View
+      style={[
+        styles.center,
+        {
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+          borderWidth: stroke,
+          borderColor: color,
+        },
+      ]}
+    >
+      <View
+        style={{
+          width: stroke,
+          height: size * 0.28,
+          borderRadius: stroke,
+          backgroundColor: color,
+        }}
+      />
+      <View
+        style={{
+          width: stroke * 1.4,
+          height: stroke * 1.4,
+          marginTop: size * 0.08,
+          borderRadius: stroke,
+          backgroundColor: color,
+        }}
+      />
+    </View>
+  );
+}
+
+export function PlusGlyph({ color, size }: IconRenderProps) {
+  const stroke = Math.max(1.5, size / 16);
+  const bar = {
+    position: 'absolute' as const,
+    backgroundColor: color,
+    borderRadius: stroke,
+  };
+  return (
+    <View style={[styles.center, { width: size, height: size }]}>
+      <View style={[bar, { width: size * 0.6, height: stroke }]} />
+      <View style={[bar, { width: stroke, height: size * 0.6 }]} />
+    </View>
+  );
+}
