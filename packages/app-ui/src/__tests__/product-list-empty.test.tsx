@@ -16,7 +16,7 @@ describe('ProductListEmpty', () => {
     await render(
       <ProductListEmpty
         onAdd={() => {}}
-        sample={{ name: '계절 꽃다발', price: 35000 }}
+        sample={{ name: '린넨 오버핏 셔츠', price: 35000 }}
         onDismissSample={onDismiss}
       />
     );

@@ -46,3 +46,51 @@ export function Column({ children }: { children: ReactNode }) {
 export const sample = (id: number, w = 600, h = w) => ({
   uri: `https://picsum.photos/id/${id}/${w}/${h}`,
 });
+
+export const demoStore = {
+  name: '카페 온기',
+  industry: '카페 · 서울 성수동',
+  tagline: '매일 아침 볶은 원두로 내리는 한 잔',
+};
+
+export const demoStoreNames = {
+  fashion: '오늘의 옷장',
+  cafe: demoStore.name,
+  living: '살림공방',
+  stationery: '문구점 모노',
+};
+
+export const demoProducts = {
+  shirt: '린넨 오버핏 셔츠',
+  beans: '하우스 블렌드 원두 200g',
+  mug: '스톤웨어 머그컵',
+  notebook: '도트 노트 A5',
+  pens: '젤펜 3종 세트',
+  towel: '호텔식 수건 2장',
+  tumbler: '보온 텀블러 500ml',
+  dripBag: '드립백 커피 10개입',
+  card: '메시지 카드',
+  long: '아주 긴 상품 이름이 한 줄을 넘어가면 말줄임으로 잘립니다 린넨 오버핏 셔츠 아이보리 프리사이즈',
+};
+
+export const demoPhotoIds = {
+  laptop: 0,
+  desk: 20,
+  flatlay: 26,
+  mug: 30,
+  cafe: 42,
+  camera: 250,
+  keyboard: 366,
+  latte: 431,
+  clothes: 535,
+  avatar: 1005,
+} as const;
+
+export const demoPhotoList = [
+  demoPhotoIds.clothes,
+  demoPhotoIds.latte,
+  demoPhotoIds.desk,
+  demoPhotoIds.mug,
+  demoPhotoIds.flatlay,
+  demoPhotoIds.camera,
+];

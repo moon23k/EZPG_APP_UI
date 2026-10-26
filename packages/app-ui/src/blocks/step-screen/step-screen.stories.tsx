@@ -6,12 +6,13 @@ import { SearchField } from '../../components/search-field/search-field';
 import { StepScreen } from './step-screen';
 
 const industries = [
-  { value: 'flower', label: '꽃집' },
   { value: 'bakery', label: '베이커리' },
   { value: 'cafe', label: '카페' },
   { value: 'craft', label: '공방' },
   { value: 'pet', label: '반려동물 용품' },
   { value: 'fashion', label: '의류' },
+  { value: 'living', label: '생활용품' },
+  { value: 'stationery', label: '문구' },
 ] as const;
 type Industry = (typeof industries)[number]['value'];
 
@@ -19,7 +20,7 @@ const frame = { height: 640, maxWidth: 420 };
 
 function Demo() {
   const [query, setQuery] = useState('');
-  const [industry, setIndustry] = useState<Industry | null>('flower');
+  const [industry, setIndustry] = useState<Industry | null>('cafe');
   const shown = industries.filter((i) => i.label.includes(query));
   return (
     <View style={frame}>

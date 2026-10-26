@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
-import { Section } from '../../__stories__/helpers';
+import { demoProducts, Section } from '../../__stories__/helpers';
 import { ProductListEmpty, type SampleProduct } from './product-list-empty';
 
-const draft: SampleProduct = { name: '계절 꽃다발 (중)', price: 35000 };
+const draft: SampleProduct = {
+  name: demoProducts.shirt,
+  price: 35000,
+};
 
 function Demo() {
   const [sample, setSample] = useState<SampleProduct | undefined>(draft);

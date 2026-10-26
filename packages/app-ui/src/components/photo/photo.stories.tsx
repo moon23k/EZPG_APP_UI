@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { View } from 'react-native';
-import { Row, Section } from '../../__stories__/helpers';
+import {
+  demoPhotoIds,
+  demoProducts,
+  Row,
+  sample,
+  Section,
+} from '../../__stories__/helpers';
 import { Text } from '../text/text';
 import { Photo } from './photo';
 
@@ -14,19 +20,19 @@ function Demo() {
         <Row>
           <View style={tile}>
             <Photo
-              source={{ uri: 'https://picsum.photos/id/152/600/600' }}
-              accessibilityLabel="꽃다발"
+              source={sample(demoPhotoIds.clothes)}
+              accessibilityLabel={demoProducts.shirt}
             />
           </View>
           <View style={tile}>
             <Photo
-              source={{ uri: 'https://picsum.photos/id/106/800/600' }}
+              source={sample(demoPhotoIds.latte, 800, 600)}
               aspectRatio={4 / 3}
             />
           </View>
           <View style={tile}>
             <Photo
-              source={{ uri: 'https://picsum.photos/id/1080/600/800' }}
+              source={sample(demoPhotoIds.desk, 600, 800)}
               aspectRatio={3 / 4}
               radius={0}
             />
@@ -36,10 +42,7 @@ function Demo() {
       <Section title="원형 · 실패">
         <Row>
           <View style={avatar}>
-            <Photo
-              source={{ uri: 'https://picsum.photos/id/64/200/200' }}
-              radius={9999}
-            />
+            <Photo source={sample(demoPhotoIds.avatar, 200)} radius={9999} />
           </View>
           <View style={tile}>
             <Photo

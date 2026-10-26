@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
-import { Section } from '../../__stories__/helpers';
+import { demoStore, Section } from '../../__stories__/helpers';
 import { CopyVariantPicker, type CopyVariant } from './copy-variant-picker';
 
 const initial = [
-  { id: '1', text: '오늘의 계절을 한 다발에 담아요' },
-  { id: '2', text: '성수동 골목, 매일 새로 들어오는 꽃', locked: true },
-  { id: '3', text: '마음을 전하는 가장 쉬운 방법, 꽃 한 송이' },
+  { id: '1', text: demoStore.tagline },
+  { id: '2', text: '성수동 골목, 오래 머물고 싶은 작은 카페', locked: true },
+  { id: '3', text: '천천히 내린 커피 한 잔의 여유' },
 ] satisfies CopyVariant[];
 
 function Demo() {

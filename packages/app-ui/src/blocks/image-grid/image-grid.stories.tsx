@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Text } from '../../components/text/text';
-import { Section } from '../../__stories__/helpers';
+import { demoPhotoIds, sample, Section } from '../../__stories__/helpers';
 import { ImageGrid, type GridImage } from './image-grid';
 
 const initial: GridImage[] = [
-  { id: '1', uri: 'https://picsum.photos/id/152/400/400' },
-  { id: '2', uri: 'https://picsum.photos/id/106/400/400', status: 'uploading' },
-  { id: '3', uri: 'https://picsum.photos/id/306/400/400', status: 'failed' },
+  { id: '1', ...sample(demoPhotoIds.clothes, 400) },
+  { id: '2', ...sample(demoPhotoIds.latte, 400), status: 'uploading' },
+  { id: '3', ...sample(demoPhotoIds.mug, 400), status: 'failed' },
 ];
 
 function Demo() {

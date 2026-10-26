@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { Text } from 'react-native';
-import { Column } from '../../__stories__/helpers';
+import { Column, demoProducts, demoStore } from '../../__stories__/helpers';
 import { Field } from './field';
 
 const meta = {
   title: 'Components/Field',
   component: Field,
-  args: { label: '상품명', placeholder: '예) 장미 꽃다발' },
+  args: { label: '상품명', placeholder: `예) ${demoProducts.shirt}` },
 } satisfies Meta<typeof Field>;
 export default meta;
 
 export const AllVariants: StoryObj<typeof meta> = {
   render: () => (
     <Column>
-      <Field label="상품명" placeholder="예) 장미 꽃다발" />
-      <Field label="상호" defaultValue="꽃집 모먼트" />
+      <Field label="상품명" placeholder={`예) ${demoProducts.shirt}`} />
+      <Field label="상호" defaultValue={demoStore.name} />
       <Field
         label="연락처"
         defaultValue="010-12"
@@ -23,7 +23,7 @@ export const AllVariants: StoryObj<typeof meta> = {
       <Field
         label="한 줄 소개"
         maxLength={40}
-        defaultValue="계절 꽃으로 만드는 작은 꽃다발"
+        defaultValue={demoStore.tagline}
       />
       <Field
         label="가격"

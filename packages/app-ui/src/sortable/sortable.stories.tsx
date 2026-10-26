@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Section } from '../__stories__/helpers';
+import {
+  demoPhotoList,
+  demoProducts,
+  sample,
+  Section,
+} from '../__stories__/helpers';
 import { ListRow } from '../components/list-row/list-row';
 import { Photo } from '../components/photo/photo';
 import { StatusBadge } from '../components/status-badge/status-badge';
@@ -26,15 +31,15 @@ const useStyles = makeStyles((t) => ({
 function Demo() {
   const s = useStyles();
   const [options, setOptions] = useState<Option[]>([
-    { id: 'a', name: '꽃다발 (소)' },
-    { id: 'b', name: '꽃다발 (중)' },
-    { id: 'c', name: '꽃다발 (대)' },
-    { id: 'd', name: '꽃바구니' },
+    { id: 'a', name: demoProducts.shirt },
+    { id: 'b', name: demoProducts.beans },
+    { id: 'c', name: demoProducts.notebook },
+    { id: 'd', name: demoProducts.towel },
   ]);
   const [shots, setShots] = useState<Shot[]>(
-    [152, 106, 1080, 306, 360, 429].map((n) => ({
+    demoPhotoList.map((n) => ({
       id: String(n),
-      uri: `https://picsum.photos/id/${n}/400/400`,
+      ...sample(n, 400),
     }))
   );
 

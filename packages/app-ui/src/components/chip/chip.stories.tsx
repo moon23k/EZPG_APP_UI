@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { Row, Section } from '../../__stories__/helpers';
+
+const categories = ['의류', '카페', '생활용품', '문구'];
 import { Chip } from './chip';
 
 const filters = ['전체', '결제완료', '배송중', '배송완료', '취소'];
 
 function Demo() {
   const [single, setSingle] = useState('전체');
-  const [multi, setMulti] = useState<string[]>(['장미', '튤립']);
+  const [multi, setMulti] = useState<string[]>(['의류', '카페']);
   const toggle = (v: string) =>
     setMulti((prev) =>
       prev.includes(v) ? prev.filter((x) => x !== v) : [...prev, v]
@@ -25,7 +27,7 @@ function Demo() {
       </Section>
       <Section title="multi select">
         <Row>
-          {['장미', '튤립', '수국', '안개꽃'].map((f) => (
+          {categories.map((f) => (
             <Chip
               key={f}
               selected={multi.includes(f)}

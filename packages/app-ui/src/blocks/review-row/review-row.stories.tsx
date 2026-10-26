@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { Divider } from '../../components/divider/divider';
-import { sample, Section } from '../../__stories__/helpers';
+import { demoPhotoIds, sample, Section } from '../../__stories__/helpers';
 import { HiddenReviewsRow, ReviewRow, ReviewSummary } from './review-row';
 
 function Demo() {
@@ -13,7 +13,7 @@ function Demo() {
         <ReviewRow
           author="박*준"
           rating={4}
-          content="배송이 하루 늦었지만 꽃은 싱싱했습니다."
+          content="배송이 하루 늦었지만 원두는 신선했어요."
           reply="불편을 드려 죄송해요. 다음엔 더 빨리 보내드릴게요."
           onMore={() => {}}
         />
@@ -28,8 +28,11 @@ function Demo() {
         <ReviewRow
           author="최*린"
           rating={5}
-          content="포장도 꼼꼼했고 향이 오래가요."
-          photos={[sample(152, 200), sample(106, 200)]}
+          content="포장도 꼼꼼했고 마감이 깔끔해요."
+          photos={[
+            sample(demoPhotoIds.clothes, 200),
+            sample(demoPhotoIds.mug, 200),
+          ]}
           onReply={() => {}}
           onMore={() => {}}
         />

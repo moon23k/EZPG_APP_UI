@@ -5,7 +5,7 @@ import { SearchField } from './search-field';
 
 function Demo() {
   const [empty, setEmpty] = useState('');
-  const [filled, setFilled] = useState('장미');
+  const [filled, setFilled] = useState('머그컵');
   return (
     <Column>
       <SearchField

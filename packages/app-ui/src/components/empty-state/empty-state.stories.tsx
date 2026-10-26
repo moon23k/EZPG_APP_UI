@@ -67,7 +67,7 @@ function Demo() {
         <Screen>
           <EmptyState
             variant="search"
-            title="‘장미 리스’ 배송중 주문이 없어요"
+            title="‘머그컵’ 배송중 주문이 없어요"
             action={{ label: '조건 초기화', onPress: () => {} }}
           />
         </Screen>

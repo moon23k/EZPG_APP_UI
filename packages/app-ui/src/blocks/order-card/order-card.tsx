@@ -78,7 +78,6 @@ const useStyles = makeStyles((t) => ({
   section: { gap: t.space[3] },
 }));
 
-/** '장미 꽃다발 (중) 외 1건', '튤립 다발 × 2' */
 export function summarizeItems(items: readonly OrderItem[]): string {
   const [first, ...rest] = items;
   if (!first) return '';

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
-import { sample, Section } from '../../__stories__/helpers';
+import { demoPhotoIds, sample, Section } from '../../__stories__/helpers';
 import { SitePreviewFrame } from './site-preview-frame';
 
-const shot = sample(152, 390, 845);
+const shot = sample(demoPhotoIds.cafe, 390, 845);
 
 function Demo() {
   return (
