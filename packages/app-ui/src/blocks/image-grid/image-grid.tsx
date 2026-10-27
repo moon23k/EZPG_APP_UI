@@ -46,7 +46,7 @@ const useStyles = makeStyles((t) => ({
   },
   dim: { backgroundColor: `${t.colors.background}B3` },
   light: { gap: 2, backgroundColor: `${t.colors.background}D9` },
-  failed: { fontSize: 12, lineHeight: 16, color: t.colors.destructive },
+  failed: { fontSize: 12, lineHeight: 16, color: t.colors.danger },
   cover: {
     position: 'absolute',
     left: 0,
@@ -248,7 +248,7 @@ export function ImageGrid({
                     onPress={() => onRetry?.(item.id)}
                     style={[s.fill, s.light]}
                   >
-                    <RetryGlyph color={t.colors.destructive} size={22} />
+                    <RetryGlyph color={t.colors.danger} size={22} />
                     <Text weight="bold" style={s.failed}>
                       실패
                     </Text>

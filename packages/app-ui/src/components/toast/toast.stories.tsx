@@ -29,12 +29,12 @@ function Demo() {
         onPress={() =>
           toast.show({
             message: '사진 업로드에 실패했어요',
-            tone: 'destructive',
+            tone: 'danger',
             duration: 4000,
           })
         }
       >
-        destructive (4초)
+        danger (4초)
       </Button>
       <Button
         variant="outline"

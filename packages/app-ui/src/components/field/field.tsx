@@ -51,7 +51,7 @@ const useStyles = makeStyles((t) => ({
   invalid: {
     borderWidth: 2,
     paddingHorizontal: t.space[4] - 1,
-    borderColor: t.colors.destructive,
+    borderColor: t.colors.danger,
   },
   disabled: { opacity: t.opacity.disabled, backgroundColor: t.colors.muted },
   input: {
@@ -67,9 +67,9 @@ const useStyles = makeStyles((t) => ({
     fontSize: 13,
     lineHeight: 18,
     paddingLeft: t.space[1],
-    color: t.colors.destructive,
+    color: t.colors.danger,
   },
-  errorLabel: { color: t.colors.destructive },
+  errorLabel: { color: t.colors.danger },
   warned: {
     borderWidth: 2,
     paddingHorizontal: t.space[4] - 1,
@@ -159,8 +159,8 @@ export function Field({
         {error ? (
           <AlertGlyph
             filled
-            color={t.colors.destructive}
-            onColor={t.colors.destructiveForeground}
+            color={t.colors.danger}
+            onColor={t.colors.dangerForeground}
             size={t.iconSize.md}
           />
         ) : trailing ? (

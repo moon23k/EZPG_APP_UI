@@ -112,7 +112,7 @@ export function PlanCard({
       </View>
       {alert ? (
         <Text
-          tone={notice ? 'muted' : 'destructive'}
+          tone={notice ? 'muted' : 'danger'}
           weight={notice ? 'semibold' : undefined}
         >
           {alert}

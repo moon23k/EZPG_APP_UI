@@ -9,7 +9,7 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
 export type ButtonVariant =
-  'solid' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  'solid' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonProps = Omit<
@@ -53,7 +53,7 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.input,
   },
   ghost: { backgroundColor: 'transparent' },
-  destructive: { backgroundColor: t.colors.destructive },
+  danger: { backgroundColor: t.colors.danger },
   label: { fontFamily: t.fontFamily, fontWeight: '600' },
   smLabel: { fontSize: 14, lineHeight: 20 },
   mdLabel: {
@@ -82,7 +82,7 @@ export function Button({
     secondary: t.colors.foreground,
     outline: t.colors.foreground,
     ghost: t.colors.foreground,
-    destructive: t.colors.destructiveForeground,
+    danger: t.colors.dangerForeground,
   }[variant];
   const icon = { color, size: size === 'sm' ? t.iconSize.sm : t.iconSize.md };
 

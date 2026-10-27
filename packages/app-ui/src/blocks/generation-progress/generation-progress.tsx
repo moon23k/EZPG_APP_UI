@@ -106,8 +106,8 @@ export function GenerationProgress({
           <View style={s.dot}>
             <AlertGlyph
               filled
-              color={t.colors.destructive}
-              onColor={t.colors.destructiveForeground}
+              color={t.colors.danger}
+              onColor={t.colors.dangerForeground}
               size={DOT}
             />
           </View>
@@ -143,7 +143,7 @@ export function GenerationProgress({
                 style={s.label}
                 tone={
                   state === 'failed'
-                    ? 'destructive'
+                    ? 'danger'
                     : state === 'pending'
                       ? 'muted'
                       : 'default'
@@ -161,7 +161,7 @@ export function GenerationProgress({
         })}
       </View>
       {status === 'failed' && errorText ? (
-        <Text tone="destructive" accessibilityLiveRegion="polite">
+        <Text tone="danger" accessibilityLiveRegion="polite">
           {errorText}
         </Text>
       ) : null}

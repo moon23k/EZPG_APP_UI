@@ -21,7 +21,7 @@ import { useReducedMotion } from '../../internal/use-reduced-motion';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type ToastTone = 'neutral' | 'success' | 'destructive';
+export type ToastTone = 'neutral' | 'success' | 'danger';
 
 export type ToastOptions = {
   message: string;
@@ -183,7 +183,7 @@ function ToastHostInner({ store }: { store: ToastStore }) {
   const [bg, fg] = {
     neutral: [t.colors.foreground, t.colors.background],
     success: [t.colors.success, t.colors.successForeground],
-    destructive: [t.colors.destructive, t.colors.destructiveForeground],
+    danger: [t.colors.danger, t.colors.dangerForeground],
   }[current.tone];
   const actionColor =
     current.tone !== 'neutral'

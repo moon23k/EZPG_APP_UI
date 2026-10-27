@@ -128,7 +128,7 @@ export function OrderCard({
         </Text>
       </View>
       {deadline ? (
-        <Text weight="bold" tone="destructive" style={s.deadline}>
+        <Text weight="bold" tone="danger" style={s.deadline}>
           {deadline}
         </Text>
       ) : null}

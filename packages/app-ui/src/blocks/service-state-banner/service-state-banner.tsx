@@ -49,7 +49,7 @@ export function ServiceStateBanner({
   const severe =
     state === 'suspended' || state === 'closed' || state === 'stopped';
   const [bg, fg] = severe
-    ? [t.colors.destructive, t.colors.destructiveForeground]
+    ? [t.colors.danger, t.colors.dangerForeground]
     : [t.colors.warning, t.colors.warningForeground];
   return (
     <View

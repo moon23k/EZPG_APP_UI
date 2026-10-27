@@ -20,7 +20,7 @@ export const AllVariants: StoryObj<typeof meta> = {
       <Section title="tone">
         <Text>기본</Text>
         <Text tone="muted">보조 설명</Text>
-        <Text tone="destructive">결제에 실패했어요</Text>
+        <Text tone="danger">결제에 실패했어요</Text>
         <Text tone="success">정산이 완료됐어요</Text>
       </Section>
       <Section title="numberOfLines=1">

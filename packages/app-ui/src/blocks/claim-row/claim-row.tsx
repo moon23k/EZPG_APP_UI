@@ -112,7 +112,7 @@ export function ClaimRow({
           {deadline ? (
             <Text
               weight="bold"
-              tone={days !== null && days <= 1 ? 'destructive' : 'muted'}
+              tone={days !== null && days <= 1 ? 'danger' : 'muted'}
               style={s.deadline}
             >
               {deadline}

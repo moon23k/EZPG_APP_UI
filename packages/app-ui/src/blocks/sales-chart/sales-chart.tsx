@@ -92,7 +92,7 @@ export function SalesChart({
                 {rate !== null ? (
                   <Text
                     weight="bold"
-                    tone={up ? 'destructive' : 'default'}
+                    tone={up ? 'danger' : 'default'}
                     style={!up && s.down}
                     accessibilityLabel={`직전 기간보다 ${Math.abs(rate).toFixed(1)}% ${up ? '증가' : '감소'}`}
                   >

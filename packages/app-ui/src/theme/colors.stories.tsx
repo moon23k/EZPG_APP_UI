@@ -9,7 +9,7 @@ const pairs: [keyof ThemeColors, keyof ThemeColors][] = [
   ['background', 'foreground'],
   ['muted', 'mutedForeground'],
   ['primary', 'primaryForeground'],
-  ['destructive', 'destructiveForeground'],
+  ['danger', 'dangerForeground'],
   ['success', 'successForeground'],
   ['warning', 'warningForeground'],
 ];

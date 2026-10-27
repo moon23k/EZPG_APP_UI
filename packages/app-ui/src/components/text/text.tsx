@@ -4,7 +4,7 @@ import type { TypographyVariant } from '../../types';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type TextTone = 'default' | 'muted' | 'destructive' | 'success';
+export type TextTone = 'default' | 'muted' | 'danger' | 'success';
 
 export type TextProps = RNTextProps & {
   ref?: Ref<ComponentRef<typeof RNText>>;
@@ -23,7 +23,7 @@ const useStyles = makeStyles((t) => ({
   display: t.typography.display,
   default: { color: t.colors.foreground },
   muted: { color: t.colors.mutedForeground },
-  destructive: { color: t.colors.destructive },
+  danger: { color: t.colors.danger },
   success: { color: t.colors.success },
   font: { fontFamily: t.fontFamily },
   regular: { fontWeight: '400' },

@@ -74,11 +74,11 @@ export function InvoiceRow({
       <View style={s.row}>
         <AlertGlyph
           filled
-          color={t.colors.destructive}
-          onColor={t.colors.destructiveForeground}
+          color={t.colors.danger}
+          onColor={t.colors.dangerForeground}
           size={t.iconSize.md}
         />
-        <Text weight="bold" tone="destructive" style={[s.head, s.grow]}>
+        <Text weight="bold" tone="danger" style={[s.head, s.grow]}>
           결제 실패
         </Text>
         <Text weight="bold" style={s.head}>

@@ -37,7 +37,7 @@ function Demo() {
         <Text tone="muted">
           취소하면 결제 금액이 환불되고 되돌릴 수 없어요.
         </Text>
-        <Button variant="destructive" onPress={() => setConfirm(false)}>
+        <Button variant="danger" onPress={() => setConfirm(false)}>
           주문 취소
         </Button>
         <Button variant="ghost" onPress={() => setConfirm(false)}>

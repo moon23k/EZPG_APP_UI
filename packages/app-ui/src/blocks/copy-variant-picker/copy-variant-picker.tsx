@@ -80,7 +80,7 @@ export function CopyVariantPicker({
       <Text weight="semibold">{label}</Text>
       {conflict ? (
         <View style={s.conflict} accessibilityLiveRegion="polite">
-          <Text tone="destructive">다른 기기에서 먼저 수정했어요.</Text>
+          <Text tone="danger">다른 기기에서 먼저 수정했어요.</Text>
           {onReload ? (
             <Button
               size="sm"

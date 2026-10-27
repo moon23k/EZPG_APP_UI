@@ -34,7 +34,7 @@ const useStyles = makeStyles((t) => ({
     ...t.typography.caption,
     fontFamily: t.fontFamily,
     fontWeight: '700',
-    color: t.colors.destructive,
+    color: t.colors.danger,
   },
 }));
 

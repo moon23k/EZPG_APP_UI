@@ -3,7 +3,7 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
 export type StatusBadgeTone =
-  'neutral' | 'info' | 'success' | 'warning' | 'destructive';
+  'neutral' | 'info' | 'success' | 'warning' | 'danger';
 
 export type StatusBadgeProps = {
   tone?: StatusBadgeTone;
@@ -37,7 +37,7 @@ export function StatusBadge({
     info: [t.colors.info, t.colors.infoForeground],
     success: [t.colors.success, t.colors.successForeground],
     warning: [t.colors.warning, t.colors.warningForeground],
-    destructive: [t.colors.destructive, t.colors.destructiveForeground],
+    danger: [t.colors.danger, t.colors.dangerForeground],
   }[tone];
   return (
     <View style={[s.base, { backgroundColor: bg }, style]}>

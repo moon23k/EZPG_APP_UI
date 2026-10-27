@@ -12,8 +12,8 @@ export type ThemeColors = {
   ring: string;
   primary: string;
   primaryForeground: string;
-  destructive: string;
-  destructiveForeground: string;
+  danger: string;
+  dangerForeground: string;
   success: string;
   successForeground: string;
   warning: string;

@@ -83,7 +83,7 @@ function ResultDemo() {
         <ListRow
           title={demoProducts.mug}
           description="이미 취소된 주문이에요"
-          trailing={<StatusBadge tone="destructive">실패</StatusBadge>}
+          trailing={<StatusBadge tone="danger">실패</StatusBadge>}
         />
       </View>
     </Section>

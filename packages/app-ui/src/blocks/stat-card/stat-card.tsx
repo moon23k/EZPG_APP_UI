@@ -57,7 +57,7 @@ export function StatCard({
             {hasChange ? (
               <Text
                 weight="bold"
-                tone={flat ? 'muted' : up ? 'destructive' : 'default'}
+                tone={flat ? 'muted' : up ? 'danger' : 'default'}
                 style={!flat && !up && s.down}
               >
                 {flat ? '변동 없음' : `${up ? '▲' : '▼'} ${rate}`}

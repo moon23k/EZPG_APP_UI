@@ -43,7 +43,7 @@ function Demo() {
         onOpenChange={setDanger}
         title="상품을 삭제할까요?"
         confirmLabel="삭제"
-        destructive
+        danger
         loading={loading}
         onConfirm={() => {
           setLoading(true);
@@ -59,19 +59,19 @@ function Demo() {
         <Text tone="muted">
           Sheet가 열린 채로 Dialog와 Toast가 위에 떠야 해요.
         </Text>
-        <Button variant="destructive" onPress={() => setNested(true)}>
+        <Button variant="danger" onPress={() => setNested(true)}>
           주문 취소
         </Button>
         <Dialog
           open={nested}
           onOpenChange={setNested}
           title="주문을 취소할까요?"
-          destructive
+          danger
           confirmLabel="취소하기"
           cancelLabel="돌아가기"
           onConfirm={() => {
             setNested(false);
-            toast.show({ message: '주문을 취소했어요', tone: 'destructive' });
+            toast.show({ message: '주문을 취소했어요', tone: 'danger' });
           }}
         />
       </Sheet>

@@ -12,7 +12,7 @@ export type DialogProps = {
   onConfirm: () => void;
   confirmLabel?: string;
   cancelLabel?: string;
-  destructive?: boolean;
+  danger?: boolean;
   loading?: boolean;
   dismissible?: boolean;
 };
@@ -50,7 +50,7 @@ export function Dialog({
   onConfirm,
   confirmLabel = '확인',
   cancelLabel = '취소',
-  destructive = false,
+  danger = false,
   loading = false,
   dismissible = true,
 }: DialogProps) {
@@ -108,7 +108,7 @@ export function Dialog({
               {cancelLabel}
             </Button>
             <Button
-              variant={destructive ? 'destructive' : 'solid'}
+              variant={danger ? 'danger' : 'solid'}
               style={s.action}
               loading={loading}
               onPress={onConfirm}
