@@ -15,7 +15,6 @@ export type BrandProfileCardProps = {
   industry: string;
   tagline?: string;
   logo?: ImageSourcePropType;
-  /** 브랜드 색 (hex) */
   colors?: readonly string[];
   keywords?: readonly string[];
   onEdit?: () => void;
@@ -36,7 +35,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/** AI가 만든 브랜드 요약 */
 export function BrandProfileCard({
   name,
   industry,

@@ -5,10 +5,6 @@ import { useReducedMotion } from './use-reduced-motion';
 
 export const useNativeDriver = Platform.OS !== 'web';
 
-/**
- * Modal 위 패널의 열림 · 닫힘 전환. 닫힘 애니메이션이 끝난 뒤 mounted가 false가 된다.
- * progress는 0(닫힘) → 1(열림).
- */
 export function useOverlayTransition(open: boolean) {
   const t = useTheme();
   const reduced = useReducedMotion();

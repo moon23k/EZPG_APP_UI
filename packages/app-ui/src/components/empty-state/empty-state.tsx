@@ -6,21 +6,12 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import { Button } from '../button/button';
 
-/**
- * - default: 목록 전체가 비었을 때
- * - search: 검색 · 필터 결과가 없을 때 (결과 변화를 화면낭독기에 알림)
- * - error: 불러오지 못했을 때
- * - section: 화면 안 한 섹션이 비었을 때 (한 줄)
- */
 export type EmptyStateVariant = 'default' | 'search' | 'error' | 'section';
 
 export type EmptyStateProps = {
-  /** 상태를 말하는 한 줄. 예) '아직 주문이 없어요' */
   title: string;
   variant?: EmptyStateVariant;
-  /** 기본: search는 검색, error는 경고 아이콘 */
   icon?: IconSlot;
-  /** 다음 행동 하나. section에서는 텍스트 링크로 보인다 */
   action?: { label: string; onPress: () => void; icon?: IconSlot };
   style?: StyleProp<ViewStyle>;
 };
@@ -28,7 +19,6 @@ export type EmptyStateProps = {
 const ICON = { screen: 40, section: 20 };
 
 const useStyles = makeStyles((t) => ({
-  // 시각 중심을 맞추려고 아래쪽을 더 띄운다
   screen: {
     flexGrow: 1,
     alignItems: 'center',
@@ -74,7 +64,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/** 비어 있거나 불러오지 못한 상태. 설명 문단 없이 아이콘 · 한 줄 · 행동 하나로 보여준다 */
 export function EmptyState({
   title,
   variant = 'default',

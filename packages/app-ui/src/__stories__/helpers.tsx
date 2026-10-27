@@ -18,7 +18,6 @@ const useStyles = makeStyles((t) => ({
   column: { gap: t.space[3], maxWidth: 360 },
 }));
 
-/** 스토리 안에서 묶음마다 제목을 붙인다 */
 export function Section({
   title,
   children,

@@ -2,7 +2,6 @@ export type Point = { x: number; y: number };
 
 const STEPS = [1, 2, 2.5, 5, 10];
 
-/** 보기 좋은 눈금. 값이 하나뿐이거나 모두 같아도 범위를 만든다 */
 export function niceTicks(min: number, max: number, count = 4): number[] {
   let lo = Math.min(min, max);
   let hi = Math.max(min, max);
@@ -24,7 +23,6 @@ export function niceTicks(min: number, max: number, count = 4): number[] {
   return ticks;
 }
 
-/** [d0, d1] → [r0, r1] 선형 변환. 범위 폭이 0이면 가운데로 */
 export function linearScale(domain: [number, number], range: [number, number]) {
   const [d0, d1] = domain;
   const [r0, r1] = range;
@@ -43,7 +41,6 @@ export function areaPath(points: Point[], baseline: number): string {
   return `${linePath(points)} L${last.x},${baseline} L${first.x},${baseline} Z`;
 }
 
-/** 라벨이 겹치지 않게 최대 maxLabels개만 남길 간격 */
 export function labelStep(count: number, maxLabels: number): number {
   return Math.max(1, Math.ceil(count / Math.max(1, maxLabels)));
 }

@@ -8,14 +8,11 @@ import { makeStyles } from '../../utils/styles';
 export type CopyVariant = { id: string; text: string; locked?: boolean };
 
 export type CopyVariantPickerProps = {
-  /** 예) '한 줄 소개' */
   label: string;
   variants: readonly CopyVariant[];
   selectedId: string | null;
   onSelect: (id: string) => void;
-  /** 잠그면 다시 만들어도 이 문구는 바뀌지 않는다 */
   onToggleLock?: (id: string) => void;
-  /** 다른 기기에서 먼저 수정했을 때(409) */
   conflict?: boolean;
   onReload?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -66,7 +63,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/** AI가 만든 문구 후보 중 하나 고르기 */
 export function CopyVariantPicker({
   label,
   variants,

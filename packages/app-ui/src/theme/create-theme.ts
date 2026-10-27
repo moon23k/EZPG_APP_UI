@@ -32,7 +32,6 @@ function resolveColors(
 ): ThemeColors {
   const base = colors[scheme];
   const result = { ...base, ...override };
-  // primary만 바꾸면 그 위 글자색은 대비로 정한다.
   if (override.primary && !override.primaryForeground) {
     result.primaryForeground = pickForeground(
       override.primary,
@@ -43,10 +42,6 @@ function resolveColors(
   return result;
 }
 
-/**
- * 기본 토큰에 overrides를 덮어 light · dark 테마를 만든다.
- * 렌더 밖(모듈 최상단)이나 useMemo 안에서 호출한다.
- */
 export function createTheme(overrides: ThemeOverrides = {}): Themes {
   const { colors: shared = {}, dark = {}, ...rest } = overrides;
   const base = merge(tokens, rest);

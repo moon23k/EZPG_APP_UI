@@ -12,7 +12,6 @@ export type ColorSwatchPickerProps = {
   colors: readonly ColorSwatch[];
   value: string;
   onValueChange: (value: string) => void;
-  /** 'circle'은 색 점, 'card'는 버튼 모양 미리보기. 기본 'circle' */
   variant?: 'circle' | 'card';
   style?: StyleProp<ViewStyle>;
 };
@@ -60,7 +59,6 @@ const useStyles = makeStyles((t) => ({
   short: { width: '45%' },
 }));
 
-/** 브랜드 색 고르기 */
 export function ColorSwatchPicker({
   colors,
   value,

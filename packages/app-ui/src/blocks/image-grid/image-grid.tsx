@@ -21,16 +21,11 @@ export type GridImage = {
 
 export type ImageGridProps = {
   images: readonly GridImage[];
-  /** 순서가 바뀌면. 첫 장이 대표 사진 */
   onImagesChange: (images: GridImage[]) => void;
-  /** 넘기면 첫 칸에 추가 버튼 */
   onAdd?: () => void;
   onRemove?: (id: string) => void;
-  /** 업로드 실패한 사진 다시 올리기 */
   onRetry?: (id: string) => void;
-  /** 기본 10 */
   max?: number;
-  /** 기본 4 */
   columns?: number;
   style?: StyleProp<ViewStyle>;
 };
@@ -49,8 +44,9 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
     borderRadius: RADIUS,
   },
-  dim: { backgroundColor: 'rgba(0, 0, 0, 0.45)' },
-  light: { backgroundColor: 'rgba(255, 255, 255, 0.7)' },
+  dim: { backgroundColor: `${t.colors.background}B3` },
+  light: { gap: 2, backgroundColor: `${t.colors.background}D9` },
+  failed: { fontSize: 12, lineHeight: 16, color: t.colors.destructive },
   cover: {
     position: 'absolute',
     left: 0,
@@ -77,7 +73,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: 11,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#262626',
+    backgroundColor: t.colors.foreground,
   },
   add: {
     aspectRatio: 1,
@@ -100,7 +96,6 @@ const g = StyleSheet.create({
   head: { position: 'absolute' },
 });
 
-/** 카메라 모양. svg 없이 테두리로 그린다 */
 function CameraGlyph({ color, size }: { color: string; size: number }) {
   const stroke = Math.max(1.5, size / 14);
   const line = { borderWidth: stroke, borderColor: color };
@@ -145,7 +140,6 @@ function CameraGlyph({ color, size }: { color: string; size: number }) {
   );
 }
 
-/** 다시 시도 화살표. 끊긴 원 + 화살촉 */
 function RetryGlyph({ color, size }: { color: string; size: number }) {
   const stroke = Math.max(2, size / 11);
   const ring = size * 0.76;
@@ -181,7 +175,6 @@ function RetryGlyph({ color, size }: { color: string; size: number }) {
   );
 }
 
-/** 상품 사진 올리기 · 순서 바꾸기. 앱 최상단이 GestureHandlerRootView로 감싸져 있어야 한다 */
 export function ImageGrid({
   images,
   onImagesChange,
@@ -246,7 +239,7 @@ export function ImageGrid({
                 ) : null}
                 {item.status === 'uploading' ? (
                   <View style={[s.fill, s.dim]}>
-                    <ActivityIndicator color="#ffffff" />
+                    <ActivityIndicator color={t.colors.foreground} />
                   </View>
                 ) : item.status === 'failed' ? (
                   <PressableBase
@@ -255,7 +248,10 @@ export function ImageGrid({
                     onPress={() => onRetry?.(item.id)}
                     style={[s.fill, s.light]}
                   >
-                    <RetryGlyph color={t.colors.destructive} size={26} />
+                    <RetryGlyph color={t.colors.destructive} size={22} />
+                    <Text weight="bold" style={s.failed}>
+                      실패
+                    </Text>
                   </PressableBase>
                 ) : null}
                 {onRemove && item.status !== 'uploading' ? (
@@ -265,7 +261,7 @@ export function ImageGrid({
                     style={s.remove}
                   >
                     <View style={s.removeDot}>
-                      <CloseGlyph color="#ffffff" size={12} />
+                      <CloseGlyph color={t.colors.background} size={12} />
                     </View>
                   </PressableBase>
                 ) : null}

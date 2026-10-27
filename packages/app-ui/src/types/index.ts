@@ -8,7 +8,6 @@ export type ThemeColors = {
   muted: string;
   mutedForeground: string;
   border: string;
-  /** 입력칸 · outline 버튼 테두리 */
   input: string;
   ring: string;
   primary: string;
@@ -48,16 +47,12 @@ export type ThemeTokens = {
   };
   radius: { sm: number; md: number; lg: number; full: number };
   typography: Record<TypographyVariant, TypographyToken>;
-  /** undefined이면 시스템 폰트 */
   fontFamily: string | undefined;
-  /** 기기 글자 크기 설정이 적용되는 최대 배율 */
   maxFontScale: number;
-  /** `boxShadow` 값 (New Architecture) */
   shadow: { sm: string; md: string };
   motion: { duration: number };
   opacity: { pressed: number; disabled: number };
   iconSize: { sm: number; md: number };
-  /** 최소 터치 영역 (iOS 44, Android 48) */
   minTouchSize: number;
 };
 
@@ -73,8 +68,6 @@ type DeepPartial<T> = {
 };
 
 export type ThemeOverrides = DeepPartial<ThemeTokens> & {
-  /** light · dark 공통 */
   colors?: Partial<ThemeColors>;
-  /** dark에만 적용 (colors보다 우선) */
   dark?: { colors?: Partial<ThemeColors> };
 };

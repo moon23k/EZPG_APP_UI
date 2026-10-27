@@ -16,17 +16,12 @@ export type StepAction = {
 
 export type StepScreenProps = {
   title: string;
-  /** 넘기면 상단에 진행 막대 */
   total?: number;
-  /** 0부터 */
   current?: number;
-  /** 넘기면 상단에 이전 버튼 */
   onBack?: () => void;
-  /** 이전 버튼의 접근성 라벨. 기본 '이전' */
   backLabel?: string;
   primaryAction: StepAction;
   secondaryAction?: StepAction;
-  /** 하단 안전 영역 높이 */
   bottomInset?: number;
   children?: ReactNode;
 };
@@ -63,7 +58,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/** 온보딩 한 단계의 화면 틀: 이전 · 진행 막대 · 제목 · 내용 · 하단 버튼 */
 export function StepScreen({
   title,
   total,

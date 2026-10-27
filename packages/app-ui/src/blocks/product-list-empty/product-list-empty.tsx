@@ -20,14 +20,10 @@ export type SampleProduct = {
 };
 
 export type ProductListEmptyProps = {
-  /** 첫 상품 등록 */
   onAdd: () => void;
-  /** 기본 '첫 상품 등록' */
   addLabel?: string;
-  /** AI가 만든 초안이 있으면 예시 카드로 먼저 보여준다 */
   sample?: SampleProduct;
   onEditSample?: () => void;
-  /** 예시를 지우면 등록 타일로 바뀐다 (부모가 sample을 비운다) */
   onDismissSample?: () => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -77,7 +73,6 @@ const useStyles = makeStyles((t) => ({
   dismiss: { width: 48, height: 48, paddingHorizontal: 0 },
 }));
 
-/** 상품 목록이 비었을 때: 예시 초안이 있으면 예시 카드, 없으면 등록 타일 */
 export function ProductListEmpty({
   onAdd,
   addLabel = '첫 상품 등록',

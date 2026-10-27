@@ -16,11 +16,8 @@ export type ButtonProps = Omit<
   PressableBaseProps,
   'children' | 'touchHeight'
 > & {
-  /** 기본 'solid' */
   variant?: ButtonVariant;
-  /** 기본 'md' */
   size?: ButtonSize;
-  /** 스피너를 보여주고 누를 수 없게 한다 */
   loading?: boolean;
   leftIcon?: IconSlot;
   rightIcon?: IconSlot;

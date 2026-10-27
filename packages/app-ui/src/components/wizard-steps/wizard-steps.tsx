@@ -3,9 +3,7 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
 export type WizardStepsProps = {
-  /** 단계 이름 */
   steps: readonly string[];
-  /** 지금 단계 (0부터) */
   current: number;
   style?: StyleProp<ViewStyle>;
 };
@@ -28,7 +26,6 @@ const useStyles = makeStyles((t) => ({
   name: { color: t.colors.foreground, fontWeight: '600' },
 }));
 
-/** 여러 단계로 나뉜 입력 흐름의 진행 표시 */
 export function WizardSteps({ steps, current, style }: WizardStepsProps) {
   const t = useTheme();
   const s = useStyles();

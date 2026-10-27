@@ -16,15 +16,10 @@ export type ChartDatum = { label: string; value: number };
 
 export type LineChartProps = {
   data: readonly ChartDatum[];
-  /** 기본 200 */
   height?: number;
-  /** y축 라벨. 기본은 천 단위 쉼표 */
   formatY?: (value: number) => string;
-  /** x축 라벨. 기본은 label 그대로 */
   formatX?: (label: string, index: number) => string;
-  /** 점을 눌렀을 때. 넘기면 각 구간이 눌린다 */
   onPointPress?: (datum: ChartDatum, index: number) => void;
-  /** 기본은 최고 · 최저 · 마지막 값 요약 */
   accessibilityLabel?: string;
   style?: StyleProp<ViewStyle>;
 };
@@ -32,6 +27,16 @@ export type LineChartProps = {
 const defaultFormat = (v: number) => formatPrice(v, '');
 const PAD = { top: 8, right: 12, bottom: 24, gap: 8 };
 const FONT_SIZE = 11;
+const WIDE = /[\u1100-\u11ff\u3000-\u9fff\uac00-\ud7af\uff00-\uffef]/;
+const NARROW = /[,.:'\s]/;
+
+export function estimateLabelWidth(label: string, fontSize = FONT_SIZE) {
+  let em = 0;
+  for (const ch of label) {
+    em += WIDE.test(ch) ? 1 : NARROW.test(ch) ? 0.34 : 0.64;
+  }
+  return Math.ceil(em * fontSize) + 2;
+}
 
 export function LineChart({
   data,
@@ -48,7 +53,7 @@ export function LineChart({
   const ticks = niceTicks(Math.min(0, ...values), Math.max(0, ...values));
   const yLabels = ticks.map(formatY);
   const left =
-    Math.max(...yLabels.map((l) => l.length)) * FONT_SIZE * 0.62 + PAD.gap;
+    Math.max(0, ...yLabels.map((l) => estimateLabelWidth(l))) + PAD.gap;
   const plot = {
     x0: left,
     x1: width - PAD.right,

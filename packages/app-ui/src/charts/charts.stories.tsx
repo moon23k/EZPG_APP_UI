@@ -34,6 +34,17 @@ function Demo() {
       <Section title="30일 (라벨 자동 간격)">
         <LineChart data={month} formatY={manwon} height={160} />
       </Section>
+      <Section title="긴 세로축 라벨 (300만 · 1,200,000)">
+        <LineChart
+          data={week.map((d) => ({ ...d, value: d.value * 8 }))}
+          formatY={manwon}
+          height={140}
+        />
+        <LineChart
+          data={week.map((d) => ({ ...d, value: d.value * 3 }))}
+          height={140}
+        />
+      </Section>
       <Section title="경계: 비어 있음 · 점 1개 · 모두 0">
         <LineChart data={[]} height={100} />
         <LineChart data={[{ label: '오늘', value: 52000 }]} height={100} />

@@ -11,16 +11,15 @@ import { SortableList } from '../../sortable/sortable-list';
 export type ProductOption = {
   id: string;
   name: string;
-  /** 기본 가격에 더하는 금액 */
   priceDelta: number;
-  /** false면 판매 중지(품절) */
   active: boolean;
+  note?: string;
 };
 
 export type OptionEditorProps = {
   options: readonly ProductOption[];
   onOptionsChange: (options: ProductOption[]) => void;
-  /** 옵션 눌러 수정 (앱에서 Sheet 등으로) */
+  onActiveChange?: (id: string, active: boolean) => void;
   onEdit?: (id: string) => void;
   onAdd?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -44,7 +43,7 @@ const useStyles = makeStyles((t) => ({
   },
   separator: { borderTopWidth: 1, borderTopColor: t.colors.border },
   pressed: { backgroundColor: t.colors.muted },
-  name: { flex: 1 },
+  body: { flex: 1, paddingVertical: t.space[2] },
   price: { fontVariant: ['tabular-nums'] },
   grip: {
     width: 20,
@@ -60,17 +59,25 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/** 상품 옵션(1단) 목록. 손잡이로 순서를 바꾼다. 앱 최상단이 GestureHandlerRootView로 감싸져 있어야 한다 */
+function formatPriceDelta(delta: number): string {
+  return delta > 0 ? `+${formatPrice(delta)}` : formatPrice(delta);
+}
+
 export function OptionEditor({
   options,
   onOptionsChange,
+  onActiveChange,
   onEdit,
   onAdd,
   style,
 }: OptionEditorProps) {
   const s = useStyles();
   const setActive = (id: string, active: boolean) =>
-    onOptionsChange(options.map((o) => (o.id === id ? { ...o, active } : o)));
+    onActiveChange
+      ? onActiveChange(id, active)
+      : onOptionsChange(
+          options.map((o) => (o.id === id ? { ...o, active } : o))
+        );
   return (
     <View style={[s.root, style]}>
       <View style={s.list}>
@@ -96,12 +103,19 @@ export function OptionEditor({
                     <View style={s.bar} />
                   </View>
                 </SortableHandle>
-                <Text tone={tone} style={s.name} numberOfLines={1}>
-                  {item.name}
-                </Text>
+                <View style={s.body}>
+                  <Text tone={tone} numberOfLines={1}>
+                    {item.name}
+                  </Text>
+                  {item.note ? (
+                    <Text variant="caption" tone="muted" numberOfLines={2}>
+                      {item.note}
+                    </Text>
+                  ) : null}
+                </View>
                 {item.priceDelta ? (
                   <Text tone={tone} style={s.price}>
-                    +{formatPrice(item.priceDelta)}
+                    {formatPriceDelta(item.priceDelta)}
                   </Text>
                 ) : null}
                 <Switch

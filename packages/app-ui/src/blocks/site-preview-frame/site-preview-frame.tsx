@@ -13,14 +13,13 @@ import { makeStyles } from '../../utils/styles';
 export type SitePublishStatus = 'draft' | 'published' | 'unpublishedChanges';
 
 export type SitePreviewFrameProps = {
-  /** 사이트 화면 이미지 */
   screenshot?: ImageSourcePropType;
-  /** 실제 사이트를 띄울 때(WebView 등). screenshot보다 우선 */
   renderPreview?: () => ReactNode;
   status: SitePublishStatus;
   onPublish?: () => void;
   publishing?: boolean;
-  /** 직전 게시본으로 되돌리기 */
+  publishDisabled?: boolean;
+  blockedReason?: string;
   onRevert?: () => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -62,15 +61,17 @@ const useStyles = makeStyles((t) => ({
   barLabel: { flex: 1 },
   barButton: { paddingHorizontal: t.space[4] },
   actions: { gap: t.space[2] },
+  reason: { textAlign: 'center' },
 }));
 
-/** 만든 사이트 미리보기와 게시 */
 export function SitePreviewFrame({
   screenshot,
   renderPreview,
   status,
   onPublish,
   publishing,
+  publishDisabled,
+  blockedReason,
   onRevert,
   style,
 }: SitePreviewFrameProps) {
@@ -97,6 +98,7 @@ export function SitePreviewFrame({
               size="sm"
               onPress={onPublish}
               loading={publishing}
+              disabled={publishDisabled}
               style={s.barButton}
             >
               게시
@@ -106,9 +108,22 @@ export function SitePreviewFrame({
       ) : null}
       <View style={s.actions}>
         {onPublish && status === 'draft' ? (
-          <Button size="lg" onPress={onPublish} loading={publishing}>
+          <Button
+            size="lg"
+            onPress={onPublish}
+            loading={publishing}
+            disabled={publishDisabled}
+          >
             사이트 게시하기
           </Button>
+        ) : null}
+        {publishDisabled &&
+        blockedReason &&
+        onPublish &&
+        status !== 'published' ? (
+          <Text tone="muted" accessibilityLiveRegion="polite" style={s.reason}>
+            {blockedReason}
+          </Text>
         ) : null}
         {onRevert && status !== 'draft' ? (
           <Button variant="ghost" onPress={onRevert}>

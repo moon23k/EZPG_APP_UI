@@ -10,6 +10,7 @@ import { makeStyles } from '../../utils/styles';
 export type ChipProps = Omit<PressableBaseProps, 'children' | 'touchHeight'> & {
   selected?: boolean;
   leftIcon?: IconSlot;
+  count?: number;
   children: string;
 };
 
@@ -38,14 +39,17 @@ const useStyles = makeStyles((t) => ({
     lineHeight: 20,
     fontWeight: '500',
   },
+  count: { fontVariant: ['tabular-nums'], fontWeight: '700' },
 }));
 
 export function Chip({
   selected = false,
   leftIcon,
+  count,
   children,
   style,
   accessibilityState,
+  accessibilityLabel,
   ...rest
 }: ChipProps) {
   const t = useTheme();
@@ -54,6 +58,10 @@ export function Chip({
   return (
     <PressableBase
       {...rest}
+      accessibilityLabel={
+        accessibilityLabel ??
+        (count === undefined ? undefined : `${children}, ${count}건`)
+      }
       accessibilityState={{ ...accessibilityState, selected }}
       touchHeight={HEIGHT}
       style={[s.base, selected && s.selected, style]}
@@ -68,6 +76,15 @@ export function Chip({
       >
         {children}
       </Text>
+      {count === undefined ? null : (
+        <Text
+          numberOfLines={1}
+          maxFontSizeMultiplier={t.maxFontScale}
+          style={[s.label, s.count, { color }]}
+        >
+          {count}
+        </Text>
+      )}
     </PressableBase>
   );
 }

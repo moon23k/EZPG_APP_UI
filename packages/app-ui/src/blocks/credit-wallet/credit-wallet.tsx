@@ -7,10 +7,9 @@ import { Card } from '../internal/card';
 
 export type CreditWalletProps = {
   balance: number;
-  /** 이번 달에 사라지는 크레딧. 0보다 크면 보여준다 */
   expiring?: number;
   todayUsed: number;
-  dailyLimit: number;
+  dailyLimit: number | null;
   onBuy?: () => void;
   onHistory?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -43,7 +42,6 @@ const useStyles = makeStyles((t) => ({
   action: { flex: 1 },
 }));
 
-/** 보유 크레딧과 오늘 생성 횟수 */
 export function CreditWallet({
   balance,
   expiring,
@@ -54,7 +52,12 @@ export function CreditWallet({
   style,
 }: CreditWalletProps) {
   const s = useStyles();
-  const ratio = dailyLimit > 0 ? Math.min(1, todayUsed / dailyLimit) : 1;
+  const ratio =
+    dailyLimit === null
+      ? 0
+      : dailyLimit > 0
+        ? Math.min(1, todayUsed / dailyLimit)
+        : 1;
   return (
     <View style={[s.root, style]}>
       <Card>
@@ -87,18 +90,21 @@ export function CreditWallet({
         <View style={s.row}>
           <Text weight="semibold">오늘 생성</Text>
           <Text>
-            <Text weight="bold">{todayUsed}</Text> / {dailyLimit}
+            <Text weight="bold">{todayUsed}</Text> /{' '}
+            {dailyLimit === null ? '무제한' : dailyLimit}
           </Text>
         </View>
-        <View
-          accessible
-          accessibilityRole="progressbar"
-          accessibilityLabel="오늘 생성"
-          accessibilityValue={{ min: 0, max: dailyLimit, now: todayUsed }}
-          style={s.meter}
-        >
-          <View style={[s.fill, { width: `${ratio * 100}%` }]} />
-        </View>
+        {dailyLimit === null ? null : (
+          <View
+            accessible
+            accessibilityRole="progressbar"
+            accessibilityLabel="오늘 생성"
+            accessibilityValue={{ min: 0, max: dailyLimit, now: todayUsed }}
+            style={s.meter}
+          >
+            <View style={[s.fill, { width: `${ratio * 100}%` }]} />
+          </View>
+        )}
       </Card>
     </View>
   );

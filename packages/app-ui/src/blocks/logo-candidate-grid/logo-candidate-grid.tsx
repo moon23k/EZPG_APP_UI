@@ -22,7 +22,6 @@ export type LogoCandidateGridProps = {
   candidates: readonly LogoCandidate[];
   selectedId: string | null;
   onSelect: (id: string) => void;
-  /** 실패한 후보 다시 만들기 */
   onRetry?: (id: string) => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -58,7 +57,6 @@ const useStyles = makeStyles((t) => ({
   retry: { paddingHorizontal: t.space[4] },
 }));
 
-/** AI가 만든 로고 후보 고르기 */
 export function LogoCandidateGrid({
   candidates,
   selectedId,

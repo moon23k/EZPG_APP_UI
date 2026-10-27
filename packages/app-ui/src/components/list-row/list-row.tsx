@@ -15,11 +15,8 @@ export type ListRowProps = Omit<
   title: string;
   description?: string;
   leading?: IconSlot;
-  /** 오른쪽 내용 (Switch, StatusBadge, 값 텍스트 등) */
   trailing?: IconSlot;
-  /** 오른쪽 화살표. 기본은 onPress가 있을 때 true */
   chevron?: boolean;
-  /** 제목 줄 수. 기본 1 */
   titleLines?: number;
 };
 

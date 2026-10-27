@@ -13,11 +13,13 @@ export type SwitchProps = Omit<RNSwitchProps, 'value' | 'onValueChange'> & {
 
 export function Switch({ disabled, style, ...rest }: SwitchProps) {
   const t = useTheme();
+  const offThumb =
+    t.scheme === 'dark' ? t.colors.mutedForeground : t.colors.background;
   return (
     <RNSwitch
-      trackColor={{ false: t.colors.border, true: t.colors.primary }}
-      thumbColor={t.colors.background}
-      ios_backgroundColor={t.colors.border}
+      trackColor={{ false: t.colors.input, true: t.colors.primary }}
+      thumbColor={rest.value ? t.colors.primaryForeground : offThumb}
+      ios_backgroundColor={t.colors.input}
       {...rest}
       disabled={disabled}
       style={[disabled && { opacity: t.opacity.disabled }, style]}

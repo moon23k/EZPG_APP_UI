@@ -1,7 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { AccessibilityInfo } from 'react-native';
 
-// 앱 전체에서 구독 하나를 공유한다.
 let reduced = false;
 let started = false;
 const listeners = new Set<() => void>();
@@ -26,7 +25,6 @@ function subscribe(listener: () => void) {
   };
 }
 
-/** 기기의 '동작 줄이기' 설정 */
 export function useReducedMotion(): boolean {
   return useSyncExternalStore(subscribe, () => reduced);
 }

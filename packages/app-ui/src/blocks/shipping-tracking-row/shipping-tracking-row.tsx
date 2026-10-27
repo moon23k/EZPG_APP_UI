@@ -46,7 +46,6 @@ const useStyles = makeStyles((t) => ({
   lineOn: { backgroundColor: t.colors.primary },
 }));
 
-/** 송장과 배송 단계 */
 export function ShippingTrackingRow({
   carrier,
   trackingNumber,

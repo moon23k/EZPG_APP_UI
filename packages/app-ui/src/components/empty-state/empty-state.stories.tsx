@@ -31,7 +31,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-// 스토리용 아이콘. 실제 앱은 자기 아이콘 세트를 슬롯으로 넘긴다.
 function TrayIcon({ color, size }: IconRenderProps) {
   const s = useStyles();
   return (

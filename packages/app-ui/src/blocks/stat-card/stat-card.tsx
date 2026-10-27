@@ -5,13 +5,9 @@ import { makeStyles } from '../../utils/styles';
 import { Card } from '../internal/card';
 
 export type StatCardProps = {
-  /** 예) '오늘 매출' */
   label: string;
-  /** 이미 포맷된 값. 예) '1,234,000원', '42건' */
   value: string;
-  /** 직전 기간 대비 증감률(%). 오르면 빨강, 내리면 파랑 */
   change?: number | null;
-  /** 오른쪽 작은 차트. 예) <Sparkline /> (@ezpg/app-ui/charts) */
   chart?: ReactNode;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -29,7 +25,6 @@ const useStyles = makeStyles((t) => ({
   down: { color: t.colors.info },
 }));
 
-/** 핵심 숫자 하나와 증감 */
 export function StatCard({
   label,
   value,

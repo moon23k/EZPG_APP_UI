@@ -1,8 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import type { IconRenderProps } from './icon';
 
-// svg 없이 그리는 최소 아이콘. 아이콘 세트는 앱이 슬롯으로 넣는다.
-
 export function SearchGlyph({ color, size }: IconRenderProps) {
   const ring = size * 0.62;
   const stroke = Math.max(1.5, size / 10);
@@ -97,7 +95,6 @@ export function ChevronGlyph({ color, size }: IconRenderProps) {
   );
 }
 
-/** filled면 원을 칠하고 느낌표를 onColor로 그린다 */
 export function AlertGlyph({
   color,
   size,

@@ -14,13 +14,9 @@ export type SalesPeriod = 'today' | 'week' | 'month';
 export type SalesChartProps = {
   period: SalesPeriod;
   onPeriodChange: (period: SalesPeriod) => void;
-  /** 순매출 (환불 차감 후) */
   total: number;
-  /** 직전 같은 기간 순매출 */
   previousTotal?: number;
-  /** 기간 중 환불 합계 */
   refundTotal?: number;
-  /** 추이 차트. 두 점 이상이면 그린다 */
   data?: readonly ChartDatum[];
   loading?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -45,7 +41,6 @@ const useStyles = makeStyles((t) => ({
   down: { color: t.colors.info },
 }));
 
-/** 기간별 총매출 · 환불 · 순매출 */
 export function SalesChart({
   period,
   onPeriodChange,

@@ -13,24 +13,19 @@ import { PressableBase } from '../../internal/pressable-base';
 import { makeStyles } from '../../utils/styles';
 import { Card } from '../internal/card';
 
-/** 예) { id: 'm', label: '중 20×25cm' } */
 export type SupplyOption = { id: string; label: string };
 
-/** 묶음 수량과 그 가격 */
 export type SupplyQuantity = { quantity: number; price: number };
 
 export type SupplyItemCardProps = {
   name: string;
   image: ImageSourcePropType;
-  /** 2개 이상이면 칩으로 고른다 */
   options?: readonly SupplyOption[];
   selectedOptionId?: string | null;
   onSelectOption?: (id: string) => void;
-  /** 선택한 옵션의 수량별 가격 */
   quantities: readonly SupplyQuantity[];
   selectedQuantity: number | null;
   onSelectQuantity: (quantity: number) => void;
-  /** 기본 '장' */
   unit?: string;
   onAdd?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -75,7 +70,6 @@ const useStyles = makeStyles((t) => ({
   quantity: { flex: 1 },
 }));
 
-/** 로고를 넣어 주문하는 공급 품목. 사이즈 · 수량을 고르고 담는다 */
 export function SupplyItemCard({
   name,
   image,

@@ -7,32 +7,23 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import { Card } from '../internal/card';
 
-export type PlanState = 'active' | 'cancelScheduled' | 'pastDue' | 'suspended';
+export type PlanState =
+  'none' | 'trial' | 'active' | 'cancelScheduled' | 'pastDue' | 'suspended';
 
 export type PlanCardProps = {
   name: string;
-  /** 월 요금 */
   price: number;
-  /** 매월 주는 크레딧 */
   monthlyCredits: number;
-  /** 하루 생성 한도 */
-  dailyLimit: number;
+  dailyLimit: number | null;
   features?: readonly string[];
-  /** 지금 쓰는 플랜이면 변경 버튼을 숨긴다 */
   current?: boolean;
-  /** 테두리를 굵게 강조 */
   recommended?: boolean;
-  /** 지금 구독 상태 (current일 때) */
   state?: PlanState;
-  /** 예) '11월 30일' — 해지 예약일 */
   cancelDate?: string;
-  /** 바꾸면 오늘 결제할 금액. 넘기면 버튼에 금액을 붙인다 */
   proratedAmount?: number;
-  /** 가격 인상 예정 */
   priceChange?: { newPrice: number; effectiveDate: string; consented: boolean };
   onSelect?: () => void;
   onConsent?: () => void;
-  /** 기본 '이 플랜으로 변경' */
   actionLabel?: string;
   style?: StyleProp<ViewStyle>;
 };
@@ -60,6 +51,10 @@ const useStyles = makeStyles((t) => ({
 
 function stateText(state: PlanState, cancelDate?: string): string | null {
   switch (state) {
+    case 'none':
+      return '구독 전';
+    case 'trial':
+      return '체험 중';
     case 'cancelScheduled':
       return cancelDate ? `${cancelDate} 해지` : '해지 신청됨';
     case 'pastDue':
@@ -71,7 +66,6 @@ function stateText(state: PlanState, cancelDate?: string): string | null {
   }
 }
 
-/** 구독 플랜 한 장. 섹션 제목('이용 중인 플랜' 등)은 쓰는 쪽에서 붙인다 */
 export function PlanCard({
   name,
   price,
@@ -93,10 +87,11 @@ export function PlanCard({
   const s = useStyles();
   const items = [
     `월 크레딧 ${formatPrice(monthlyCredits, '')}`,
-    `하루 생성 ${dailyLimit}회`,
+    dailyLimit === null ? '하루 생성 무제한' : `하루 생성 ${dailyLimit}회`,
     ...features,
   ];
-  const alert = current ? stateText(state, cancelDate) : null;
+  const notice = state === 'none' || state === 'trial';
+  const alert = current || notice ? stateText(state, cancelDate) : null;
   return (
     <Card style={[recommended && s.recommended, style]}>
       <View style={s.head}>
@@ -115,7 +110,14 @@ export function PlanCard({
           </View>
         ))}
       </View>
-      {alert ? <Text tone="destructive">{alert}</Text> : null}
+      {alert ? (
+        <Text
+          tone={notice ? 'muted' : 'destructive'}
+          weight={notice ? 'semibold' : undefined}
+        >
+          {alert}
+        </Text>
+      ) : null}
       {priceChange ? (
         <View style={s.change}>
           <Text tone="muted">{priceChange.effectiveDate}부터</Text>

@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
 import type { ColorScheme, ThemeColors, ThemeTokens } from '../types';
 
-// shadcn/ui neutral 기준
 const neutral = {
   50: '#fafafa',
   100: '#f5f5f5',

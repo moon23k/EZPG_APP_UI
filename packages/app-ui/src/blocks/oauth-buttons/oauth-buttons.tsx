@@ -15,19 +15,12 @@ export type OAuthProvider = 'kakao' | 'naver' | 'google' | 'apple';
 export type OAuthButtonsProps = {
   providers: readonly OAuthProvider[];
   onPress: (provider: OAuthProvider) => void;
-  /**
-   * 각 사 공식 로고. 로고는 상표라 패키지에 넣지 않는다.
-   * 각 사 브랜드 가이드의 에셋을 앱에서 넘긴다.
-   */
   icons?: Partial<Record<OAuthProvider, ReactNode>>;
-  /** 진행 중인 공급자 */
   loading?: OAuthProvider | null;
-  /** 문구 바꾸기 */
   labels?: Partial<Record<OAuthProvider, string>>;
   style?: StyleProp<ViewStyle>;
 };
 
-// 각 사 브랜드 가이드의 지정 색. 테마 토큰을 따르지 않는다.
 const BRAND: Record<
   OAuthProvider,
   { bg: string; fg: string; border?: string; label: string }
@@ -62,7 +55,6 @@ const useStyles = makeStyles((t) => ({
   label: { fontSize: 15, fontWeight: '600', fontFamily: t.fontFamily },
 }));
 
-/** 소셜 로그인 버튼 묶음. Apple은 iOS에서만 보인다 */
 export function OAuthButtons({
   providers,
   onPress,

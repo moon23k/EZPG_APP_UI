@@ -6,7 +6,6 @@ export type StatusBadgeTone =
   'neutral' | 'info' | 'success' | 'warning' | 'destructive';
 
 export type StatusBadgeProps = {
-  /** 기본 'neutral' */
   tone?: StatusBadgeTone;
   children: string;
   style?: StyleProp<ViewStyle>;

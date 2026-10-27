@@ -12,16 +12,12 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
 export type ReviewRowProps = {
-  /** 가린 이름. 예) '김*지' */
   author: string;
-  /** 1~5 */
   rating: number;
   content: string;
   photos?: readonly ImageSourcePropType[];
   reply?: string;
-  /** 답글이 없을 때 '답글 달기' 버튼 */
   onReply?: () => void;
-  /** 오른쪽 위 더보기 버튼 (답글 수정 · 숨기기 등) */
   onMore?: () => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -72,7 +68,6 @@ const useStyles = makeStyles((t) => ({
   hiddenLabel: { flex: 1 },
 }));
 
-/** 별점을 ★로 그린다. 빈 별은 border 색 */
 function Stars({ rating, size }: { rating: number; size?: number }) {
   const t = useTheme();
   const s = useStyles();
@@ -93,7 +88,6 @@ function Stars({ rating, size }: { rating: number; size?: number }) {
   );
 }
 
-/** 리뷰 한 건과 사장님 답글 */
 export function ReviewRow({
   author,
   rating,
@@ -165,7 +159,6 @@ export function ReviewRow({
   );
 }
 
-/** 숨긴 리뷰를 한 줄로 접어 둔다 */
 export function HiddenReviewsRow({
   count,
   onShow,
@@ -183,9 +176,7 @@ export function HiddenReviewsRow({
 }
 
 export type ReviewSummaryProps = {
-  /** 평균 별점 */
   average: number;
-  /** 5점부터 1점까지 리뷰 수 */
   distribution: readonly [number, number, number, number, number];
   style?: StyleProp<ViewStyle>;
 };
@@ -207,7 +198,6 @@ const useSummaryStyles = makeStyles((t) => ({
   fill: { height: 6, borderRadius: 3, backgroundColor: t.colors.warning },
 }));
 
-/** 평균 별점과 점수별 분포 막대 */
 export function ReviewSummary({
   average,
   distribution,

@@ -40,6 +40,34 @@ function Demo() {
           onSelect={() => {}}
         />
       </Section>
+      <Section title="구독 전 · 체험 · 무제한">
+        <PlanCard
+          name="베이직"
+          price={19900}
+          monthlyCredits={100}
+          dailyLimit={10}
+          state="none"
+          actionLabel="구독 시작"
+          onSelect={() => {}}
+        />
+        <PlanCard
+          name="베이직"
+          price={19900}
+          monthlyCredits={30}
+          dailyLimit={3}
+          current
+          state="trial"
+          features={['체험 기간 동안 모든 기능을 써 볼 수 있어요']}
+        />
+        <PlanCard
+          name="비즈니스 무제한 생성 플랜 연간 결제 할인 포함"
+          price={1290000}
+          monthlyCredits={3000}
+          dailyLimit={null}
+          recommended
+          onSelect={() => {}}
+        />
+      </Section>
       <Section title="인상 동의함 · 해지 예약 · 결제 실패">
         <PlanCard
           name="베이직"

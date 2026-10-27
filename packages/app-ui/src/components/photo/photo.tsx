@@ -12,11 +12,8 @@ import { useTheme } from '../../theme/theme-provider';
 
 export type PhotoProps = Omit<ImageProps, 'source' | 'style'> & {
   source: ImageSourcePropType;
-  /** 가로 / 세로. 기본 1 */
   aspectRatio?: number;
-  /** 기본 radius.md */
   radius?: number;
-  /** 불러오지 못했을 때 보여줄 내용 */
   fallback?: ReactNode;
   style?: StyleProp<ViewStyle>;
 };
@@ -27,9 +24,7 @@ function sourceKey(source: ImageSourcePropType): string {
   return (source as { uri?: string }).uri ?? '';
 }
 
-/** 로딩 중에는 muted 배경, 실패하면 fallback을 보여주는 이미지 */
 export function Photo(props: PhotoProps) {
-  // 주소가 바뀌면 로딩 · 실패 상태를 처음부터 다시 잡는다.
   return <PhotoInner key={sourceKey(props.source)} {...props} />;
 }
 

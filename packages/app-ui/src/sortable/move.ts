@@ -1,4 +1,3 @@
-/** from 위치의 항목을 to 위치로 옮긴 새 배열 */
 export function moveItem<T>(
   items: readonly T[],
   from: number,

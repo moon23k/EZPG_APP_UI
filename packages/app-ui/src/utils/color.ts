@@ -1,4 +1,3 @@
-// #rgb · #rrggbb만 지원한다.
 function toRgb(hex: string): [number, number, number] {
   const value = hex.replace('#', '');
   const full =
@@ -26,7 +25,6 @@ function luminance(hex: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-/** WCAG 대비 비율 (1~21) */
 export function contrastRatio(a: string, b: string): number {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [
     number,
@@ -35,7 +33,6 @@ export function contrastRatio(a: string, b: string): number {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-/** 배경 위에서 대비가 더 큰 글자색 */
 export function pickForeground(
   background: string,
   dark: string,

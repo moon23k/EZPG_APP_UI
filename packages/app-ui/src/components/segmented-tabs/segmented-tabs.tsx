@@ -6,7 +6,6 @@ import { makeStyles } from '../../utils/styles';
 export type SegmentedTabsItem<T extends string> = { value: T; label: string };
 
 export type SegmentedTabsProps<T extends string> = {
-  /** 2~4개 */
   items: readonly SegmentedTabsItem<T>[];
   value: T;
   onValueChange: (value: T) => void;

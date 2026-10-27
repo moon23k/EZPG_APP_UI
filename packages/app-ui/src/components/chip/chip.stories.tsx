@@ -38,6 +38,16 @@ function Demo() {
           ))}
         </Row>
       </Section>
+      <Section title="count">
+        <Row>
+          <Chip selected count={12}>
+            신규
+          </Chip>
+          <Chip count={3}>배송 준비</Chip>
+          <Chip count={0}>반품 요청</Chip>
+          <Chip count={1280}>오래 걸리는 긴 이름의 필터</Chip>
+        </Row>
+      </Section>
       <Section title="disabled">
         <Row>
           <Chip disabled>품절</Chip>

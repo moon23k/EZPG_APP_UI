@@ -15,11 +15,11 @@ import { makeStyles } from '../../utils/styles';
 export type FieldProps = Omit<TextInputProps, 'style'> & {
   ref?: Ref<ComponentRef<typeof TextInput>>;
   label?: string;
-  /** 있으면 오류 상태로 표시하고 입력칸 아래에 보여준다 */
   error?: string;
+  hint?: string;
+  warning?: string;
   leading?: IconSlot;
   trailing?: IconSlot;
-  /** 바깥 컨테이너 스타일 */
   style?: StyleProp<ViewStyle>;
 };
 
@@ -43,7 +43,6 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.input,
     backgroundColor: t.colors.background,
   },
-  // 테두리가 두꺼워져도 글자가 밀리지 않게 padding을 줄인다
   focused: {
     borderWidth: 2,
     paddingHorizontal: t.space[4] - 1,
@@ -71,11 +70,39 @@ const useStyles = makeStyles((t) => ({
     color: t.colors.destructive,
   },
   errorLabel: { color: t.colors.destructive },
+  warned: {
+    borderWidth: 2,
+    paddingHorizontal: t.space[4] - 1,
+    borderColor: t.colors.warning,
+  },
+  noteRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: t.space[1],
+    paddingLeft: t.space[1],
+  },
+  grow: { flex: 1, paddingLeft: 0 },
+  hint: {
+    fontFamily: t.fontFamily,
+    fontSize: 13,
+    lineHeight: 18,
+    paddingLeft: t.space[1],
+    color: t.colors.mutedForeground,
+  },
+  warning: {
+    fontFamily: t.fontFamily,
+    fontSize: 13,
+    lineHeight: 18,
+    paddingLeft: t.space[1],
+    color: t.colors.foreground,
+  },
 }));
 
 export function Field({
   label,
   error,
+  hint,
+  warning,
   leading,
   trailing,
   style,
@@ -88,6 +115,8 @@ export function Field({
   const s = useStyles();
   const [focused, setFocused] = useState(false);
   const icon = { color: t.colors.mutedForeground, size: t.iconSize.md };
+  const warn = error ? undefined : warning;
+  const note = error ?? warn ?? hint;
 
   return (
     <View style={[s.root, style]}>
@@ -104,6 +133,7 @@ export function Field({
           s.frame,
           focused && s.focused,
           !!error && s.invalid,
+          !!warn && s.warned,
           !editable && s.disabled,
         ]}
       >
@@ -113,7 +143,7 @@ export function Field({
           selectionColor={t.colors.ring}
           maxFontSizeMultiplier={t.maxFontScale}
           accessibilityLabel={label}
-          accessibilityHint={error}
+          accessibilityHint={note}
           {...input}
           editable={editable}
           style={s.input}
@@ -144,6 +174,26 @@ export function Field({
           style={s.error}
         >
           {error}
+        </Text>
+      ) : warn ? (
+        <View style={s.noteRow}>
+          <AlertGlyph
+            filled
+            color={t.colors.warning}
+            onColor={t.colors.warningForeground}
+            size={t.iconSize.sm}
+          />
+          <Text
+            maxFontSizeMultiplier={t.maxFontScale}
+            accessibilityLiveRegion="polite"
+            style={[s.warning, s.grow]}
+          >
+            {warn}
+          </Text>
+        </View>
+      ) : hint ? (
+        <Text maxFontSizeMultiplier={t.maxFontScale} style={s.hint}>
+          {hint}
         </Text>
       ) : null}
     </View>

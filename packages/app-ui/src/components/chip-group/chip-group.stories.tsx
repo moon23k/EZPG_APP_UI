@@ -20,7 +20,15 @@ const moods = [
   { value: 'natural', label: '자연스러운' },
 ] as const;
 
+const counted = [
+  { value: 'paid', label: '신규', count: 4 },
+  { value: 'preparing', label: '배송 준비', count: 12 },
+  { value: 'shipped', label: '배송 중', count: 0 },
+  { value: 'claims', label: '취소 · 반품 · 교환', count: 2 },
+] as const;
+
 type Status = (typeof status)[number]['value'];
+type Counted = (typeof counted)[number]['value'];
 type Mood = (typeof moods)[number]['value'];
 
 function Demo() {
@@ -28,10 +36,18 @@ function Demo() {
     'all'
   );
   const [many, setMany] = useState<Mood[]>(['warm']);
+  const [tab, setTab] = useState<Counted | null>('paid');
   return (
     <Column>
       <Section title="단일 선택">
         <ChipGroup<Status> items={status} value={one} onValueChange={setOne} />
+      </Section>
+      <Section title="건수 표시">
+        <ChipGroup<Counted>
+          items={counted}
+          value={tab}
+          onValueChange={setTab}
+        />
       </Section>
       <Section title="다중 선택 · 최대 3개">
         <ChipGroup<Mood>

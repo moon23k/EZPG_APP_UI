@@ -146,7 +146,6 @@ describe('EmptyState', () => {
         action={{ label: '다시 불러오기', onPress }}
       />
     );
-    // 컨테이너는 버튼을 품고 있어 accessible로 묶지 않는다. 역할만 확인한다.
     expect(screen.toJSON()).toMatchObject({
       props: { accessibilityRole: 'alert' },
     });

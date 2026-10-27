@@ -9,7 +9,6 @@ export type SearchFieldProps = Omit<
 > & {
   value: string;
   onChangeText: (text: string) => void;
-  /** 지우기 버튼의 접근성 라벨. 기본 '검색어 지우기' */
   clearLabel?: string;
 };
 

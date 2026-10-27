@@ -9,6 +9,12 @@ function Demo() {
       <ServiceStateBanner state="grace" daysLeft={3} onAction={() => {}} />
       <ServiceStateBanner state="suspended" onAction={() => {}} />
       <ServiceStateBanner state="closed" onAction={() => {}} />
+      <ServiceStateBanner
+        state="stopped"
+        reason="상품 정보와 실제 판매 상품이 달라 확인이 필요해요. 상세 내용은 알림함에서 볼 수 있어요"
+        onAction={() => {}}
+      />
+      <ServiceStateBanner state="stopped" />
     </Section>
   );
 }

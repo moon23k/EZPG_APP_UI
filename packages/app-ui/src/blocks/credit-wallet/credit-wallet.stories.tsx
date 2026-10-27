@@ -22,3 +22,6 @@ export const NoExpiring: StoryObj<typeof meta> = {
 export const LimitReached: StoryObj<typeof meta> = {
   args: { balance: 3, expiring: undefined, todayUsed: 10 },
 };
+export const Unlimited: StoryObj<typeof meta> = {
+  args: { balance: 1280000, expiring: 120000, todayUsed: 42, dailyLimit: null },
+};

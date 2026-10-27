@@ -10,7 +10,7 @@
     "build": "yarn workspaces foreach -A --topological-dev --exclude @ezpg/app-ui-example run prepare",
     "clean": "del-cli example/android/build example/android/app/build example/ios/build \"packages/*/lib\"",
     "typecheck": "tsc",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint": "node scripts/check-no-comments.mjs && eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
     "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build",

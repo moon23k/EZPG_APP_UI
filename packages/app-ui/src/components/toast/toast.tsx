@@ -25,11 +25,8 @@ export type ToastTone = 'neutral' | 'success' | 'destructive';
 
 export type ToastOptions = {
   message: string;
-  /** 기본 'neutral' */
   tone?: ToastTone;
-  /** ms. 기본 2500, action이 있으면 4000 */
   duration?: number;
-  /** 메시지 오른쪽 텍스트 버튼 (예: 실행 취소). 누르면 Toast가 닫힌다 */
   action?: ToastAction;
 };
 
@@ -42,7 +39,6 @@ type Current = {
   action?: ToastAction;
 };
 
-/** Provider 하나가 가진 상태. show를 불러도 Provider 아래 화면은 다시 렌더링되지 않는다. */
 function createToastStore() {
   let current: Current | null = null;
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -66,7 +62,6 @@ function createToastStore() {
       };
     },
     getCurrent: () => current,
-    /** 가장 나중에 붙은 host(가장 위의 Modal)만 그린다 */
     getTopHost: () => hosts[hosts.length - 1],
     addHost(id: string) {
       hosts = [...hosts, id];
@@ -93,7 +88,6 @@ type ToastStore = ReturnType<typeof createToastStore>;
 const StoreContext = createContext<ToastStore | null>(null);
 
 export type ToastProviderProps = {
-  /** 하단 안전 영역 높이. 앱의 safe-area 값을 넘긴다 */
   bottomInset?: number;
   children: ReactNode;
 };
@@ -152,10 +146,6 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-/**
- * Toast를 그리는 자리. Provider가 하나 두고, Modal을 쓰는 컴포넌트(Sheet · Dialog)가
- * Modal 안에 하나씩 더 둔다. 가장 위의 host만 그린다.
- */
 export function ToastHost() {
   const store = useContext(StoreContext);
   return store ? <ToastHostInner store={store} /> : null;
@@ -195,7 +185,6 @@ function ToastHostInner({ store }: { store: ToastStore }) {
     success: [t.colors.success, t.colors.successForeground],
     destructive: [t.colors.destructive, t.colors.destructiveForeground],
   }[current.tone];
-  // 어두운 바탕(light) 위에서는 밝은 파랑, 밝은 바탕(dark) 위에서는 진한 파랑
   const actionColor =
     current.tone !== 'neutral'
       ? fg

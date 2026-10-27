@@ -5,6 +5,7 @@ import { Chip } from '../chip/chip';
 export type ChipGroupItem<T extends string> = {
   value: T;
   label: string;
+  count?: number;
   disabled?: boolean;
 };
 
@@ -12,7 +13,6 @@ type Single<T extends string> = {
   multiple?: false;
   value: T | null;
   onValueChange: (value: T | null) => void;
-  /** 선택된 칩을 다시 누르면 해제. 기본 false */
   deselectable?: boolean;
 };
 
@@ -20,7 +20,6 @@ type Multiple<T extends string> = {
   multiple: true;
   value: readonly T[];
   onValueChange: (value: T[]) => void;
-  /** 최대 선택 개수 */
   max?: number;
 };
 
@@ -70,6 +69,7 @@ export function ChipGroup<T extends string>(props: ChipGroupProps<T>) {
           <Chip
             key={item.value}
             selected={selected}
+            count={item.count}
             disabled={item.disabled || (full && !selected)}
             accessibilityRole={props.multiple ? 'checkbox' : 'radio'}
             accessibilityState={

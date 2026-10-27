@@ -11,18 +11,12 @@ import { Card } from '../internal/card';
 export type InvoiceStatus = 'paid' | 'failed' | 'refunded';
 
 export type InvoiceRowProps = {
-  /** 예) '베이직 · 10월' */
   title: string;
   amount: number;
-  /** 기본 'paid' */
   status?: InvoiceStatus;
-  /** 환불된 금액. 없으면 전액 환불 */
   refundedAmount?: number;
-  /** 실패일 때 [결제수단 변경] */
   onChangePaymentMethod?: () => void;
-  /** 실패일 때 [다시 결제] */
   onRetry?: () => void;
-  /** 다시 결제 진행 중 */
   retrying?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -35,7 +29,6 @@ const useStyles = makeStyles((t) => ({
   action: { flex: 1 },
 }));
 
-/** 결제 내역 한 건. 실패한 결제는 해결 버튼이 있는 카드로 보여준다 */
 export function InvoiceRow({
   title,
   amount,

@@ -1,27 +1,25 @@
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { Button } from '../../components/button/button';
 import { formatPrice } from '../../components/price/price';
 import { Text } from '../../components/text/text';
 import { makeStyles } from '../../utils/styles';
 import { Card } from '../internal/card';
-import { formatDeadline } from '../internal/format';
 
 export type ClaimType = 'cancel' | 'return' | 'exchange';
-export type ClaimStatus = 'requested' | 'collecting' | 'completed' | 'rejected';
+export type ClaimStatus =
+  | 'requested'
+  | 'collecting'
+  | 'collected'
+  | 'held'
+  | 'completed'
+  | 'rejected'
+  | 'withdrawn';
 
 export type ClaimRowProps = {
   type: ClaimType;
-  /** 기본 'requested' */
   status?: ClaimStatus;
-  /** 요청 금액 */
   amount: number;
-  /** 예) '상품 파손' */
-  reason: string;
-  /** 처리 기한까지 남은 영업일. 임박했을 때만 표시한다 */
-  dueInDays?: number;
-  /** 요청 상태일 때 [거부] [승인] 버튼 */
-  onReject?: () => void;
-  onApprove?: () => void;
+  reason?: string;
+  dueAt?: Date | string;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -31,45 +29,73 @@ const TYPE: Record<ClaimType, string> = {
   return: '반품',
   exchange: '교환',
 };
-const STATUS: Record<ClaimStatus, string> = {
+
+export const claimStatusLabel: Record<ClaimStatus, string> = {
   requested: '요청',
   collecting: '회수 중',
+  collected: '회수 완료',
+  held: '보류',
   completed: '완료',
-  rejected: '거부',
+  rejected: '거절',
+  withdrawn: '철회',
 };
+
+const OPEN: readonly ClaimStatus[] = [
+  'requested',
+  'collecting',
+  'collected',
+  'held',
+];
+
+const DAY = 86400000;
+
+function toDate(value: Date | string): Date {
+  if (typeof value !== 'string') return value;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return m
+    ? new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
+    : new Date(value);
+}
+
+function daysUntil(value: Date | string, now = new Date()): number | null {
+  const due = toDate(value);
+  if (Number.isNaN(due.getTime())) return null;
+  const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const b = new Date(due.getFullYear(), due.getMonth(), due.getDate());
+  return Math.round((b.getTime() - a.getTime()) / DAY);
+}
+
+function formatDday(days: number): string {
+  if (days < 0) return '기한 지남';
+  return days === 0 ? 'D-day' : `D-${days}`;
+}
 
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   grow: { flex: 1 },
   head: { fontSize: 16, lineHeight: 24, fontVariant: ['tabular-nums'] },
-  deadline: { fontSize: 14, lineHeight: 20 },
-  action: { flex: 1 },
+  deadline: { fontSize: 14, lineHeight: 20, fontVariant: ['tabular-nums'] },
 }));
 
-/** 취소 · 반품 · 교환 요청 한 건 */
 export function ClaimRow({
   type,
   status = 'requested',
   amount,
   reason,
-  dueInDays,
-  onReject,
-  onApprove,
+  dueAt,
   onPress,
   style,
 }: ClaimRowProps) {
   const s = useStyles();
-  const title = `${TYPE[type]} ${STATUS[status]}`;
-  const open = status === 'requested' || status === 'collecting';
-  const deadline =
-    open && dueInDays !== undefined ? formatDeadline(dueInDays) : null;
-  const actionable = status === 'requested' && (onReject || onApprove);
+  const title = `${TYPE[type]} ${claimStatusLabel[status]}`;
+  const days =
+    OPEN.includes(status) && dueAt !== undefined ? daysUntil(dueAt) : null;
+  const deadline = days === null ? null : formatDday(days);
+  const label = [title, formatPrice(amount), reason, deadline]
+    .filter(Boolean)
+    .join(', ');
   return (
-    <Card
-      onPress={onPress}
-      accessibilityLabel={`${title}, ${formatPrice(amount)}, ${reason}${deadline ? `, ${deadline}` : ''}`}
-      style={style}
-    >
+    <Card onPress={onPress} accessibilityLabel={label} style={style}>
       <View style={s.row}>
         <Text weight="bold" style={[s.head, s.grow]} numberOfLines={1}>
           {title}
@@ -78,32 +104,19 @@ export function ClaimRow({
           {formatPrice(amount)}
         </Text>
       </View>
-      <View style={s.row}>
-        <Text style={s.grow} numberOfLines={1}>
-          {reason}
-        </Text>
-        {deadline ? (
-          <Text weight="bold" tone="destructive" style={s.deadline}>
-            {deadline}
-          </Text>
-        ) : null}
-      </View>
-      {actionable ? (
+      {reason || deadline ? (
         <View style={s.row}>
-          {onReject ? (
-            <Button
-              size="sm"
-              variant="outline"
-              style={s.action}
-              onPress={onReject}
+          <Text style={s.grow} numberOfLines={1}>
+            {reason ?? ''}
+          </Text>
+          {deadline ? (
+            <Text
+              weight="bold"
+              tone={days !== null && days <= 1 ? 'destructive' : 'muted'}
+              style={s.deadline}
             >
-              거부
-            </Button>
-          ) : null}
-          {onApprove ? (
-            <Button size="sm" style={s.action} onPress={onApprove}>
-              승인
-            </Button>
+              {deadline}
+            </Text>
           ) : null}
         </View>
       ) : null}

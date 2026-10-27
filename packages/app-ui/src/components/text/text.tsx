@@ -8,11 +8,8 @@ export type TextTone = 'default' | 'muted' | 'destructive' | 'success';
 
 export type TextProps = RNTextProps & {
   ref?: Ref<ComponentRef<typeof RNText>>;
-  /** 기본 'body' */
   variant?: TypographyVariant;
-  /** 기본 'default' */
   tone?: TextTone;
-  /** 지정하지 않으면 variant의 굵기 */
   weight?: TextWeight;
 };
 

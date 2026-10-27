@@ -4,12 +4,13 @@ import { Text } from '../../components/text/text';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type ServiceState = 'paymentFailed' | 'grace' | 'suspended' | 'closed';
+export type ServiceState =
+  'paymentFailed' | 'grace' | 'suspended' | 'closed' | 'stopped';
 
 export type ServiceStateBannerProps = {
   state: ServiceState;
-  /** 유예 남은 일수 (grace) */
   daysLeft?: number;
+  reason?: string;
   actionLabel?: string;
   onAction?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -25,6 +26,8 @@ function title(state: ServiceState, daysLeft?: number) {
       return '사이트가 멈췄어요';
     case 'closed':
       return '해지된 사이트예요';
+    case 'stopped':
+      return '운영 정책에 따라 판매가 중지됐어요';
   }
 }
 
@@ -33,17 +36,18 @@ const useStyles = makeStyles((t) => ({
   start: { alignSelf: 'flex-start' },
 }));
 
-/** 결제 실패 · 유예 · 정지 · 해지 상태 안내 */
 export function ServiceStateBanner({
   state,
   daysLeft,
+  reason,
   actionLabel,
   onAction,
   style,
 }: ServiceStateBannerProps) {
   const t = useTheme();
   const s = useStyles();
-  const severe = state === 'suspended' || state === 'closed';
+  const severe =
+    state === 'suspended' || state === 'closed' || state === 'stopped';
   const [bg, fg] = severe
     ? [t.colors.destructive, t.colors.destructiveForeground]
     : [t.colors.warning, t.colors.warningForeground];
@@ -55,10 +59,17 @@ export function ServiceStateBanner({
       <Text weight="bold" style={{ color: fg }}>
         {title(state, daysLeft)}
       </Text>
+      {state === 'stopped' && reason ? (
+        <Text style={{ color: fg }}>사유: {reason}</Text>
+      ) : null}
       {onAction ? (
         <Button size="sm" variant="outline" onPress={onAction} style={s.start}>
           {actionLabel ??
-            (state === 'closed' ? '다시 시작하기' : '결제 수단 확인')}
+            (state === 'closed'
+              ? '다시 시작하기'
+              : state === 'stopped'
+                ? '문의하기'
+                : '결제 수단 확인')}
         </Button>
       ) : null}
     </View>

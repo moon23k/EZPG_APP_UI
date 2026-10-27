@@ -32,6 +32,7 @@ export * from './components/field';
 export * from './components/list-row';
 export * from './components/photo';
 export * from './components/price';
+export * from './components/progress-bar';
 export * from './components/search-field';
 export * from './components/segmented-tabs';
 export * from './components/sheet';

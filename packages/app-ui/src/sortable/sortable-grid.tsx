@@ -10,26 +10,15 @@ export type SortableGridProps<T> = {
   data: readonly T[];
   keyExtractor: (item: T) => string;
   renderItem: (info: { item: T; index: number }) => ReactNode;
-  /** 순서가 바뀐 새 배열 */
   onDataChange: (data: T[], change: SortableChange) => void;
-  /** 기본 3 */
   columns?: number;
-  /** 항목 사이 간격. 기본 space[2] */
   gap?: number;
-  /** true면 SortableHandle을 눌러야만 끈다 */
   handle?: boolean;
-  /** false면 끌 수 없다. 기본 true */
   enabled?: boolean;
-  /** 항목의 접근성 라벨. 넘기면 앞으로 · 뒤로 이동 동작을 제공한다 */
   itemLabel?: (item: T) => string;
-  /** 접근성 동작 이름. 기본 ['앞으로 이동', '뒤로 이동'] */
   moveLabels?: [string, string];
 };
 
-/**
- * 길게 눌러 순서를 바꾸는 격자. 앱 최상단이 GestureHandlerRootView로 감싸져 있어야 한다.
- * columns={1}이면 세로 목록이다.
- */
 export function SortableGrid<T>({
   data,
   keyExtractor,
@@ -91,7 +80,6 @@ export function SortableGrid<T>({
   );
 }
 
-/** handle을 켠 SortableGrid · SortableList 안에서 끄는 손잡이 */
 export function SortableHandle({ children }: { children: ReactNode }) {
   return <Sortable.Handle>{children}</Sortable.Handle>;
 }
