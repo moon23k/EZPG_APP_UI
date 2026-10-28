@@ -56,6 +56,7 @@ const useStyles = makeStyles((t) => ({
   disabled: { opacity: t.opacity.disabled, backgroundColor: t.colors.muted },
   input: {
     flex: 1,
+    minWidth: 0,
     alignSelf: 'stretch',
     paddingVertical: 0,
     fontFamily: t.fontFamily,
