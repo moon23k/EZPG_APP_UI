@@ -8,6 +8,7 @@ import {
   ListSection,
   ListTemplate,
   ResultTemplate,
+  StepScreen,
   SystemTemplate,
 } from '../index';
 
@@ -185,5 +186,25 @@ describe('SystemTemplate', () => {
     expect(screen.getByRole('header')).toBeTruthy();
     await fireEvent.press(screen.getByText('업데이트'));
     expect(onPress).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('StepScreen', () => {
+  it('shows a notice above the action only when given', async () => {
+    const view = await render(
+      <StepScreen
+        title="사이트 만드는 중"
+        primaryAction={{ label: '다시 만들기', onPress: () => {} }}
+      />
+    );
+    expect(screen.queryByText('쓴 크레딧은 돌려드려요')).toBeNull();
+    await view.rerender(
+      <StepScreen
+        title="사이트 만드는 중"
+        notice={{ reason: 'money', text: '쓴 크레딧은 돌려드려요' }}
+        primaryAction={{ label: '다시 만들기', onPress: () => {} }}
+      />
+    );
+    expect(screen.getByText('쓴 크레딧은 돌려드려요')).toBeTruthy();
   });
 });

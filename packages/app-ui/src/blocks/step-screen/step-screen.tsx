@@ -6,6 +6,7 @@ import { ChevronGlyph } from '../../internal/glyphs';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
+import { Notice, type TemplateNotice } from '../../templates/parts';
 
 export type StepAction = {
   label: string;
@@ -22,6 +23,7 @@ export type StepScreenProps = {
   backLabel?: string;
   primaryAction: StepAction;
   secondaryAction?: StepAction;
+  notice?: TemplateNotice;
   bottomInset?: number;
   children?: ReactNode;
 };
@@ -69,6 +71,7 @@ export function StepScreen({
   backLabel = '이전',
   primaryAction,
   secondaryAction,
+  notice,
   bottomInset = 0,
   children,
 }: StepScreenProps) {
@@ -109,6 +112,7 @@ export function StepScreen({
         </Text>
         {children}
       </ScrollView>
+      {notice ? <Notice notice={notice} /> : null}
       <View
         style={[
           s.footer,
