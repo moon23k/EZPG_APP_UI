@@ -11,6 +11,7 @@ export * from './oauth-buttons';
 export * from './order-card';
 export * from './plan-card';
 export * from './product-list-empty';
+export * from './product-row';
 export * from './review-row';
 export * from './selection-bar';
 export * from './service-state-banner';

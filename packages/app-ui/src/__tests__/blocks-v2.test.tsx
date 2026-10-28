@@ -11,6 +11,7 @@ import {
   OrderCard,
   orderStatusLabel,
   PlanCard,
+  ProductRow,
   ProgressBar,
   SelectionBar,
   ServiceStateBanner,
@@ -441,5 +442,23 @@ describe('Chip selection', () => {
     expect(screen.getByRole('button').props.accessibilityState.selected).toBe(
       true
     );
+  });
+});
+
+describe('ProductRow', () => {
+  it('reads name, price, and status and opens on press', async () => {
+    const onPress = jest.fn();
+    await render(
+      <ProductRow
+        title="린넨 쿠션 커버"
+        price={24000}
+        status={{ label: '품절', tone: 'warning' }}
+        onPress={onPress}
+      />
+    );
+    const row = screen.getByLabelText('린넨 쿠션 커버, 24,000원, 품절');
+    await fireEvent.press(row);
+    expect(onPress).toHaveBeenCalled();
+    expect(screen.getByText('품절')).toBeTruthy();
   });
 });
