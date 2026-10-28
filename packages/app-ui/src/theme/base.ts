@@ -9,7 +9,7 @@ export const semantic = {
     ring: '#a3a3a3',
     primary: '#171717',
     primaryForeground: '#fafafa',
-    danger: '#dc2626',
+    danger: '#b91c1c',
     dangerForeground: '#ffffff',
     success: '#15803d',
     successForeground: '#ffffff',
