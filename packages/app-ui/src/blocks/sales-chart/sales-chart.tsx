@@ -36,7 +36,7 @@ const useStyles = makeStyles((t) => ({
     minHeight: t.controlSize.sm,
   },
   divided: { borderBottomWidth: 1, borderBottomColor: t.colors.border },
-  net: { minHeight: t.listRowHeight },
+  net: { minHeight: t.listRow.oneLine },
   netValue: { flexDirection: 'row', alignItems: 'baseline', gap: t.space[2] },
   down: { color: t.colors.info },
 }));

@@ -31,5 +31,9 @@ export const tokens: ThemeTokens = {
   layout,
   controlSize,
   headerHeight: frame.header,
-  listRowHeight: frame.listRow,
+  listRow: {
+    oneLine: frame.listRow,
+    twoLine: frame.listRow2,
+    threeLine: frame.listRow3,
+  },
 };

@@ -25,7 +25,7 @@ const useStyles = makeStyles((t) => ({
     flexDirection: 'row',
     alignItems: 'center',
     gap: t.space[3],
-    minHeight: t.listRowHeight,
+    minHeight: t.listRow.oneLine,
     paddingVertical: t.space[3],
     paddingHorizontal: t.space[4],
     backgroundColor: t.colors.background,

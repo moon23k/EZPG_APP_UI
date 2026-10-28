@@ -66,7 +66,7 @@ export type ThemeTokens = {
   };
   controlSize: { sm: number; md: number; lg: number };
   headerHeight: number;
-  listRowHeight: number;
+  listRow: { oneLine: number; twoLine: number; threeLine: number };
 };
 
 export type Theme = ThemeTokens & {

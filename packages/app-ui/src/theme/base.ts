@@ -123,7 +123,7 @@ export const touch = {
 } as const;
 
 export const layout = {
-  screenX: 20,
+  screenX: 16,
   screenTop: 24,
   titleGap: 24,
   sectionGap: 32,
@@ -142,4 +142,6 @@ export const controlSize = {
 export const frame = {
   header: 52,
   listRow: 56,
+  listRow2: 72,
+  listRow3: 88,
 } as const;
