@@ -22,5 +22,5 @@ export { ResultTemplate } from './result-template';
 export type { ResultPreview, ResultTemplateProps } from './result-template';
 export { SystemTemplate } from './system-template';
 export type { SystemTemplateProps } from './system-template';
-export { BottomBar, ListSection, Notice } from './parts';
+export { ListSection } from './parts';
 export type { NoticeReason, TemplateAction, TemplateNotice } from './parts';
