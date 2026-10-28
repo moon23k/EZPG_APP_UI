@@ -4,6 +4,7 @@ import {
   DetailTemplate,
   EditorTemplate,
   FormTemplate,
+  Group,
   ListRow,
   ListSection,
   ListTemplate,
@@ -100,19 +101,45 @@ describe('ResultTemplate', () => {
     expect(onBuild).toHaveBeenCalledTimes(1);
   });
 
-  it('shows progress instead of results and no action while generating', async () => {
-    await render(
+  it('shows progress instead of results with the action the caller gives', async () => {
+    const onRetry = jest.fn();
+    const view = await render(
       <ResultTemplate
         previews={previews}
         index={0}
         onIndexChange={() => {}}
         progress={<Text>문구 쓰기</Text>}
-        primaryAction={{ label: '이 디자인으로 만들기', onPress: () => {} }}
       />
     );
     expect(screen.getByText('문구 쓰기')).toBeTruthy();
     expect(screen.queryByText('1안 사이트')).toBeNull();
-    expect(screen.queryByText('이 디자인으로 만들기')).toBeNull();
+    expect(screen.queryByText('다시 만들기')).toBeNull();
+    await view.rerender(
+      <ResultTemplate
+        previews={previews}
+        index={0}
+        onIndexChange={() => {}}
+        progress={<Text>문구 쓰기</Text>}
+        primaryAction={{ label: '다시 만들기', onPress: onRetry }}
+      />
+    );
+    await fireEvent.press(screen.getByText('다시 만들기'));
+    expect(onRetry).toHaveBeenCalledTimes(1);
+  });
+
+  it('renders cards and the full preview in their own mode', async () => {
+    await render(
+      <ResultTemplate
+        previews={[
+          { key: 'a', label: '1안', render: (mode) => <Text>{mode}</Text> },
+        ]}
+        index={0}
+        onIndexChange={() => {}}
+      />
+    );
+    expect(screen.getByText('card')).toBeTruthy();
+    await fireEvent.press(screen.getByLabelText('1안 크게 보기'));
+    expect(screen.getByText('full')).toBeTruthy();
   });
 });
 
@@ -206,5 +233,18 @@ describe('StepScreen', () => {
       />
     );
     expect(screen.getByText('쓴 크레딧은 돌려드려요')).toBeTruthy();
+  });
+});
+
+describe('Group', () => {
+  it('labels its content as a header with an optional aside', async () => {
+    await render(
+      <Group title="분위기" aside="선택">
+        <Text>포근한</Text>
+      </Group>
+    );
+    expect(screen.getByRole('header')).toBeTruthy();
+    expect(screen.getByText('선택')).toBeTruthy();
+    expect(screen.getByText('포근한')).toBeTruthy();
   });
 });

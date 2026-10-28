@@ -22,7 +22,7 @@ import {
 export type ResultPreview = {
   key: string;
   label: string;
-  render: () => ReactNode;
+  render: (mode: 'card' | 'full') => ReactNode;
 };
 
 export type ResultTemplateProps = {
@@ -141,7 +141,7 @@ function Viewer({
       >
         {previews.map((preview) => (
           <View key={preview.key} style={{ width }}>
-            {preview.render()}
+            {preview.render('full')}
           </View>
         ))}
       </ScrollView>
@@ -210,7 +210,7 @@ export function ResultTemplate({
                     accessibilityLabel={`${preview.label} ${openLabel}`}
                     style={s.card}
                   >
-                    {preview.render()}
+                    {preview.render('card')}
                   </PressableBase>
                   <View style={s.caption}>
                     <Text variant="label" weight="semibold">
@@ -223,14 +223,16 @@ export function ResultTemplate({
                 </View>
               ))}
             </ScrollView>
-            <View style={s.dots}>
-              {previews.map((preview, i) => (
-                <View
-                  key={preview.key}
-                  style={[s.dot, i === index ? s.dotOn : null]}
-                />
-              ))}
-            </View>
+            {previews.length > 1 ? (
+              <View style={s.dots}>
+                {previews.map((preview, i) => (
+                  <View
+                    key={preview.key}
+                    style={[s.dot, i === index ? s.dotOn : null]}
+                  />
+                ))}
+              </View>
+            ) : null}
           </>
         )}
       </View>
@@ -239,7 +241,7 @@ export function ResultTemplate({
           <Notice notice={notice} />
         </View>
       ) : null}
-      {primaryAction && !progress ? (
+      {primaryAction ? (
         <BottomBar
           primaryAction={primaryAction}
           secondaryAction={secondaryAction}

@@ -23,4 +23,6 @@ export type { ResultPreview, ResultTemplateProps } from './result-template';
 export { SystemTemplate } from './system-template';
 export type { SystemTemplateProps } from './system-template';
 export { ListSection } from './parts';
+export { Group } from './group';
+export type { GroupProps } from './group';
 export type { NoticeReason, TemplateAction, TemplateNotice } from './parts';
