@@ -5,9 +5,8 @@ import {
   View,
   type ListRenderItem,
 } from 'react-native';
-import { Button } from '../components/button/button';
+import { EmptyState } from '../components/empty-state/empty-state';
 import { Skeleton } from '../components/skeleton/skeleton';
-import { Text } from '../components/text/text';
 import { useTheme } from '../theme/theme-provider';
 import { makeStyles } from '../utils/styles';
 import type { TemplateAction } from './parts';
@@ -21,7 +20,7 @@ export type ListTemplateProps<T> = {
   status?: ListTemplateStatus;
   filters?: ReactNode;
   pinned?: ReactNode;
-  empty: { title: string; action?: TemplateAction };
+  empty: { title: string; action?: Pick<TemplateAction, 'label' | 'onPress'> };
   error?: { title: string; onRetry: () => void };
   refreshing?: boolean;
   onRefresh?: () => void;
@@ -38,16 +37,6 @@ const useStyles = makeStyles((t) => ({
     paddingBottom: t.space[2],
     paddingHorizontal: t.layout.screenX,
   },
-  state: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: t.layout.titleGap,
-    paddingHorizontal: t.layout.screenX,
-    paddingVertical: t.layout.sectionGap,
-  },
-  stateTitle: { textAlign: 'center' },
-  stateButton: { paddingHorizontal: t.space[6] },
   loading: {
     gap: t.space[4],
     paddingTop: t.space[2],
@@ -55,34 +44,6 @@ const useStyles = makeStyles((t) => ({
   },
   grow: { flexGrow: 1 },
 }));
-
-function StateView({
-  title,
-  action,
-}: {
-  title: string;
-  action?: TemplateAction;
-}) {
-  const s = useStyles();
-  return (
-    <View style={s.state}>
-      <Text variant="bodyLg" weight="semibold" style={s.stateTitle}>
-        {title}
-      </Text>
-      {action ? (
-        <Button
-          variant="outline"
-          onPress={action.onPress}
-          disabled={action.disabled}
-          loading={action.loading}
-          style={s.stateButton}
-        >
-          {action.label}
-        </Button>
-      ) : null}
-    </View>
-  );
-}
 
 export function ListTemplate<T>({
   data,
@@ -120,7 +81,8 @@ export function ListTemplate<T>({
     return (
       <View style={s.root}>
         {head}
-        <StateView
+        <EmptyState
+          variant="error"
           title={error.title}
           action={{ label: '다시 시도', onPress: error.onRetry }}
         />
@@ -143,7 +105,7 @@ export function ListTemplate<T>({
           ) : undefined
         }
         ListEmptyComponent={
-          <StateView title={empty.title} action={empty.action} />
+          <EmptyState title={empty.title} action={empty.action} />
         }
         contentContainerStyle={[
           data.length === 0 ? s.grow : null,

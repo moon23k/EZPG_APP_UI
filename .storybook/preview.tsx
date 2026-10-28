@@ -2,18 +2,10 @@ import type { Decorator, Preview } from '@storybook/react-native-web-vite';
 import type { ReactNode } from 'react';
 import { View } from 'react-native';
 import {
-  createTheme,
   defaultThemes,
   makeStyles,
   ThemeProvider,
-  type Themes,
 } from '../packages/app-ui/src';
-
-const brands: Record<string, Themes> = {
-  default: defaultThemes,
-  blue: createTheme({ colors: { primary: '#2563eb' } }),
-  yellow: createTheme({ colors: { primary: '#facc15' } }),
-};
 
 const useStyles = makeStyles((t) => ({
   canvas: {
@@ -28,10 +20,7 @@ function Canvas({ children }: { children: ReactNode }) {
 }
 
 const withTheme: Decorator = (Story, { globals }) => (
-  <ThemeProvider
-    themes={brands[globals.brand] ?? defaultThemes}
-    colorScheme={globals.scheme}
-  >
+  <ThemeProvider themes={defaultThemes} colorScheme={globals.scheme}>
     <Canvas>
       <Story />
     </Canvas>
@@ -52,21 +41,8 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
-    brand: {
-      description: 'Brand primary',
-      toolbar: {
-        title: 'Brand',
-        icon: 'paintbrush',
-        items: [
-          { value: 'default', title: 'Default' },
-          { value: 'blue', title: 'Blue #2563eb' },
-          { value: 'yellow', title: 'Yellow #facc15' },
-        ],
-        dynamicTitle: true,
-      },
-    },
   },
-  initialGlobals: { scheme: 'light', brand: 'default' },
+  initialGlobals: { scheme: 'light' },
   decorators: [withTheme],
   parameters: { layout: 'fullscreen' },
 };

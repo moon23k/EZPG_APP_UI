@@ -1,3 +1,4 @@
+import type { StatusBadgeTone } from '../../components/status-badge/status-badge';
 import type { ReactNode } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { Button, type ButtonVariant } from '../../components/button/button';
@@ -7,7 +8,7 @@ import { ChevronGlyph } from '../../internal/glyphs';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import { Card } from '../internal/card';
-import { formatDeadline } from '../internal/format';
+import { deadlineTone, formatDeadline } from '../internal/format';
 
 export type OrderStatus =
   | 'pending_payment'
@@ -21,12 +22,45 @@ export type OrderStatus =
 export const orderStatusLabel: Record<OrderStatus, string> = {
   pending_payment: '결제 대기',
   paid: '신규',
-  preparing: '배송 준비',
+  preparing: '상품 준비 중',
   shipped: '배송 중',
   delivered: '배송 완료',
   completed: '구매 확정',
-  canceled: '취소',
+  canceled: '주문 취소',
 };
+
+export type OrderFulfillment = 'ship' | 'pickup' | 'local' | 'visit' | 'none';
+
+export type OrderStatusInput = {
+  status: OrderStatus;
+  fulfillment?: OrderFulfillment;
+  readyAt?: string | null;
+  awaitingDeposit?: boolean;
+};
+
+export const orderStatusTone: Record<OrderStatus, StatusBadgeTone> = {
+  pending_payment: 'neutral',
+  paid: 'warning',
+  preparing: 'warning',
+  shipped: 'info',
+  delivered: 'success',
+  completed: 'neutral',
+  canceled: 'neutral',
+};
+
+export function orderStatusText({
+  status,
+  fulfillment = 'ship',
+  readyAt,
+  awaitingDeposit,
+}: OrderStatusInput): string {
+  if (status === 'pending_payment' && awaitingDeposit) return '입금 대기';
+  if (fulfillment === 'pickup') {
+    if (status === 'preparing' && readyAt) return '픽업 준비 완료';
+    if (status === 'delivered') return '수령 완료';
+  }
+  return orderStatusLabel[status];
+}
 
 export type OrderItem = { name: string; option?: string; quantity: number };
 
@@ -134,7 +168,11 @@ export function OrderCard({
         </Text>
       </View>
       {deadline ? (
-        <Text weight="bold" tone="danger" style={s.deadline}>
+        <Text
+          weight={deadlineTone(dueInDays!) === 'muted' ? 'regular' : 'bold'}
+          tone={deadlineTone(dueInDays!)}
+          style={s.deadline}
+        >
           {deadline}
         </Text>
       ) : null}

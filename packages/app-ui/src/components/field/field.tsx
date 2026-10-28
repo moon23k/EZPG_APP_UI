@@ -74,7 +74,7 @@ const useStyles = makeStyles((t) => ({
   warned: {
     borderWidth: 2,
     paddingHorizontal: t.space[4] - 1,
-    borderColor: t.colors.warning,
+    borderColor: t.colors.warningText,
   },
   noteRow: {
     flexDirection: 'row',
@@ -180,8 +180,8 @@ export function Field({
         <View style={s.noteRow}>
           <AlertGlyph
             filled
-            color={t.colors.warning}
-            onColor={t.colors.warningForeground}
+            color={t.colors.warningText}
+            onColor={t.colors.background}
             size={t.iconSize.sm}
           />
           <Text

@@ -193,7 +193,15 @@ const useStoryStyles = makeStyles((t) => ({
     backgroundColor: t.colors.muted,
   },
   flush: { paddingHorizontal: 0 },
-  pinned: { backgroundColor: t.colors.muted },
+  cards: {
+    gap: t.layout.itemGap,
+    paddingHorizontal: t.layout.screenX,
+    paddingBottom: t.layout.itemGap,
+  },
+  card: {
+    paddingHorizontal: t.layout.screenX,
+    paddingBottom: t.layout.itemGap,
+  },
   tabular: { fontVariant: ['tabular-nums'] },
   stack: { gap: t.space[1] },
 }));

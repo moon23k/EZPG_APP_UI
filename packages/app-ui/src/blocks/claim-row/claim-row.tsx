@@ -1,3 +1,4 @@
+import { deadlineTone } from '../internal/format';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { formatPrice } from '../../components/price/price';
 import { Text } from '../../components/text/text';
@@ -120,7 +121,7 @@ export function ClaimRow({
           {deadline ? (
             <Text
               weight="bold"
-              tone={days !== null && days <= 1 ? 'danger' : 'muted'}
+              tone={days === null ? 'muted' : deadlineTone(days)}
               style={s.deadline}
             >
               {deadline}

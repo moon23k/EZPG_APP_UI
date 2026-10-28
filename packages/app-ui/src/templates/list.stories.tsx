@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { Chip } from '../components/chip/chip';
-import { ListRow } from '../components/list-row/list-row';
+import { OrderCard } from '../blocks/order-card/order-card';
 import { SegmentedTabs } from '../components/segmented-tabs/segmented-tabs';
-import { Text } from '../components/text/text';
 import { SearchGlyph } from '../internal/glyphs';
 import { useTheme } from '../theme/theme-provider';
 import { Phone, useStoryStyles } from '../__stories__/phone';
@@ -12,59 +11,47 @@ import { ListTemplate, type ListTemplateStatus } from './list-template';
 
 type Order = {
   id: string;
-  title: string;
-  meta: string;
-  amount: string;
-  deadline?: string;
+  items: { name: string; option?: string; quantity: number }[];
+  total: number;
+  dueInDays?: number;
 };
 
 const orders: Order[] = [
   {
     id: '2026102800012',
-    title: '린넨 오버핏 셔츠 외 1건',
-    meta: '2026102800012 · 김*지',
-    amount: '35,000원',
-    deadline: '오늘 발송 마감 14:00',
+    items: [
+      { name: '린넨 오버핏 셔츠', option: 'L', quantity: 1 },
+      { name: '패브릭 코스터 세트', quantity: 1 },
+    ],
+    total: 35000,
+    dueInDays: 0,
   },
   {
     id: '2026102800011',
-    title: '머그컵 2개',
-    meta: '2026102800011 · 박*준',
-    amount: '18,000원',
+    items: [{ name: '머그컵', quantity: 2 }],
+    total: 18000,
+    dueInDays: 1,
   },
   {
     id: '2026102700009',
-    title: '원목 트레이',
-    meta: '2026102700009 · 최*린',
-    amount: '52,000원',
+    items: [{ name: '원목 트레이', quantity: 1 }],
+    total: 52000,
   },
   {
     id: '2026102700008',
-    title: '말차 원데이 클래스 · 11/2 14시',
-    meta: '2026102700008 · 이*호 · 픽업',
-    amount: '45,000원',
+    items: [{ name: '말차 원데이 클래스', option: '11/2 14시', quantity: 1 }],
+    total: 45000,
   },
   {
     id: '2026102700007',
-    title: '라탄 바구니 외 2건',
-    meta: '2026102700007 · 정*윤',
-    amount: '41,000원',
-  },
-  {
-    id: '2026102700006',
-    title: '리넨 앞치마',
-    meta: '2026102700006 · 한*수',
-    amount: '27,500원',
+    items: [
+      { name: '라탄 바구니', quantity: 1 },
+      { name: '리넨 앞치마', quantity: 1 },
+      { name: '코튼 행주', quantity: 1 },
+    ],
+    total: 41000,
   },
 ];
-
-function Amount({ value }: { value: string }) {
-  return (
-    <Text variant="body" weight="semibold" style={useStoryStyles().tabular}>
-      {value}
-    </Text>
-  );
-}
 
 function Screen({
   status = 'ready',
@@ -76,7 +63,7 @@ function Screen({
   const t = useTheme();
   const s = useStoryStyles();
   const [tab, setTab] = useState<'orders' | 'claims'>('orders');
-  const pinned = data.filter((o) => o.deadline);
+  const pinned = data.filter((o) => o.dueInDays !== undefined);
   return (
     <Phone
       title="주문"
@@ -85,7 +72,7 @@ function Screen({
     >
       <ListTemplate
         status={status}
-        data={data.filter((o) => !o.deadline)}
+        data={data.filter((o) => o.dueInDays === undefined)}
         keyExtractor={(o) => o.id}
         filters={
           <>
@@ -109,27 +96,29 @@ function Screen({
             </ScrollView>
           </>
         }
-        pinned={pinned.map((o) => (
-          <ListRow
-            key={o.id}
-            overline={o.deadline}
-            overlineTone="warning"
-            title={o.title}
-            description={o.meta}
-            trailing={<Amount value={o.amount} />}
-            chevron={false}
-            onPress={() => {}}
-            style={s.pinned}
-          />
-        ))}
+        pinned={
+          pinned.length ? (
+            <View style={s.cards}>
+              {pinned.map((o) => (
+                <OrderCard
+                  key={o.id}
+                  items={o.items}
+                  total={o.total}
+                  dueInDays={o.dueInDays}
+                  onPress={() => {}}
+                />
+              ))}
+            </View>
+          ) : null
+        }
         renderItem={({ item }) => (
-          <ListRow
-            title={item.title}
-            description={item.meta}
-            trailing={<Amount value={item.amount} />}
-            chevron={false}
-            onPress={() => {}}
-          />
+          <View style={s.card}>
+            <OrderCard
+              items={item.items}
+              total={item.total}
+              onPress={() => {}}
+            />
+          </View>
         )}
         empty={{
           title: '발송할 주문이 없어요',
