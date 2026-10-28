@@ -18,6 +18,7 @@ export type ThemeColors = {
   successForeground: string;
   warning: string;
   warningForeground: string;
+  warningText: string;
   info: string;
   infoForeground: string;
 };
