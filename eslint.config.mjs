@@ -24,6 +24,27 @@ export default defineConfig([
     },
   },
   {
+    files: ['packages/app-ui/src/**/*.tsx'],
+    ignores: [
+      '**/*.stories.tsx',
+      '**/__stories__/**',
+      '**/__tests__/**',
+      'packages/app-ui/src/charts/**',
+      'packages/app-ui/src/blocks/site-preview-frame/**',
+      'packages/app-ui/src/blocks/color-swatch-picker/**',
+    ],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            'Property[key.name=/^(fontSize|lineHeight|padding|paddingTop|paddingBottom|paddingLeft|paddingRight|paddingHorizontal|paddingVertical|margin|marginTop|marginBottom|marginLeft|marginRight|marginHorizontal|marginVertical|gap|rowGap|columnGap|borderRadius)$/][value.type="Literal"][value.value>0]',
+          message: '글자 크기 · 간격 · 모서리는 테마 토큰을 쓰세요.',
+        },
+      ],
+    },
+  },
+  {
     ignores: ['**/node_modules/', '**/lib/', 'storybook-static/'],
   },
 ]);

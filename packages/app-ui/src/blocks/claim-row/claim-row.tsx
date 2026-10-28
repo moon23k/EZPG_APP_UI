@@ -73,8 +73,16 @@ function formatDday(days: number): string {
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   grow: { flex: 1 },
-  head: { fontSize: 16, lineHeight: 24, fontVariant: ['tabular-nums'] },
-  deadline: { fontSize: 14, lineHeight: 20, fontVariant: ['tabular-nums'] },
+  head: {
+    fontSize: t.typography.bodyLg.fontSize,
+    lineHeight: t.typography.bodyLg.lineHeight,
+    fontVariant: ['tabular-nums'],
+  },
+  deadline: {
+    fontSize: t.typography.label.fontSize,
+    lineHeight: t.typography.label.lineHeight,
+    fontVariant: ['tabular-nums'],
+  },
 }));
 
 export function ClaimRow({

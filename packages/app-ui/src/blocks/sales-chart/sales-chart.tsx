@@ -33,10 +33,10 @@ const useStyles = makeStyles((t) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: 44,
+    minHeight: t.controlSize.sm,
   },
   divided: { borderBottomWidth: 1, borderBottomColor: t.colors.border },
-  net: { minHeight: 56 },
+  net: { minHeight: t.listRowHeight },
   netValue: { flexDirection: 'row', alignItems: 'baseline', gap: t.space[2] },
   down: { color: t.colors.info },
 }));

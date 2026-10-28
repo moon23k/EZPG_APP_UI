@@ -47,12 +47,16 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
     gap: t.space[2],
     paddingHorizontal: t.space[4],
-    borderRadius: 12,
+    borderRadius: t.radius.lg,
     borderWidth: 1,
     borderColor: 'transparent',
   },
   icon: { position: 'absolute', left: t.space[4] },
-  label: { fontSize: 15, fontWeight: '600', fontFamily: t.fontFamily },
+  label: {
+    fontSize: t.typography.body.fontSize,
+    fontWeight: '600',
+    fontFamily: t.fontFamily,
+  },
 }));
 
 export function OAuthButtons({

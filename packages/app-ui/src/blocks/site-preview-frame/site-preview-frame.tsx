@@ -45,7 +45,7 @@ const useStyles = makeStyles((t) => ({
   bar: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: t.space[2],
     minHeight: 60,
     paddingLeft: t.space[4],
     paddingRight: t.space[2],

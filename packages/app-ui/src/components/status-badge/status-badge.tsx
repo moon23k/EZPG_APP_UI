@@ -15,7 +15,7 @@ const useStyles = makeStyles((t) => ({
   base: {
     alignSelf: 'flex-start',
     paddingHorizontal: t.space[2],
-    paddingVertical: 2,
+    paddingVertical: t.space[1],
     borderRadius: t.radius.full,
   },
   label: {

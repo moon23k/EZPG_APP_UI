@@ -23,7 +23,7 @@ export type ThemeColors = {
 };
 
 export type TypographyVariant =
-  'caption' | 'body' | 'bodyLg' | 'title' | 'display';
+  'caption' | 'label' | 'body' | 'bodyLg' | 'title' | 'screenTitle' | 'display';
 
 export type TypographyToken = {
   fontSize: number;
@@ -54,6 +54,19 @@ export type ThemeTokens = {
   opacity: { pressed: number; disabled: number };
   iconSize: { sm: number; md: number };
   minTouchSize: number;
+  layout: {
+    screenX: number;
+    screenTop: number;
+    titleGap: number;
+    sectionGap: number;
+    groupGap: number;
+    itemGap: number;
+    footerTop: number;
+    footerBottom: number;
+  };
+  controlSize: { sm: number; md: number; lg: number };
+  headerHeight: number;
+  listRowHeight: number;
 };
 
 export type Theme = ThemeTokens & {

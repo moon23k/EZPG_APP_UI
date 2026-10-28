@@ -51,9 +51,15 @@ export type OrderCardProps = {
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   grow: { flex: 1 },
-  title: { fontSize: 16, lineHeight: 24 },
+  title: {
+    fontSize: t.typography.bodyLg.fontSize,
+    lineHeight: t.typography.bodyLg.lineHeight,
+  },
   amount: { fontVariant: ['tabular-nums'] },
-  deadline: { fontSize: 14, lineHeight: 20 },
+  deadline: {
+    fontSize: t.typography.label.fontSize,
+    lineHeight: t.typography.label.lineHeight,
+  },
   action: { flex: 1 },
   compact: {
     flexDirection: 'row',

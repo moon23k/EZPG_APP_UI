@@ -49,12 +49,12 @@ const useStyles = makeStyles((t) => ({
     width: 20,
     height: t.minTouchSize,
     justifyContent: 'center',
-    gap: 4,
+    gap: t.space[1],
   },
   bar: {
     height: 2,
-    marginHorizontal: 3,
-    borderRadius: 1,
+    marginHorizontal: t.space[1],
+    borderRadius: t.radius.full,
     backgroundColor: t.colors.mutedForeground,
   },
 }));

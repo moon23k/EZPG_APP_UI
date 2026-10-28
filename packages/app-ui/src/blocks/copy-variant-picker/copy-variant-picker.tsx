@@ -38,8 +38,8 @@ const useStyles = makeStyles((t) => ({
   radio: {
     width: 18,
     height: 18,
-    marginTop: 2,
-    borderRadius: 9,
+    marginTop: t.space[1],
+    borderRadius: t.radius.full,
     borderWidth: 2,
     borderColor: t.colors.border,
     alignItems: 'center',
@@ -49,7 +49,7 @@ const useStyles = makeStyles((t) => ({
   radioDot: {
     width: 8,
     height: 8,
-    borderRadius: 4,
+    borderRadius: t.radius.full,
     backgroundColor: t.colors.primary,
   },
   body: { flex: 1, gap: t.space[2] },

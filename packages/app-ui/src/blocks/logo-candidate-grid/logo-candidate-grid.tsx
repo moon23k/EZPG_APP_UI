@@ -41,7 +41,7 @@ const useStyles = makeStyles((t) => ({
     right: t.space[2],
     width: 24,
     height: 24,
-    borderRadius: 12,
+    borderRadius: t.radius.lg,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: t.colors.primary,

@@ -25,7 +25,7 @@ const useStyles = makeStyles((t) => ({
     backgroundColor: t.colors.background,
     boxShadow: t.shadow.md,
   },
-  info: { flex: 1, gap: 2 },
+  info: { flex: 1, gap: t.space[1] },
   count: { fontVariant: ['tabular-nums'] },
 }));
 

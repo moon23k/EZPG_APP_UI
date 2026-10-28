@@ -26,7 +26,7 @@ const useStyles = makeStyles((t) => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    minHeight: 44,
+    minHeight: t.controlSize.sm,
     paddingHorizontal: t.space[3],
     borderRadius: t.radius.md,
     backgroundColor: `${t.colors.warning}24`,

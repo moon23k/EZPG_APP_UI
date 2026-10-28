@@ -32,8 +32,8 @@ const useStyles = makeStyles((t) => ({
   selected: { backgroundColor: t.colors.background, boxShadow: t.shadow.sm },
   label: {
     fontFamily: t.fontFamily,
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: t.typography.label.fontSize,
+    lineHeight: t.typography.label.lineHeight,
     fontWeight: '500',
     color: t.colors.mutedForeground,
   },

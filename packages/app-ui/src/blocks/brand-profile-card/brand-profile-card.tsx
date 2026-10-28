@@ -24,12 +24,12 @@ export type BrandProfileCardProps = {
 const useStyles = makeStyles((t) => ({
   head: { flexDirection: 'row', alignItems: 'center', gap: t.space[3] },
   logo: { width: 56 },
-  title: { flex: 1, gap: 2 },
+  title: { flex: 1, gap: t.space[1] },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: t.space[2] },
   dot: {
     width: 20,
     height: 20,
-    borderRadius: 10,
+    borderRadius: t.radius.full,
     borderWidth: 1,
     borderColor: t.colors.border,
   },

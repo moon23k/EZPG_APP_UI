@@ -1,7 +1,10 @@
 import { Platform } from 'react-native';
 import type { ColorScheme, ThemeColors, ThemeTokens } from '../types';
 import {
+  controlSize,
+  frame,
   iconSize,
+  layout,
   motion,
   opacity,
   radius,
@@ -25,4 +28,8 @@ export const tokens: ThemeTokens = {
   opacity,
   iconSize,
   minTouchSize: Platform.OS === 'ios' ? touch.ios : touch.android,
+  layout,
+  controlSize,
+  headerHeight: frame.header,
+  listRowHeight: frame.listRow,
 };

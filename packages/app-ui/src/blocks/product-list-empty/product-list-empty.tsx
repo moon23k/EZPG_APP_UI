@@ -61,16 +61,23 @@ const useStyles = makeStyles((t) => ({
     position: 'absolute',
     top: t.space[3],
     left: t.space[3],
-    paddingHorizontal: 10,
+    paddingHorizontal: t.space[2],
     paddingVertical: t.space[1],
     borderRadius: t.radius.full,
     backgroundColor: t.colors.foreground,
   },
-  badgeLabel: { color: t.colors.background, fontSize: 14 },
+  badgeLabel: {
+    color: t.colors.background,
+    fontSize: t.typography.label.fontSize,
+  },
   body: { gap: t.space[1], padding: t.space[4] },
   actions: { flexDirection: 'row', gap: t.space[2], marginTop: t.space[3] },
-  edit: { flex: 1, height: 48 },
-  dismiss: { width: 48, height: 48, paddingHorizontal: 0 },
+  edit: { flex: 1, height: t.controlSize.md },
+  dismiss: {
+    width: t.controlSize.md,
+    height: t.controlSize.md,
+    paddingHorizontal: 0,
+  },
 }));
 
 export function ProductListEmpty({

@@ -25,7 +25,11 @@ export type InvoiceRowProps = {
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   grow: { flex: 1 },
-  head: { fontSize: 16, lineHeight: 24, fontVariant: ['tabular-nums'] },
+  head: {
+    fontSize: t.typography.bodyLg.fontSize,
+    lineHeight: t.typography.bodyLg.lineHeight,
+    fontVariant: ['tabular-nums'],
+  },
   action: { flex: 1 },
 }));
 

@@ -66,6 +66,11 @@ export const typography = {
     lineHeight: 16,
     fontWeight: '400',
   },
+  label: {
+    fontSize: 14,
+    lineHeight: 20,
+    fontWeight: '400',
+  },
   body: {
     fontSize: 15,
     lineHeight: 22,
@@ -80,6 +85,11 @@ export const typography = {
     fontSize: 20,
     lineHeight: 28,
     fontWeight: '600',
+  },
+  screenTitle: {
+    fontSize: 24,
+    lineHeight: 32,
+    fontWeight: '700',
   },
   display: {
     fontSize: 28,
@@ -110,4 +120,26 @@ export const iconSize = {
 export const touch = {
   ios: 44,
   android: 48,
+} as const;
+
+export const layout = {
+  screenX: 20,
+  screenTop: 24,
+  titleGap: 24,
+  sectionGap: 32,
+  groupGap: 12,
+  itemGap: 8,
+  footerTop: 12,
+  footerBottom: 16,
+} as const;
+
+export const controlSize = {
+  sm: 44,
+  md: 48,
+  lg: 52,
+} as const;
+
+export const frame = {
+  header: 52,
+  listRow: 56,
 } as const;

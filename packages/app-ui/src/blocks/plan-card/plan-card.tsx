@@ -36,7 +36,7 @@ const useStyles = makeStyles((t) => ({
   },
   head: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   name: { flex: 1 },
-  list: { gap: 6 },
+  list: { gap: t.space[2] },
   feature: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   change: {
     flexDirection: 'row',

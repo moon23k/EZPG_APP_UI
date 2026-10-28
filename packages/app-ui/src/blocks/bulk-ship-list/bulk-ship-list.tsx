@@ -66,7 +66,7 @@ const useStyles = makeStyles((t) => ({
     height: FIELD_HEIGHT,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
+    borderRadius: t.radius.md,
     borderWidth: 1,
     borderColor: t.colors.input,
     backgroundColor: t.colors.background,

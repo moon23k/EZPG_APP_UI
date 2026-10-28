@@ -17,9 +17,11 @@ export type TextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
 
 const useStyles = makeStyles((t) => ({
   caption: t.typography.caption,
+  label: t.typography.label,
   body: t.typography.body,
   bodyLg: t.typography.bodyLg,
   title: t.typography.title,
+  screenTitle: t.typography.screenTitle,
   display: t.typography.display,
   default: { color: t.colors.foreground },
   muted: { color: t.colors.mutedForeground },

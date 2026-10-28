@@ -31,7 +31,7 @@ const useStyles = makeStyles((t) => ({
   dot: {
     width: 10,
     height: 10,
-    borderRadius: 5,
+    borderRadius: t.radius.full,
     backgroundColor: t.colors.border,
   },
   on: { backgroundColor: t.colors.primary },

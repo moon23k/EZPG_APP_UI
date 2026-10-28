@@ -29,14 +29,14 @@ export type StepScreenProps = {
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, backgroundColor: t.colors.background },
   header: {
-    height: 52,
+    height: t.headerHeight,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: t.space[1],
   },
   back: {
-    width: 44,
-    height: 44,
+    width: t.minTouchSize,
+    height: t.minTouchSize,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -44,16 +44,19 @@ const useStyles = makeStyles((t) => ({
   track: { height: 3, backgroundColor: t.colors.muted },
   fill: { height: 3, backgroundColor: t.colors.primary },
   body: {
-    gap: t.space[5],
-    paddingTop: t.space[6],
-    paddingHorizontal: t.space[5],
-    paddingBottom: t.space[4],
+    gap: t.layout.titleGap,
+    paddingTop: t.layout.screenTop,
+    paddingHorizontal: t.layout.screenX,
+    paddingBottom: t.layout.footerBottom,
   },
-  title: { fontSize: 24, lineHeight: 32 },
+  title: {
+    fontSize: t.typography.screenTitle.fontSize,
+    lineHeight: t.typography.screenTitle.lineHeight,
+  },
   footer: {
-    gap: t.space[2],
-    paddingHorizontal: t.space[5],
-    paddingTop: t.space[3],
+    gap: t.layout.itemGap,
+    paddingHorizontal: t.layout.screenX,
+    paddingTop: t.layout.footerTop,
     backgroundColor: t.colors.background,
   },
 }));
@@ -106,7 +109,12 @@ export function StepScreen({
         </Text>
         {children}
       </ScrollView>
-      <View style={[s.footer, { paddingBottom: t.space[4] + bottomInset }]}>
+      <View
+        style={[
+          s.footer,
+          { paddingBottom: t.layout.footerBottom + bottomInset },
+        ]}
+      >
         <Button
           size="lg"
           onPress={primaryAction.onPress}

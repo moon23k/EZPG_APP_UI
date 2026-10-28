@@ -24,8 +24,6 @@ export type ButtonProps = Omit<
   children: ReactNode;
 };
 
-const heights: Record<ButtonSize, number> = { sm: 44, md: 48, lg: 52 };
-
 const useStyles = makeStyles((t) => ({
   base: {
     flexDirection: 'row',
@@ -36,13 +34,17 @@ const useStyles = makeStyles((t) => ({
     borderColor: 'transparent',
   },
   sm: {
-    height: heights.sm,
+    height: t.controlSize.sm,
     paddingHorizontal: t.space[3],
     borderRadius: t.radius.md,
   },
-  md: { height: heights.md, paddingHorizontal: t.space[4], borderRadius: 10 },
+  md: {
+    height: t.controlSize.md,
+    paddingHorizontal: t.space[4],
+    borderRadius: t.radius.md,
+  },
   lg: {
-    height: heights.lg,
+    height: t.controlSize.lg,
     paddingHorizontal: t.space[5],
     borderRadius: t.radius.lg,
   },
@@ -55,12 +57,18 @@ const useStyles = makeStyles((t) => ({
   ghost: { backgroundColor: 'transparent' },
   danger: { backgroundColor: t.colors.danger },
   label: { fontFamily: t.fontFamily, fontWeight: '600' },
-  smLabel: { fontSize: 14, lineHeight: 20 },
+  smLabel: {
+    fontSize: t.typography.label.fontSize,
+    lineHeight: t.typography.label.lineHeight,
+  },
   mdLabel: {
     fontSize: t.typography.body.fontSize,
     lineHeight: t.typography.body.lineHeight,
   },
-  lgLabel: { fontSize: 16, lineHeight: 24 },
+  lgLabel: {
+    fontSize: t.typography.bodyLg.fontSize,
+    lineHeight: t.typography.bodyLg.lineHeight,
+  },
 }));
 
 export function Button({
@@ -90,7 +98,7 @@ export function Button({
     <PressableBase
       {...rest}
       disabled={disabled || loading}
-      touchHeight={heights[size]}
+      touchHeight={t.controlSize[size]}
       accessibilityState={{ ...accessibilityState, busy: loading }}
       style={[s.base, s[size], s[variant], style]}
     >

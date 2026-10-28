@@ -54,7 +54,11 @@ const useStyles = makeStyles((t) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  line: { height: 6, borderRadius: 3, backgroundColor: t.colors.muted },
+  line: {
+    height: 6,
+    borderRadius: t.radius.full,
+    backgroundColor: t.colors.muted,
+  },
   long: { width: '70%' },
   short: { width: '45%' },
 }));
