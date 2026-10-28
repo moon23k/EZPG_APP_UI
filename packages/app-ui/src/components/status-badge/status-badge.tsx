@@ -1,9 +1,9 @@
 import { Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import type { Tone } from '../../theme/contract';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type StatusBadgeTone =
-  'neutral' | 'info' | 'success' | 'warning' | 'danger';
+export type StatusBadgeTone = Exclude<Tone, 'primary'>;
 
 export type StatusBadgeProps = {
   tone?: StatusBadgeTone;

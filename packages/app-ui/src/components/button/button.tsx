@@ -8,9 +8,9 @@ import {
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type ButtonVariant =
-  'solid' | 'secondary' | 'outline' | 'ghost' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+import type { ButtonSize, ButtonVariant } from '../../theme/contract';
+
+export type { ButtonSize, ButtonVariant };
 
 export type ButtonProps = Omit<
   PressableBaseProps,
@@ -48,7 +48,7 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.space[5],
     borderRadius: t.radius.lg,
   },
-  solid: { backgroundColor: t.colors.primary },
+  primary: { backgroundColor: t.colors.primary },
   secondary: { backgroundColor: t.colors.muted },
   outline: {
     backgroundColor: t.colors.background,
@@ -72,7 +72,7 @@ const useStyles = makeStyles((t) => ({
 }));
 
 export function Button({
-  variant = 'solid',
+  variant = 'primary',
   size = 'md',
   loading = false,
   disabled,
@@ -86,7 +86,7 @@ export function Button({
   const t = useTheme();
   const s = useStyles();
   const color = {
-    solid: t.colors.primaryForeground,
+    primary: t.colors.primaryForeground,
     secondary: t.colors.foreground,
     outline: t.colors.foreground,
     ghost: t.colors.foreground,

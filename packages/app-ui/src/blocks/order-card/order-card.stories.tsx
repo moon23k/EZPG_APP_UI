@@ -20,7 +20,7 @@ function Demo() {
           onPress={() => {}}
           actions={[
             { label: '판매 취소', onPress: () => {} },
-            { label: '배송 준비', onPress: () => {}, variant: 'solid' },
+            { label: '배송 준비', onPress: () => {}, variant: 'primary' },
           ]}
         />
       </OrderSection>
@@ -34,7 +34,7 @@ function Demo() {
           dueInDays={0}
           onPress={() => {}}
           actions={[
-            { label: '송장 입력', onPress: () => {}, variant: 'solid' },
+            { label: '송장 입력', onPress: () => {}, variant: 'primary' },
           ]}
         />
       </OrderSection>

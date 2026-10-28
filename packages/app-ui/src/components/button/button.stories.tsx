@@ -10,7 +10,7 @@ const meta = {
 } satisfies Meta<typeof Button>;
 export default meta;
 
-const variants = ['solid', 'outline', 'ghost', 'danger'] as const;
+const variants = ['primary', 'outline', 'ghost', 'danger'] as const;
 
 export const AllVariants: StoryObj<typeof meta> = {
   render: () => (

@@ -3,7 +3,7 @@ export const semantic = {
     background: '#ffffff',
     foreground: '#0a0a0a',
     muted: '#f5f5f5',
-    mutedForeground: '#737373',
+    mutedForeground: '#525252',
     border: '#e5e5e5',
     input: '#d4d4d4',
     ring: '#a3a3a3',

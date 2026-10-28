@@ -108,7 +108,7 @@ export function Dialog({
               {cancelLabel}
             </Button>
             <Button
-              variant={danger ? 'danger' : 'solid'}
+              variant={danger ? 'danger' : 'primary'}
               style={s.action}
               loading={loading}
               onPress={onConfirm}

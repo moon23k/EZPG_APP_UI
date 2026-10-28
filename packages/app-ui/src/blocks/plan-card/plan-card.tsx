@@ -136,7 +136,7 @@ export function PlanCard({
       {!current && onSelect ? (
         <Button
           size="lg"
-          variant={recommended ? 'solid' : 'outline'}
+          variant={recommended ? 'primary' : 'outline'}
           onPress={onSelect}
         >
           {proratedAmount !== undefined && proratedAmount > 0

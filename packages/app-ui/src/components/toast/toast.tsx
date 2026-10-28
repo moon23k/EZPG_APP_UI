@@ -18,10 +18,11 @@ import {
 import { useNativeDriver } from '../../internal/overlay';
 import { PressableBase } from '../../internal/pressable-base';
 import { useReducedMotion } from '../../internal/use-reduced-motion';
+import type { Tone } from '../../theme/contract';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type ToastTone = 'neutral' | 'success' | 'danger';
+export type ToastTone = Extract<Tone, 'neutral' | 'success' | 'danger'>;
 
 export type ToastOptions = {
   message: string;
