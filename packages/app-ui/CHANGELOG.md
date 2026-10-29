@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.7.0
+
+### Minor Changes
+
+- Calendar(월 달력 — 날짜 하나 · 기간 선택, 날짜별 보조 표시(요금 등), 판매 중지 날짜, 이전 · 다음 달)
+
 ## 0.6.0
 
 ### Minor Changes

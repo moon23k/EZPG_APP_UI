@@ -24,6 +24,7 @@ export { contrastRatio, pickForeground } from './utils/color';
 export * from './components/button';
 export * from './components/checkbox';
 export * from './components/chip';
+export * from './components/calendar';
 export * from './components/chip-group';
 export * from './components/dialog';
 export * from './components/divider';

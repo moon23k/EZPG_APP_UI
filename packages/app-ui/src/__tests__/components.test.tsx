@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import {
   Button,
+  Calendar,
   Checkbox,
   Dialog,
   EmptyState,
@@ -162,5 +163,42 @@ describe('EmptyState', () => {
       />
     );
     expect(screen.getByRole('link')).toBeTruthy();
+  });
+});
+
+describe('Calendar', () => {
+  const days = ['2026-11-06', '2026-11-07', '2026-11-08', '2026-11-09'].map(
+    (date, i) => ({
+      date,
+      label: '12만',
+      disabled: i === 2,
+    })
+  );
+
+  it('ends a range on a closed night but not across one', async () => {
+    const onValueChange = jest.fn();
+    const view = await render(
+      <Calendar
+        days={days}
+        mode="range"
+        value={{ start: '2026-11-06' }}
+        onValueChange={onValueChange}
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('11월 8일 일요일 12만'));
+    expect(onValueChange).toHaveBeenLastCalledWith({
+      start: '2026-11-06',
+      end: '2026-11-08',
+    });
+    await view.rerender(
+      <Calendar
+        days={days}
+        mode="range"
+        value={{ start: '2026-11-06' }}
+        onValueChange={onValueChange}
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('11월 9일 월요일 12만'));
+    expect(onValueChange).toHaveBeenLastCalledWith({ start: '2026-11-09' });
   });
 });
