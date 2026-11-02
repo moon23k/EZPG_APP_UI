@@ -11,6 +11,7 @@ import {
   ResultTemplate,
   StepScreen,
   SystemTemplate,
+  IntroTemplate,
 } from '../index';
 
 const rows = [
@@ -246,5 +247,28 @@ describe('Group', () => {
     expect(screen.getByRole('header')).toBeTruthy();
     expect(screen.getByText('선택')).toBeTruthy();
     expect(screen.getByText('포근한')).toBeTruthy();
+  });
+});
+
+describe('IntroTemplate', () => {
+  const pages = [
+    { key: 'a', title: '첫 장', art: () => null },
+    { key: 'b', title: '둘째 장', art: () => null },
+  ];
+
+  it('skips to done from the first page', async () => {
+    const onDone = jest.fn();
+    await render(<IntroTemplate pages={pages} onDone={onDone} />);
+    await fireEvent.press(screen.getByLabelText('Skip'));
+    expect(onDone).toHaveBeenCalledTimes(1);
+  });
+
+  it('pages forward and finishes on the last page', async () => {
+    const onDone = jest.fn();
+    await render(<IntroTemplate pages={pages} onDone={onDone} />);
+    await fireEvent.press(screen.getByText('다음'));
+    expect(screen.queryByLabelText('Skip')).toBeNull();
+    await fireEvent.press(screen.getByText('시작하기'));
+    expect(onDone).toHaveBeenCalledTimes(1);
   });
 });

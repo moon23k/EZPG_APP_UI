@@ -18,6 +18,8 @@ export type {
 } from './editor-template';
 export { ListTemplate } from './list-template';
 export type { ListTemplateProps, ListTemplateStatus } from './list-template';
+export { IntroTemplate } from './intro-template';
+export type { IntroPage, IntroTemplateProps } from './intro-template';
 export { ResultTemplate } from './result-template';
 export type { ResultPreview, ResultTemplateProps } from './result-template';
 export { SystemTemplate } from './system-template';

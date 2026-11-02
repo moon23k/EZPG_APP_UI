@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.9.0
+
+### Minor Changes
+
+- IntroTemplate(첫 실행 소개 넘김 화면 — 장마다 그림 · 제목, 넘김 점, 다음 · 시작하기 주 버튼, 마지막 장 전까지 작은 Skip)
+
 ## 0.8.0
 
 ### Minor Changes
