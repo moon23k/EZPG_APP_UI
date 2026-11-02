@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.8.0
+
+### Minor Changes
+
+- 주색을 검정에서 갈색으로(라이트 #795548 · 다크 #bcaaa4, Material brown 500 · 200)
+
 ## 0.7.0
 
 ### Minor Changes
