@@ -18,23 +18,17 @@ function Art({ width }: { width: number }) {
   );
 }
 
-const pages = [
-  {
-    key: 'site',
-    title: '답하면 사이트가 생겨요',
-    art: (w: number) => <Art width={w} />,
-  },
-  {
-    key: 'orders',
-    title: '주문 · 예약 · 견적을 한 곳에서',
-    art: (w: number) => <Art width={w} />,
-  },
-  {
-    key: 'desk',
-    title: '문의는 AI가 먼저 답해요',
-    art: (w: number) => <Art width={w} />,
-  },
-];
+const pages = (
+  [
+    ['site', '답하면 사이트가 생겨요'],
+    ['orders', '주문 · 예약 · 견적을 한 곳에서'],
+    ['desk', '문의는 AI가 먼저 답해요'],
+  ] as const
+).map(([key, title]) => ({
+  key,
+  title,
+  art: (w: number) => <Art width={w} />,
+}));
 
 function Demo() {
   return (
