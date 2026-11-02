@@ -4,7 +4,10 @@
 
 ### Minor Changes
 
-- 주색을 검정에서 갈색으로(라이트 #795548 · 다크 #bcaaa4, Material brown 500 · 200)
+- 주색을 검정에서 다크 브라운으로(라이트 #4d291c · 다크 #caada3, Fluent darkBrown)
+- 색 역할 primaryTint · primaryContainer · primaryEdge 추가
+- 선택 표현을 채움 · 굵은 테두리에서 옅은 면으로: Chip(옅은 갈색 면 + 갈색 글자 + 체크, 미선택은 회색 면), Card · PlanCard 추천 · CopyVariantPicker · ColorSwatchPicker 카드(옅은 면 + 작은 표시 점), LogoCandidateGrid(테두리 없이 표시 점)
+- Field 포커스 1px primaryEdge, ColorSwatchPicker 고리 · ResultTemplate 넘김 점 갈색, Text tone primary
 
 ## 0.7.0
 

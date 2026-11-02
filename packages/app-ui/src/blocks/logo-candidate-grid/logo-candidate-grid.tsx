@@ -34,7 +34,6 @@ const useStyles = makeStyles((t) => ({
     overflow: 'hidden',
     borderRadius: t.radius.lg,
   },
-  selected: { borderWidth: 2, borderColor: t.colors.primary },
   check: {
     position: 'absolute',
     top: t.space[2],
@@ -111,7 +110,7 @@ export function LogoCandidateGrid({
             accessibilityState={{ selected }}
             pressedStyle={{}}
             onPress={() => onSelect(c.id)}
-            style={[s.cell, selected && s.selected]}
+            style={s.cell}
           >
             <Photo source={c.image} radius={0} />
             {selected ? (

@@ -30,9 +30,8 @@ export type PlanCardProps = {
 
 const useStyles = makeStyles((t) => ({
   recommended: {
-    borderColor: t.colors.primary,
-    borderWidth: 2,
-    padding: t.space[4] - 1,
+    borderColor: t.colors.primaryTint,
+    backgroundColor: t.colors.primaryTint,
   },
   head: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
   name: { flex: 1 },

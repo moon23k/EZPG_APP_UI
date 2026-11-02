@@ -17,6 +17,7 @@ export type ColorSwatchPickerProps = {
 };
 
 const DOT = 40;
+const MARK = 18;
 
 const useStyles = makeStyles((t) => ({
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: t.space[3] },
@@ -33,7 +34,7 @@ const useStyles = makeStyles((t) => ({
     borderWidth: 2,
     borderColor: 'transparent',
   },
-  ringOn: { borderColor: t.colors.foreground },
+  ringOn: { borderColor: t.colors.primary },
   card: {
     width: 148,
     gap: t.space[2],
@@ -44,9 +45,19 @@ const useStyles = makeStyles((t) => ({
     backgroundColor: t.colors.background,
   },
   cardOn: {
-    borderColor: t.colors.foreground,
-    borderWidth: 2,
-    padding: t.space[3] - 1,
+    borderColor: t.colors.primaryTint,
+    backgroundColor: t.colors.primaryTint,
+  },
+  mark: {
+    position: 'absolute',
+    top: t.space[1],
+    right: t.space[1],
+    width: MARK,
+    height: MARK,
+    borderRadius: MARK / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: t.colors.primary,
   },
   sample: {
     height: 32,
@@ -105,6 +116,11 @@ export function ColorSwatchPicker({
                     {c.label}
                   </Text>
                 </View>
+                {selected ? (
+                  <View style={s.mark}>
+                    <CheckGlyph color={t.colors.primaryForeground} size={12} />
+                  </View>
+                ) : null}
               </>
             ) : (
               <View style={[s.dot, { backgroundColor: c.value }]}>

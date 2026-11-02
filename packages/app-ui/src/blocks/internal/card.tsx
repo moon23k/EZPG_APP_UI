@@ -18,10 +18,9 @@ const useStyles = makeStyles((t) => ({
   },
   pressed: { backgroundColor: t.colors.muted },
   selected: {
-    borderWidth: 2,
-    padding: t.space[4] - 1,
     paddingRight: MARK + t.space[3],
-    borderColor: t.colors.primary,
+    borderColor: t.colors.primaryTint,
+    backgroundColor: t.colors.primaryTint,
   },
   mark: {
     position: 'absolute',

@@ -68,7 +68,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.full,
     backgroundColor: t.colors.input,
   },
-  dotOn: { width: t.space[5], backgroundColor: t.colors.foreground },
+  dotOn: { width: t.space[5], backgroundColor: t.colors.primary },
   progress: { flex: 1, paddingHorizontal: t.layout.screenX },
   notice: { paddingBottom: t.layout.groupGap },
   viewer: { flex: 1, backgroundColor: t.colors.background },

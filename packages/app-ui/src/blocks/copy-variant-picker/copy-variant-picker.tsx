@@ -31,9 +31,8 @@ const useStyles = makeStyles((t) => ({
     backgroundColor: t.colors.background,
   },
   selected: {
-    borderColor: t.colors.primary,
-    borderWidth: 2,
-    padding: t.space[3] - 1,
+    borderColor: t.colors.primaryTint,
+    backgroundColor: t.colors.primaryTint,
   },
   radio: {
     width: 18,

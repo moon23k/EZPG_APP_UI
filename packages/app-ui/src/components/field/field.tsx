@@ -44,9 +44,7 @@ const useStyles = makeStyles((t) => ({
     backgroundColor: t.colors.background,
   },
   focused: {
-    borderWidth: 2,
-    paddingHorizontal: t.space[4] - 1,
-    borderColor: t.colors.primary,
+    borderColor: t.colors.primaryEdge,
   },
   invalid: {
     borderWidth: 2,
