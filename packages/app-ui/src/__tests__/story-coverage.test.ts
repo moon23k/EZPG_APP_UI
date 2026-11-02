@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import * as adjust from '../adjust';
 import * as charts from '../charts';
 import * as main from '../index';
 import * as sortable from '../sortable';
@@ -27,7 +28,12 @@ it('every exported component has a story', () => {
       ].flatMap((m) => m[1]!.split(',').map((n) => n.trim()))
     )
   );
-  const components = Object.entries({ ...main, ...charts, ...sortable })
+  const components = Object.entries({
+    ...main,
+    ...adjust,
+    ...charts,
+    ...sortable,
+  })
     .filter(
       ([name, value]) =>
         /^[A-Z]/.test(name) &&

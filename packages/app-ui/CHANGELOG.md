@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.10.0
+
+### Minor Changes
+
+- `@ezpg/app-ui/adjust` 새 입구: AdjustTemplate(미리보기 + 조정 칸 + 원래와 비교), DialStrip(원 테두리로 값 표시하는 항목 줄), ScrubRuler(좌우로 미는 눈금, 단계 맞춤), ColorTrack(색상 · 채도 트랙), ColorAdjustNote(자동 대비 조정 전후 색), hslToHex · hexToHsl
+
 ## 0.9.0
 
 ### Minor Changes

@@ -8,6 +8,9 @@
       "@ezpg/app-ui/charts": [
         "./packages/app-ui/src/charts"
       ],
+      "@ezpg/app-ui/adjust": [
+        "./packages/app-ui/src/adjust"
+      ],
       "@ezpg/app-ui/sortable": [
         "./packages/app-ui/src/sortable"
       ]

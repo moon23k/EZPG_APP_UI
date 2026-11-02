@@ -14,6 +14,7 @@ import { moveItem } from '../sortable/move';
 describe('subpath entries', () => {
   it('load', () => {
     expect(require('../charts').LineChart).toBeDefined();
+    expect(require('../adjust').DialStrip).toBeDefined();
     expect(require('../sortable').SortableGrid).toBeDefined();
     expect(require('../charts').SalesChart).toBeDefined();
     expect(require('../sortable').ImageGrid).toBeDefined();

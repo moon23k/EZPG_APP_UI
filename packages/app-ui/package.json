@@ -1,6 +1,6 @@
 {
   "name": "@ezpg/app-ui",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "React Native UI components for EZPG partner apps",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -14,6 +14,11 @@
       "ezpg-app-ui-source": "./src/charts.tsx",
       "types": "./lib/typescript/src/charts.d.ts",
       "default": "./lib/module/charts.js"
+    },
+    "./adjust": {
+      "ezpg-app-ui-source": "./src/adjust.tsx",
+      "types": "./lib/typescript/src/adjust.d.ts",
+      "default": "./lib/module/adjust.js"
     },
     "./sortable": {
       "ezpg-app-ui-source": "./src/sortable.tsx",
