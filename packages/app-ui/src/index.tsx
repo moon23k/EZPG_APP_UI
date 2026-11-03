@@ -37,6 +37,8 @@ export * from './components/price';
 export * from './components/progress-bar';
 export * from './components/search-field';
 export * from './components/step-slider';
+export * from './components/progress-circle';
+export * from './components/result-mark';
 export * from './components/segmented-tabs';
 export * from './components/sheet';
 export * from './components/skeleton';

@@ -26,6 +26,8 @@ export type ResultPreview = {
 };
 
 export type ResultTemplateProps = {
+  title?: string;
+  captions?: boolean;
   previews: readonly ResultPreview[];
   index: number;
   onIndexChange: (index: number) => void;
@@ -41,6 +43,13 @@ export type ResultTemplateProps = {
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, backgroundColor: t.colors.background },
   body: { flex: 1, paddingTop: t.space[2] },
+  heading: {
+    paddingTop: t.layout.screenTop,
+    paddingBottom: t.layout.groupGap,
+    paddingHorizontal: t.layout.screenX,
+    fontSize: t.typography.screenTitle.fontSize,
+    lineHeight: t.typography.screenTitle.lineHeight,
+  },
   pager: { flex: 1 },
   page: { gap: t.space[2] },
   card: {
@@ -153,6 +162,8 @@ function Viewer({
 }
 
 export function ResultTemplate({
+  title,
+  captions = true,
   previews,
   index,
   onIndexChange,
@@ -173,6 +184,11 @@ export function ResultTemplate({
 
   return (
     <View style={s.root}>
+      {title ? (
+        <Text weight="bold" accessibilityRole="header" style={s.heading}>
+          {title}
+        </Text>
+      ) : null}
       <View
         style={s.body}
         onLayout={(e: LayoutChangeEvent) =>
@@ -212,14 +228,16 @@ export function ResultTemplate({
                   >
                     {preview.render('card')}
                   </PressableBase>
-                  <View style={s.caption}>
-                    <Text variant="label" weight="semibold">
-                      {preview.label}
-                    </Text>
-                    <Text variant="label" tone="muted">
-                      {openLabel}
-                    </Text>
-                  </View>
+                  {captions ? (
+                    <View style={s.caption}>
+                      <Text variant="label" weight="semibold">
+                        {preview.label}
+                      </Text>
+                      <Text variant="label" tone="muted">
+                        {openLabel}
+                      </Text>
+                    </View>
+                  ) : null}
                 </View>
               ))}
             </ScrollView>

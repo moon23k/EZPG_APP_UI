@@ -8,8 +8,11 @@ import { BottomBar, type TemplateAction } from './parts';
 
 export type SystemTemplateProps = {
   icon?: IconSlot;
+  asset?: ReactNode;
   title: string;
+  note?: string;
   primaryAction?: TemplateAction;
+  secondaryAction?: TemplateAction;
   actions?: ReactNode;
   bottomInset?: number;
 };
@@ -24,6 +27,11 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.layout.screenX,
   },
   title: { textAlign: 'center' },
+  note: {
+    textAlign: 'center',
+    paddingHorizontal: t.layout.screenX,
+    paddingTop: t.layout.footerTop,
+  },
   actions: {
     gap: t.layout.itemGap,
     paddingHorizontal: t.layout.screenX,
@@ -33,8 +41,11 @@ const useStyles = makeStyles((t) => ({
 
 export function SystemTemplate({
   icon,
+  asset,
   title,
+  note,
   primaryAction,
+  secondaryAction,
   actions,
   bottomInset = 0,
 }: SystemTemplateProps) {
@@ -43,7 +54,8 @@ export function SystemTemplate({
   return (
     <View style={s.root}>
       <View style={s.center}>
-        {icon
+        {asset}
+        {!asset && icon
           ? renderIcon(icon, {
               color: t.colors.foreground,
               size: t.controlSize.lg,
@@ -53,6 +65,21 @@ export function SystemTemplate({
           {title}
         </Text>
       </View>
+      {note ? (
+        <Text
+          variant="label"
+          tone="muted"
+          style={[
+            s.note,
+            !actions &&
+              !primaryAction && {
+                paddingBottom: t.layout.footerBottom + bottomInset,
+              },
+          ]}
+        >
+          {note}
+        </Text>
+      ) : null}
       {actions ? (
         <View
           style={[
@@ -63,7 +90,11 @@ export function SystemTemplate({
           {actions}
         </View>
       ) : primaryAction ? (
-        <BottomBar primaryAction={primaryAction} bottomInset={bottomInset} />
+        <BottomBar
+          primaryAction={primaryAction}
+          secondaryAction={secondaryAction}
+          bottomInset={bottomInset}
+        />
       ) : null}
     </View>
   );
