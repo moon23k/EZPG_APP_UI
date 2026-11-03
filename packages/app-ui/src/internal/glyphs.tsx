@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import { BELL } from './bell';
 import type { IconRenderProps } from './icon';
 
 export function SearchGlyph({ color, size }: IconRenderProps) {
@@ -151,5 +152,14 @@ export function PlusGlyph({ color, size }: IconRenderProps) {
       <View style={[bar, { width: size * 0.6, height: stroke }]} />
       <View style={[bar, { width: stroke, height: size * 0.6 }]} />
     </View>
+  );
+}
+
+export function BellGlyph({ color, size }: IconRenderProps) {
+  return (
+    <Image
+      source={{ uri: BELL }}
+      style={{ width: size, height: size, tintColor: color }}
+    />
   );
 }

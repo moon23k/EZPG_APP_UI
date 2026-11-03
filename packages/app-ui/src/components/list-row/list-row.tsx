@@ -21,6 +21,9 @@ export type ListRowProps = Omit<
   leading?: IconSlot;
   trailing?: IconSlot;
   chevron?: boolean;
+  value?: string;
+  meta?: string;
+  highlighted?: boolean;
   titleLines?: number;
 };
 
@@ -37,6 +40,19 @@ const useStyles = makeStyles((t) => ({
   twoLine: { minHeight: t.listRow.twoLine },
   threeLine: { minHeight: t.listRow.threeLine },
   pressed: { backgroundColor: t.colors.muted },
+  highlighted: { backgroundColor: t.colors.primaryTint },
+  top: { alignItems: 'flex-start' },
+  value: {
+    ...t.typography.bodyLg,
+    fontFamily: t.fontFamily,
+    color: t.colors.mutedForeground,
+    fontVariant: ['tabular-nums'],
+  },
+  meta: {
+    ...t.typography.label,
+    fontFamily: t.fontFamily,
+    color: t.colors.mutedForeground,
+  },
   body: { flex: 1 },
   overline: {
     ...t.typography.caption,
@@ -67,6 +83,9 @@ export function ListRow({
   leading,
   trailing,
   chevron,
+  value,
+  meta,
+  highlighted = false,
   titleLines = 1,
   onPress,
   style,
@@ -109,8 +128,18 @@ export function ListRow({
           </Text>
         ) : null}
       </View>
-      {trailing || showChevron ? (
+      {meta ? (
+        <Text maxFontSizeMultiplier={t.maxFontScale} style={s.meta}>
+          {meta}
+        </Text>
+      ) : null}
+      {trailing || value || showChevron ? (
         <View style={s.trailing}>
+          {value ? (
+            <Text maxFontSizeMultiplier={t.maxFontScale} style={s.value}>
+              {value}
+            </Text>
+          ) : null}
           {trailing ? renderIcon(trailing, icon) : null}
           {showChevron ? (
             <ChevronGlyph
@@ -124,14 +153,32 @@ export function ListRow({
   );
 
   if (!onPress) {
-    return <View style={[s.row, height, style]}>{content}</View>;
+    return (
+      <View
+        style={[
+          s.row,
+          height,
+          meta && s.top,
+          highlighted && s.highlighted,
+          style,
+        ]}
+      >
+        {content}
+      </View>
+    );
   }
   return (
     <PressableBase
       {...rest}
       onPress={onPress}
       pressedStyle={s.pressed}
-      style={[s.row, height, style]}
+      style={[
+        s.row,
+        height,
+        meta && s.top,
+        highlighted && s.highlighted,
+        style,
+      ]}
     >
       {content}
     </PressableBase>

@@ -13,6 +13,7 @@ export type { IconRenderProps, IconSlot } from './internal/icon';
 export { renderIcon } from './internal/icon';
 export {
   AlertGlyph,
+  BellGlyph,
   CheckGlyph,
   ChevronGlyph,
   CloseGlyph,
@@ -39,6 +40,8 @@ export * from './components/search-field';
 export * from './components/step-slider';
 export * from './components/progress-circle';
 export * from './components/result-mark';
+export * from './components/page-header';
+export * from './blocks/setup-guide';
 export * from './components/segmented-tabs';
 export * from './components/sheet';
 export * from './components/skeleton';
