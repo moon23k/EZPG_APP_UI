@@ -10,6 +10,8 @@ export type {
   FormTemplateProps,
   MenuTemplateProps,
 } from './scroll-templates';
+export { CalendarTemplate } from './calendar-template';
+export type { CalendarTemplateProps } from './calendar-template';
 export { EditorTemplate } from './editor-template';
 export type {
   EditorSheet,

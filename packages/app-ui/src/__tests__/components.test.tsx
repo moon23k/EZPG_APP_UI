@@ -201,4 +201,18 @@ describe('Calendar', () => {
     await fireEvent.press(screen.getByLabelText('11월 9일 월요일 12만'));
     expect(onValueChange).toHaveBeenLastCalledWith({ start: '2026-11-09' });
   });
+
+  it('clears a lone start when it is pressed again', async () => {
+    const onValueChange = jest.fn();
+    await render(
+      <Calendar
+        days={days}
+        mode="range"
+        value={{ start: '2026-11-06' }}
+        onValueChange={onValueChange}
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('11월 6일 금요일 12만'));
+    expect(onValueChange).toHaveBeenLastCalledWith({});
+  });
 });

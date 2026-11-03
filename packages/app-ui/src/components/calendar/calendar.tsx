@@ -1,10 +1,22 @@
 import { useState } from 'react';
-import { Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  ScrollView,
+  Text,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
+import { ChevronGlyph } from '../../internal/glyphs';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type CalendarDate = { date: string; label?: string; disabled?: boolean };
+export type CalendarDate = {
+  date: string;
+  label?: string;
+  disabled?: boolean;
+  marked?: boolean;
+};
 export type CalendarValue = { start?: string; end?: string };
 
 export type CalendarProps = {
@@ -12,11 +24,16 @@ export type CalendarProps = {
   mode?: 'single' | 'range';
   value: CalendarValue;
   onValueChange: (value: CalendarValue) => void;
+  stacked?: boolean;
+  today?: string;
   style?: StyleProp<ViewStyle>;
 };
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 const DAY_MS = 86_400_000;
+const CELL = 48;
+const LABELED = 64;
+const DOT = 40;
 
 function utc(iso: string): number {
   const [y, m, d] = iso.split('-').map(Number);
@@ -31,51 +48,107 @@ function weekday(iso: string): number {
   return new Date(utc(iso)).getUTCDay();
 }
 
+function monthDates(month: string): string[] {
+  const [y, m] = month.split('-').map(Number);
+  const last = new Date(Date.UTC(y!, m!, 0)).getUTCDate();
+  return Array.from(
+    { length: last },
+    (_, i) => `${month}-${String(i + 1).padStart(2, '0')}`
+  );
+}
+
+function localToday(): string {
+  const now = new Date();
+  return [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('-');
+}
+
 const useStyles = makeStyles((t) => ({
-  root: { gap: t.space[3] },
+  stacked: { flex: 1 },
   head: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    height: 56,
   },
-  arrow: { width: 44, alignItems: 'center', justifyContent: 'center' },
-  month: {
-    fontFamily: t.fontFamily,
-    fontSize: t.typography.title.fontSize,
-    lineHeight: t.typography.title.lineHeight,
-    fontWeight: '700',
-    color: t.colors.foreground,
-  },
-  grid: { flexDirection: 'row', flexWrap: 'wrap' },
-  cell: { width: `${100 / 7}%`, padding: t.space[1] / 2 },
-  weekday: {
-    textAlign: 'center',
-    fontFamily: t.fontFamily,
-    fontSize: t.typography.caption.fontSize,
-    lineHeight: t.typography.caption.lineHeight,
-    color: t.colors.mutedForeground,
-  },
-  day: {
-    minHeight: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: t.radius.sm,
-    backgroundColor: t.colors.muted,
-  },
-  edge: { backgroundColor: t.colors.primary },
-  inside: { backgroundColor: t.colors.border },
-  off: { backgroundColor: 'transparent' },
-  struck: { textDecorationLine: 'line-through' },
-  number: {
+  headTitle: {
+    flex: 1,
     fontFamily: t.fontFamily,
     fontSize: t.typography.label.fontSize,
     lineHeight: t.typography.label.lineHeight,
+    fontWeight: '500',
+    color: t.colors.foreground,
+  },
+  arrow: { width: CELL, height: CELL },
+  arrowInner: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  back: { transform: [{ scaleX: -1 }] },
+  weekdays: { flexDirection: 'row', height: CELL, alignItems: 'center' },
+  weekdaysPinned: {
+    paddingHorizontal: t.space[3],
+    borderBottomWidth: 1,
+    borderBottomColor: t.colors.border,
+  },
+  weekday: {
+    flex: 1,
+    textAlign: 'center',
+    fontFamily: t.fontFamily,
+    fontSize: t.typography.body.fontSize,
+    lineHeight: t.typography.body.lineHeight,
+    color: t.colors.foreground,
+  },
+  months: { paddingHorizontal: t.space[3], paddingBottom: t.space[6] },
+  subhead: {
+    fontFamily: t.fontFamily,
+    fontSize: t.typography.label.fontSize,
+    lineHeight: t.typography.label.lineHeight,
+    fontWeight: '500',
+    color: t.colors.mutedForeground,
+    paddingLeft: t.space[3],
+    paddingTop: t.space[5],
+    paddingBottom: t.space[2],
+  },
+  grid: { flexDirection: 'row', flexWrap: 'wrap' },
+  cell: { width: `${100 / 7}%`, alignItems: 'center' },
+  band: {
+    position: 'absolute',
+    top: t.space[1],
+    height: DOT,
+    left: 0,
+    right: 0,
+    backgroundColor: t.colors.primaryTint,
+  },
+  bandStart: { left: '50%' },
+  bandEnd: { right: '50%' },
+  day: {
+    width: DOT,
+    height: DOT,
+    marginTop: t.space[1],
+    borderRadius: t.radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  today: { borderWidth: 1, borderColor: t.colors.primary },
+  edge: { backgroundColor: t.colors.primary },
+  number: {
+    fontFamily: t.fontFamily,
+    fontSize: t.typography.body.fontSize,
+    lineHeight: t.typography.body.lineHeight,
     fontVariant: ['tabular-nums'],
   },
-  sub: {
+  label: {
     fontFamily: t.fontFamily,
     fontSize: t.typography.caption.fontSize,
     lineHeight: t.typography.caption.lineHeight,
+    fontVariant: ['tabular-nums'],
+  },
+  dot: {
+    width: 4,
+    height: 4,
+    borderRadius: t.radius.full,
+    marginTop: t.space[1] / 2,
+    backgroundColor: t.colors.foreground,
   },
 }));
 
@@ -84,17 +157,18 @@ export function Calendar({
   mode = 'single',
   value,
   onValueChange,
+  stacked = false,
+  today = localToday(),
   style,
 }: CalendarProps) {
   const t = useTheme();
   const s = useStyles();
+  const byDate = new Map(days.map((d) => [d.date, d]));
   const months = [...new Set(days.map((d) => d.date.slice(0, 7)))];
   const [page, setPage] = useState(() =>
     Math.max(0, months.indexOf((value.start ?? '').slice(0, 7)))
   );
-  const month = months[page] ?? months[0] ?? '';
-  const shown = days.filter((d) => d.date.startsWith(month));
-  const [year, monthNo] = month.split('-').map(Number);
+  const height = days.some((d) => d.label) ? LABELED : CELL;
   const openUntil = (start: string, end: string) => {
     const nights = days.filter((d) => d.date >= start && d.date < end);
     return (
@@ -110,85 +184,67 @@ export function Calendar({
     openUntil(value.start, iso);
   const pick = (day: CalendarDate) => {
     if (mode === 'single') onValueChange({ start: day.date });
+    else if (day.date === value.start && !value.end) onValueChange({});
     else if (canEnd(day.date))
       onValueChange({ start: value.start, end: day.date });
     else if (!day.disabled) onValueChange({ start: day.date });
   };
+  const ranged = !!value.start && !!value.end && value.start !== value.end;
   const look = (iso: string) => {
     if (iso === value.start || iso === value.end) return 'edge';
-    if (value.start && value.end && iso > value.start && iso < value.end)
-      return 'inside';
+    if (ranged && iso > value.start! && iso < value.end!) return 'inside';
     return 'none';
   };
-  const blanks = shown.length ? weekday(shown[0]!.date) : 0;
 
-  return (
-    <View style={[s.root, style]}>
-      <View style={s.head}>
-        <PressableBase
-          style={s.arrow}
-          accessibilityRole="button"
-          accessibilityLabel="이전 달"
-          disabled={page <= 0}
-          onPress={() => setPage(page - 1)}
-        >
-          <Text
-            style={[s.month, page <= 0 && { color: t.colors.mutedForeground }]}
-          >
-            ‹
-          </Text>
-        </PressableBase>
-        <Text style={s.month}>{`${year}년 ${monthNo}월`}</Text>
-        <PressableBase
-          style={s.arrow}
-          accessibilityRole="button"
-          accessibilityLabel="다음 달"
-          disabled={page >= months.length - 1}
-          onPress={() => setPage(page + 1)}
-        >
-          <Text
-            style={[
-              s.month,
-              page >= months.length - 1 && { color: t.colors.mutedForeground },
-            ]}
-          >
-            ›
-          </Text>
-        </PressableBase>
-      </View>
+  const weekdays = (pinned: boolean) => (
+    <View style={[s.weekdays, pinned && s.weekdaysPinned]}>
+      {WEEKDAYS.map((w) => (
+        <Text key={w} style={s.weekday}>
+          {w}
+        </Text>
+      ))}
+    </View>
+  );
+
+  const grid = (month: string) => {
+    const dates = monthDates(month);
+    return (
       <View style={s.grid}>
-        {WEEKDAYS.map((w) => (
-          <View key={w} style={s.cell}>
-            <Text style={s.weekday}>{w}</Text>
-          </View>
+        {Array.from({ length: weekday(dates[0]!) }, (_, i) => (
+          <View key={`blank-${i}`} style={[s.cell, { height }]} />
         ))}
-        {Array.from({ length: blanks }, (_, i) => (
-          <View key={`blank-${i}`} style={s.cell} />
-        ))}
-        {shown.map((day) => {
-          const state = look(day.date);
-          const blocked = !!day.disabled && !canEnd(day.date);
+        {dates.map((iso) => {
+          const day = byDate.get(iso);
+          const state = look(iso);
+          const blocked = !day || (!!day.disabled && !canEnd(iso));
+          const isToday = iso === today && state !== 'edge';
           const color =
             state === 'edge'
               ? t.colors.primaryForeground
               : blocked
-                ? t.colors.mutedForeground
-                : t.colors.foreground;
-          const [, m, d] = day.date.split('-').map(Number);
+                ? t.colors.input
+                : isToday
+                  ? t.colors.primary
+                  : t.colors.foreground;
+          const [, m, d] = iso.split('-').map(Number);
           return (
-            <View key={day.date} style={s.cell}>
+            <View key={iso} style={[s.cell, { height }]}>
+              {ranged && state !== 'none' ? (
+                <View
+                  style={[
+                    s.band,
+                    iso === value.start && s.bandStart,
+                    iso === value.end && s.bandEnd,
+                  ]}
+                />
+              ) : null}
               <PressableBase
-                style={[
-                  s.day,
-                  state === 'edge' && s.edge,
-                  state === 'inside' && s.inside,
-                  blocked && s.off,
-                ]}
+                style={[s.day, isToday && s.today, state === 'edge' && s.edge]}
                 accessibilityRole="button"
                 accessibilityLabel={[
                   `${m}월 ${d}일`,
-                  `${WEEKDAYS[weekday(day.date)]}요일`,
-                  day.label,
+                  `${WEEKDAYS[weekday(iso)]}요일`,
+                  day?.label,
                 ]
                   .filter(Boolean)
                   .join(' ')}
@@ -197,19 +253,85 @@ export function Calendar({
                   disabled: blocked,
                 }}
                 disabled={blocked}
-                onPress={() => pick(day)}
+                onPress={() => day && pick(day)}
               >
-                <Text style={[s.number, { color }, blocked && s.struck]}>
-                  {d}
-                </Text>
-                {day.label ? (
-                  <Text style={[s.sub, { color }]}>{day.label}</Text>
-                ) : null}
+                <Text style={[s.number, { color }]}>{d}</Text>
               </PressableBase>
+              {day?.label ? (
+                <Text
+                  numberOfLines={1}
+                  style={[
+                    s.label,
+                    {
+                      color:
+                        state === 'none'
+                          ? t.colors.mutedForeground
+                          : t.colors.foreground,
+                    },
+                  ]}
+                >
+                  {day.label}
+                </Text>
+              ) : null}
+              {day?.marked ? <View style={s.dot} /> : null}
             </View>
           );
         })}
       </View>
+    );
+  };
+
+  const title = (month: string) => {
+    const [y, m] = month.split('-').map(Number);
+    return `${y}년 ${m}월`;
+  };
+
+  if (stacked) {
+    return (
+      <View style={[s.stacked, style]}>
+        {weekdays(true)}
+        <ScrollView contentContainerStyle={s.months}>
+          {months.map((month) => (
+            <View key={month}>
+              <Text style={s.subhead}>{title(month)}</Text>
+              {grid(month)}
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  const month = months[page] ?? months[0] ?? '';
+  const arrow = (dir: -1 | 1) => {
+    const off = dir < 0 ? page <= 0 : page >= months.length - 1;
+    return (
+      <PressableBase
+        style={s.arrow}
+        accessibilityRole="button"
+        accessibilityLabel={dir < 0 ? '이전 달' : '다음 달'}
+        disabled={off}
+        onPress={() => setPage(page + dir)}
+      >
+        <View style={[s.arrowInner, dir < 0 && s.back]}>
+          <ChevronGlyph
+            size={t.iconSize.md}
+            color={off ? t.colors.input : t.colors.mutedForeground}
+          />
+        </View>
+      </PressableBase>
+    );
+  };
+
+  return (
+    <View style={style}>
+      <View style={s.head}>
+        <Text style={s.headTitle}>{title(month)}</Text>
+        {arrow(-1)}
+        {arrow(1)}
+      </View>
+      {weekdays(false)}
+      {grid(month)}
     </View>
   );
 }
