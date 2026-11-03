@@ -9,7 +9,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { PressableBase } from '../../internal/pressable-base';
-import { GOOGLE_G, KAKAO_SYMBOL, NAVER_N } from './logos';
+import { APPLE_LOGO, GOOGLE_G, KAKAO_SYMBOL, NAVER_N } from './logos';
 import { makeStyles } from '../../utils/styles';
 
 export type OAuthProvider = 'kakao' | 'naver' | 'google' | 'apple';
@@ -28,7 +28,7 @@ const BRAND: Record<
   { bg: string; fg: string; border?: string; label: string }
 > = {
   kakao: { bg: '#FEE500', fg: 'rgba(0, 0, 0, 0.85)', label: '카카오 로그인' },
-  naver: { bg: '#03C75A', fg: '#FFFFFF', label: '네이버 로그인' },
+  naver: { bg: '#03A94D', fg: '#FFFFFF', label: '네이버 로그인' },
   google: {
     bg: '#FFFFFF',
     fg: '#1F1F1F',
@@ -38,7 +38,7 @@ const BRAND: Record<
   apple: { bg: '#000000', fg: '#FFFFFF', label: 'Apple로 로그인' },
 };
 
-const HEIGHT = 48;
+const HEIGHT = 52;
 const LOGO = 18;
 
 const LOGOS: Partial<Record<OAuthProvider, ReactNode>> = {
@@ -53,6 +53,9 @@ const LOGOS: Partial<Record<OAuthProvider, ReactNode>> = {
   ),
   google: (
     <Image source={{ uri: GOOGLE_G }} style={{ width: LOGO, height: LOGO }} />
+  ),
+  apple: (
+    <Image source={{ uri: APPLE_LOGO }} style={{ width: LOGO, height: LOGO }} />
   ),
 };
 
