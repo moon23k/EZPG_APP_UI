@@ -1,6 +1,6 @@
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { makeStyles } from '../../utils/styles';
-import { Chip } from '../chip/chip';
+import { Chip, type ChipSize, type ChipVariant } from '../chip/chip';
 
 export type ChipGroupItem<T extends string> = {
   value: T;
@@ -25,6 +25,8 @@ type Multiple<T extends string> = {
 
 export type ChipGroupProps<T extends string> = (Single<T> | Multiple<T>) & {
   items: readonly ChipGroupItem<T>[];
+  size?: ChipSize;
+  variant?: ChipVariant;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -34,7 +36,7 @@ const useStyles = makeStyles((t) => ({
 
 export function ChipGroup<T extends string>(props: ChipGroupProps<T>) {
   const s = useStyles();
-  const { items, style } = props;
+  const { items, size, variant, style } = props;
 
   const isSelected = (v: T) =>
     props.multiple ? props.value.includes(v) : props.value === v;
@@ -69,6 +71,8 @@ export function ChipGroup<T extends string>(props: ChipGroupProps<T>) {
           <Chip
             key={item.value}
             selected={selected}
+            size={size}
+            variant={variant}
             count={item.count}
             disabled={item.disabled || (full && !selected)}
             accessibilityRole={props.multiple ? 'checkbox' : 'radio'}

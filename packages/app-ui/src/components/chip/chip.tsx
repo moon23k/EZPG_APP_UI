@@ -8,28 +8,45 @@ import {
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
+export type ChipSize = 'sm' | 'md' | 'lg';
+
+export type ChipVariant = 'solid' | 'outline';
+
 export type ChipProps = Omit<PressableBaseProps, 'children' | 'touchHeight'> & {
   selected?: boolean;
+  size?: ChipSize;
+  variant?: ChipVariant;
   leftIcon?: IconSlot;
   count?: number;
   children: string;
 };
 
-const HEIGHT = 32;
+const HEIGHT: Record<ChipSize, number> = { sm: 32, md: 36, lg: 40 };
+const MIN_WIDTH: Record<ChipSize, number> = { sm: 44, md: 48, lg: 52 };
 
 const useStyles = makeStyles((t) => ({
   base: {
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-start',
+    justifyContent: 'center',
     gap: t.space[1],
-    height: HEIGHT,
     paddingHorizontal: t.space[3],
     borderRadius: t.radius.full,
     backgroundColor: t.colors.muted,
   },
+  lg: { paddingHorizontal: t.space[4] },
   selected: {
     backgroundColor: t.colors.primaryContainer,
+  },
+  outline: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: t.colors.input,
+  },
+  outlineSelected: {
+    backgroundColor: t.colors.muted,
+    borderColor: t.colors.foreground,
   },
   label: {
     fontFamily: t.fontFamily,
@@ -42,6 +59,8 @@ const useStyles = makeStyles((t) => ({
 
 export function Chip({
   selected = false,
+  size = 'sm',
+  variant = 'solid',
   leftIcon,
   count,
   children,
@@ -52,7 +71,8 @@ export function Chip({
 }: ChipProps) {
   const t = useTheme();
   const s = useStyles();
-  const color = selected ? t.colors.primary : t.colors.foreground;
+  const outline = variant === 'outline';
+  const color = selected && !outline ? t.colors.primary : t.colors.foreground;
   return (
     <PressableBase
       {...rest}
@@ -61,10 +81,20 @@ export function Chip({
         (count === undefined ? undefined : `${children}, ${count}건`)
       }
       accessibilityState={{ ...accessibilityState, selected }}
-      touchHeight={HEIGHT}
-      style={[s.base, selected && s.selected, style]}
+      touchHeight={HEIGHT[size]}
+      style={[
+        s.base,
+        { height: HEIGHT[size], minWidth: MIN_WIDTH[size] },
+        size === 'lg' && s.lg,
+        outline
+          ? [s.outline, selected && s.outlineSelected]
+          : selected && s.selected,
+        style,
+      ]}
     >
-      {selected ? <CheckGlyph color={color} size={t.iconSize.sm} /> : null}
+      {selected && !outline ? (
+        <CheckGlyph color={color} size={t.iconSize.sm} />
+      ) : null}
       {leftIcon ? (
         <View>{renderIcon(leftIcon, { color, size: t.iconSize.sm })}</View>
       ) : null}

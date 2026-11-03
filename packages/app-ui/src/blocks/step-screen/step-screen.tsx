@@ -16,13 +16,15 @@ export type StepAction = {
 };
 
 export type StepScreenProps = {
+  top?: ReactNode;
   title: string;
   total?: number;
   current?: number;
   onBack?: () => void;
   backLabel?: string;
-  primaryAction: StepAction;
+  primaryAction?: StepAction;
   secondaryAction?: StepAction;
+  actions?: ReactNode;
   notice?: TemplateNotice;
   bottomInset?: number;
   children?: ReactNode;
@@ -64,6 +66,7 @@ const useStyles = makeStyles((t) => ({
 }));
 
 export function StepScreen({
+  top,
   title,
   total,
   current = 0,
@@ -71,6 +74,7 @@ export function StepScreen({
   backLabel = '이전',
   primaryAction,
   secondaryAction,
+  actions,
   notice,
   bottomInset = 0,
   children,
@@ -107,6 +111,7 @@ export function StepScreen({
         contentContainerStyle={s.body}
         keyboardShouldPersistTaps="handled"
       >
+        {top}
         <Text weight="bold" accessibilityRole="header" style={s.title}>
           {title}
         </Text>
@@ -119,14 +124,17 @@ export function StepScreen({
           { paddingBottom: t.layout.footerBottom + bottomInset },
         ]}
       >
-        <Button
-          size="lg"
-          onPress={primaryAction.onPress}
-          disabled={primaryAction.disabled}
-          loading={primaryAction.loading}
-        >
-          {primaryAction.label}
-        </Button>
+        {actions}
+        {primaryAction ? (
+          <Button
+            size="lg"
+            onPress={primaryAction.onPress}
+            disabled={primaryAction.disabled}
+            loading={primaryAction.loading}
+          >
+            {primaryAction.label}
+          </Button>
+        ) : null}
         {secondaryAction ? (
           <Button
             variant="ghost"

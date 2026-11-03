@@ -15,6 +15,7 @@ import { makeStyles } from '../../utils/styles';
 export type FieldProps = Omit<TextInputProps, 'style'> & {
   ref?: Ref<ComponentRef<typeof TextInput>>;
   label?: string;
+  readOnly?: boolean;
   error?: string;
   hint?: string;
   warning?: string;
@@ -27,9 +28,9 @@ const useStyles = makeStyles((t) => ({
   root: { gap: t.space[2] },
   label: {
     fontFamily: t.fontFamily,
-    fontSize: t.typography.label.fontSize,
-    lineHeight: t.typography.label.lineHeight,
-    fontWeight: '600',
+    fontSize: t.typography.body.fontSize,
+    lineHeight: t.typography.body.lineHeight,
+    fontWeight: '500',
     color: t.colors.foreground,
   },
   frame: {
@@ -52,6 +53,7 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.danger,
   },
   disabled: { opacity: t.opacity.disabled, backgroundColor: t.colors.muted },
+  readOnly: { borderColor: t.colors.muted, backgroundColor: t.colors.muted },
   input: {
     flex: 1,
     minWidth: 0,
@@ -99,6 +101,7 @@ const useStyles = makeStyles((t) => ({
 
 export function Field({
   label,
+  readOnly = false,
   error,
   hint,
   warning,
@@ -133,7 +136,7 @@ export function Field({
           focused && s.focused,
           !!error && s.invalid,
           !!warn && s.warned,
-          !editable && s.disabled,
+          readOnly ? s.readOnly : !editable && s.disabled,
         ]}
       >
         {leading ? renderIcon(leading, icon) : null}
@@ -144,7 +147,7 @@ export function Field({
           accessibilityLabel={label}
           accessibilityHint={note}
           {...input}
-          editable={editable}
+          editable={editable && !readOnly}
           style={s.input}
           onFocus={(e) => {
             setFocused(true);

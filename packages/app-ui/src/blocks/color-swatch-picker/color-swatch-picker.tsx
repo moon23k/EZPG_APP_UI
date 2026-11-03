@@ -12,12 +12,15 @@ export type ColorSwatchPickerProps = {
   colors: readonly ColorSwatch[];
   value: string;
   onValueChange: (value: string) => void;
-  variant?: 'circle' | 'card';
+  variant?: 'circle' | 'card' | 'grid';
   style?: StyleProp<ViewStyle>;
 };
 
 const DOT = 40;
+const GRID = 44;
 const MARK = 18;
+const RING = 2;
+const RING_GAP = 3;
 
 const useStyles = makeStyles((t) => ({
   wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: t.space[3] },
@@ -35,6 +38,17 @@ const useStyles = makeStyles((t) => ({
     borderColor: 'transparent',
   },
   ringOn: { borderColor: t.colors.primary },
+  cell: { width: GRID, height: GRID, borderRadius: t.radius.full },
+  cellRing: {
+    position: 'absolute',
+    top: -(RING + RING_GAP),
+    left: -(RING + RING_GAP),
+    right: -(RING + RING_GAP),
+    bottom: -(RING + RING_GAP),
+    borderRadius: t.radius.full,
+    borderWidth: RING,
+    borderColor: t.colors.foreground,
+  },
   card: {
     width: 148,
     gap: t.space[2],
@@ -94,16 +108,22 @@ export function ColorSwatchPicker({
             accessibilityRole="radio"
             accessibilityLabel={c.label}
             accessibilityState={{ selected }}
-            touchHeight={DOT}
+            touchHeight={variant === 'grid' ? GRID : DOT}
             pressedStyle={{}}
             onPress={() => onValueChange(c.value)}
             style={
               variant === 'card'
                 ? [s.card, selected && s.cardOn]
-                : [s.ring, selected && s.ringOn]
+                : variant === 'grid'
+                  ? [s.cell, { backgroundColor: c.value }]
+                  : [s.ring, selected && s.ringOn]
             }
           >
-            {variant === 'card' ? (
+            {variant === 'grid' ? (
+              selected ? (
+                <View style={s.cellRing} pointerEvents="none" />
+              ) : null
+            ) : variant === 'card' ? (
               <>
                 <View style={[s.line, s.long]} />
                 <View style={[s.line, s.short]} />
