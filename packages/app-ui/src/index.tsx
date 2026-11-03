@@ -17,7 +17,12 @@ export {
   CheckGlyph,
   ChevronGlyph,
   CloseGlyph,
+  HouseGlyph,
+  MenuGlyph,
+  MessageGlyph,
+  PackageGlyph,
   PlusGlyph,
+  ReceiptGlyph,
   SearchGlyph,
 } from './internal/glyphs';
 export { contrastRatio, pickForeground } from './utils/color';

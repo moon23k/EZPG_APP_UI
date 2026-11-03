@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import { Text } from '../components/text/text';
 import { useTheme } from '../theme/theme-provider';
 import { makeStyles } from '../utils/styles';
 import {
@@ -16,6 +17,7 @@ import {
 
 type ScrollTemplateProps = {
   top?: ReactNode;
+  heading?: { title: string; caption?: string };
   notice?: TemplateNotice;
   primaryAction?: TemplateAction;
   secondaryAction?: TemplateAction;
@@ -36,10 +38,17 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.layout.screenX,
   },
   notice: { paddingTop: t.layout.groupGap },
+  heading: {
+    gap: t.space[1],
+    paddingTop: t.space[4],
+    paddingBottom: t.space[2],
+    paddingHorizontal: t.layout.screenX,
+  },
 }));
 
 function ScrollTemplate({
   top,
+  heading,
   notice,
   primaryAction,
   secondaryAction,
@@ -66,6 +75,18 @@ function ScrollTemplate({
           ) : undefined
         }
       >
+        {heading ? (
+          <View style={s.heading}>
+            <Text variant="screenTitle" accessibilityRole="header">
+              {heading.title}
+            </Text>
+            {heading.caption ? (
+              <Text variant="label" tone="muted">
+                {heading.caption}
+              </Text>
+            ) : null}
+          </View>
+        ) : null}
         {top ? <View style={s.top}>{top}</View> : null}
         {notice ? (
           <View style={s.notice}>
@@ -87,6 +108,8 @@ function ScrollTemplate({
 
 export type DetailTemplateProps = {
   status?: ReactNode;
+  title?: string;
+  caption?: string;
   notice?: TemplateNotice;
   primaryAction?: TemplateAction;
   secondaryAction?: TemplateAction;
@@ -94,8 +117,19 @@ export type DetailTemplateProps = {
   children: ReactNode;
 };
 
-export function DetailTemplate({ status, ...rest }: DetailTemplateProps) {
-  return <ScrollTemplate top={status} {...rest} />;
+export function DetailTemplate({
+  status,
+  title,
+  caption,
+  ...rest
+}: DetailTemplateProps) {
+  return (
+    <ScrollTemplate
+      top={status}
+      heading={title ? { title, caption } : undefined}
+      {...rest}
+    />
+  );
 }
 
 export type FormTemplateProps = {

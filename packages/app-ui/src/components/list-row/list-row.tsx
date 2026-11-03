@@ -7,6 +7,7 @@ import {
 } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
+import { Photo } from '../photo/photo';
 
 export type ListRowTone = 'muted' | 'warning' | 'danger';
 
@@ -19,13 +20,17 @@ export type ListRowProps = Omit<
   overline?: string;
   overlineTone?: ListRowTone;
   leading?: IconSlot;
+  image?: string | null;
   trailing?: IconSlot;
   chevron?: boolean;
   value?: string;
   meta?: string;
   highlighted?: boolean;
+  strong?: boolean;
   titleLines?: number;
 };
+
+const IMAGE = 48;
 
 const useStyles = makeStyles((t) => ({
   row: {
@@ -42,6 +47,7 @@ const useStyles = makeStyles((t) => ({
   pressed: { backgroundColor: t.colors.muted },
   highlighted: { backgroundColor: t.colors.primaryTint },
   top: { alignItems: 'flex-start' },
+  image: { width: IMAGE },
   value: {
     ...t.typography.bodyLg,
     fontFamily: t.fontFamily,
@@ -73,6 +79,7 @@ const useStyles = makeStyles((t) => ({
     color: t.colors.mutedForeground,
   },
   trailing: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
+  strong: { color: t.colors.foreground, fontWeight: '700' },
 }));
 
 export function ListRow({
@@ -81,11 +88,13 @@ export function ListRow({
   overline,
   overlineTone = 'muted',
   leading,
+  image,
   trailing,
   chevron,
   value,
   meta,
   highlighted = false,
+  strong = false,
   titleLines = 1,
   onPress,
   style,
@@ -101,6 +110,13 @@ export function ListRow({
   const content = (
     <>
       {leading ? renderIcon(leading, icon) : null}
+      {image !== undefined ? (
+        <Photo
+          source={{ uri: image ?? '' }}
+          radius={t.radius.md}
+          style={s.image}
+        />
+      ) : null}
       <View style={s.body}>
         {overline ? (
           <Text
@@ -114,7 +130,7 @@ export function ListRow({
         <Text
           numberOfLines={titleLines}
           maxFontSizeMultiplier={t.maxFontScale}
-          style={s.title}
+          style={[s.title, strong && s.strong]}
         >
           {title}
         </Text>
@@ -136,7 +152,10 @@ export function ListRow({
       {trailing || value || showChevron ? (
         <View style={s.trailing}>
           {value ? (
-            <Text maxFontSizeMultiplier={t.maxFontScale} style={s.value}>
+            <Text
+              maxFontSizeMultiplier={t.maxFontScale}
+              style={[s.value, strong && s.strong]}
+            >
               {value}
             </Text>
           ) : null}

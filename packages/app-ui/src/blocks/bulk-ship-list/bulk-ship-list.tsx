@@ -1,7 +1,17 @@
-import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
-import { ChipGroup } from '../../components/chip-group/chip-group';
+import { useState } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import { Field } from '../../components/field/field';
+import { ListRow } from '../../components/list-row/list-row';
+import { Photo } from '../../components/photo/photo';
+import { Sheet } from '../../components/sheet/sheet';
 import { Text } from '../../components/text/text';
+import { CheckGlyph } from '../../internal/glyphs';
 import type { IconRenderProps } from '../../internal/icon';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
@@ -13,6 +23,7 @@ export type BulkShipRow = {
   id: string;
   title: string;
   subtitle?: string;
+  image?: string | null;
   trackingNo: string;
 };
 
@@ -23,6 +34,7 @@ export type BulkShipListProps = {
   rows: readonly BulkShipRow[];
   onTrackingChange: (id: string, value: string) => void;
   onScan?: (id: string) => void;
+  bottomInset?: number;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -32,6 +44,7 @@ const TRACKING = /^[0-9-]{8,20}$/;
 const INVALID = '숫자와 -만 8~20자리로 입력해 주세요';
 const DUPLICATE = '같은 송장 번호가 다른 주문에도 있어요';
 const FIELD_HEIGHT = 52;
+const THUMB = 48;
 
 export function trackingIssues(
   rows: readonly BulkShipRow[]
@@ -55,10 +68,17 @@ export function trackingIssues(
 }
 
 const useStyles = makeStyles((t) => ({
-  root: { gap: t.space[5] },
-  carrier: { gap: t.space[2] },
+  head: {
+    paddingTop: t.space[4],
+    paddingBottom: t.space[2],
+    paddingHorizontal: t.layout.screenX,
+  },
   list: { gap: t.space[4] },
-  row: { gap: t.space[2] },
+  row: { gap: t.space[2], paddingHorizontal: t.layout.screenX },
+  item: { flexDirection: 'row', alignItems: 'center', gap: t.space[3] },
+  thumb: { width: THUMB },
+  body: { flex: 1 },
+  options: { marginHorizontal: -t.space[4] },
   input: { flexDirection: 'row', alignItems: 'flex-start', gap: t.space[2] },
   field: { flex: 1 },
   scan: {
@@ -119,39 +139,55 @@ export function BulkShipList({
   rows,
   onTrackingChange,
   onScan,
+  bottomInset = 0,
   style,
 }: BulkShipListProps) {
   const t = useTheme();
   const s = useStyles();
+  const [picking, setPicking] = useState(false);
   const issues = trackingIssues(rows);
+  const selected = carriers.find((c) => c.code === carrier);
   return (
-    <View style={[s.root, style]}>
-      <View style={s.carrier}>
-        <Text weight="semibold" accessibilityRole="header">
-          택배사
+    <View style={style}>
+      <ListRow
+        title="택배사"
+        value={selected?.name ?? '선택'}
+        chevron
+        onPress={() => setPicking(true)}
+      />
+      <View style={s.head}>
+        <Text
+          variant="label"
+          tone="muted"
+          weight="semibold"
+          accessibilityRole="header"
+        >
+          {`${rows.length}건`}
         </Text>
-        <ChipGroup
-          items={carriers.map((c) => ({ value: c.code, label: c.name }))}
-          value={carrier}
-          onValueChange={(code) => {
-            if (code !== null) onCarrierChange(code);
-          }}
-        />
       </View>
       <View style={s.list}>
         {rows.map((row) => {
           const issue = issues[row.id];
           return (
             <View key={row.id} style={s.row}>
-              <View>
-                <Text weight="semibold" numberOfLines={1}>
-                  {row.title}
-                </Text>
-                {row.subtitle ? (
-                  <Text variant="caption" tone="muted" numberOfLines={1}>
-                    {row.subtitle}
-                  </Text>
+              <View style={s.item}>
+                {row.image !== undefined ? (
+                  <Photo
+                    source={{ uri: row.image ?? '' }}
+                    radius={t.radius.md}
+                    style={s.thumb}
+                  />
                 ) : null}
+                <View style={s.body}>
+                  <Text variant="bodyLg" numberOfLines={1}>
+                    {row.title}
+                  </Text>
+                  {row.subtitle ? (
+                    <Text variant="label" tone="muted" numberOfLines={1}>
+                      {row.subtitle}
+                    </Text>
+                  ) : null}
+                </View>
               </View>
               <View style={s.input}>
                 <Field
@@ -182,6 +218,29 @@ export function BulkShipList({
           );
         })}
       </View>
+      <Sheet
+        open={picking}
+        onOpenChange={setPicking}
+        title="택배사"
+        bottomInset={bottomInset}
+      >
+        <ScrollView style={s.options}>
+          {carriers.map((c) => (
+            <ListRow
+              key={c.code}
+              title={c.name}
+              chevron={false}
+              trailing={c.code === carrier ? CheckGlyph : undefined}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: c.code === carrier }}
+              onPress={() => {
+                onCarrierChange(c.code);
+                setPicking(false);
+              }}
+            />
+          ))}
+        </ScrollView>
+      </Sheet>
     </View>
   );
 }

@@ -38,6 +38,14 @@ function Demo() {
         />
         <Divider inset={16} />
         <ListRow
+          title={`${demoProducts.shirt} 외 1건`}
+          description="김민지 · 11월 3일"
+          image={null}
+          value="42,000원"
+          onPress={() => {}}
+        />
+        <ListRow title="결제 금액" value="42,000원" strong />
+        <ListRow
           title="#20261023-0012"
           description={`${demoProducts.shirt} 외 1건 · 42,000원`}
           trailing={<StatusBadge tone="info">배송중</StatusBadge>}

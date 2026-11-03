@@ -1,5 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { BELL } from './bell';
+import { HOUSE, MENU, MESSAGE, PACKAGE, RECEIPT } from './tab-icons';
 import type { IconRenderProps } from './icon';
 
 export function SearchGlyph({ color, size }: IconRenderProps) {
@@ -155,11 +156,20 @@ export function PlusGlyph({ color, size }: IconRenderProps) {
   );
 }
 
-export function BellGlyph({ color, size }: IconRenderProps) {
-  return (
-    <Image
-      source={{ uri: BELL }}
-      style={{ width: size, height: size, tintColor: color }}
-    />
-  );
+function imageGlyph(uri: string) {
+  return function ImageGlyph({ color, size }: IconRenderProps) {
+    return (
+      <Image
+        source={{ uri }}
+        style={{ width: size, height: size, tintColor: color }}
+      />
+    );
+  };
 }
+
+export const BellGlyph = imageGlyph(BELL);
+export const HouseGlyph = imageGlyph(HOUSE);
+export const ReceiptGlyph = imageGlyph(RECEIPT);
+export const PackageGlyph = imageGlyph(PACKAGE);
+export const MessageGlyph = imageGlyph(MESSAGE);
+export const MenuGlyph = imageGlyph(MENU);

@@ -1,4 +1,4 @@
-import { View, type StyleProp, type ViewStyle } from 'react-native';
+import { ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
 import { makeStyles } from '../../utils/styles';
 import { Chip, type ChipSize, type ChipVariant } from '../chip/chip';
 
@@ -27,16 +27,23 @@ export type ChipGroupProps<T extends string> = (Single<T> | Multiple<T>) & {
   items: readonly ChipGroupItem<T>[];
   size?: ChipSize;
   variant?: ChipVariant;
+  scroll?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
 const useStyles = makeStyles((t) => ({
   root: { flexDirection: 'row', flexWrap: 'wrap', gap: t.space[2] },
+  scroll: { marginHorizontal: -t.layout.screenX, flexGrow: 0 },
+  track: {
+    flexDirection: 'row',
+    gap: t.space[2],
+    paddingHorizontal: t.layout.screenX,
+  },
 }));
 
 export function ChipGroup<T extends string>(props: ChipGroupProps<T>) {
   const s = useStyles();
-  const { items, size, variant, style } = props;
+  const { items, size, variant, scroll, style } = props;
 
   const isSelected = (v: T) =>
     props.multiple ? props.value.includes(v) : props.value === v;
@@ -60,31 +67,47 @@ export function ChipGroup<T extends string>(props: ChipGroupProps<T>) {
     props.max !== undefined &&
     props.value.length >= props.max;
 
+  const chips = items.map((item) => {
+    const selected = isSelected(item.value);
+    return (
+      <Chip
+        key={item.value}
+        selected={selected}
+        size={size}
+        variant={variant}
+        count={item.count}
+        disabled={item.disabled || (full && !selected)}
+        accessibilityRole={props.multiple ? 'checkbox' : 'radio'}
+        accessibilityState={
+          props.multiple ? { checked: selected } : { selected }
+        }
+        onPress={() => press(item.value)}
+      >
+        {item.label}
+      </Chip>
+    );
+  });
+
+  if (scroll) {
+    return (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        accessibilityRole={props.multiple ? undefined : 'radiogroup'}
+        style={[s.scroll, style]}
+        contentContainerStyle={s.track}
+      >
+        {chips}
+      </ScrollView>
+    );
+  }
+
   return (
     <View
       accessibilityRole={props.multiple ? undefined : 'radiogroup'}
       style={[s.root, style]}
     >
-      {items.map((item) => {
-        const selected = isSelected(item.value);
-        return (
-          <Chip
-            key={item.value}
-            selected={selected}
-            size={size}
-            variant={variant}
-            count={item.count}
-            disabled={item.disabled || (full && !selected)}
-            accessibilityRole={props.multiple ? 'checkbox' : 'radio'}
-            accessibilityState={
-              props.multiple ? { checked: selected } : { selected }
-            }
-            onPress={() => press(item.value)}
-          >
-            {item.label}
-          </Chip>
-        );
-      })}
+      {chips}
     </View>
   );
 }

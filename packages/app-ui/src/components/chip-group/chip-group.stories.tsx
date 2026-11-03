@@ -49,6 +49,16 @@ function Demo() {
           onValueChange={setTab}
         />
       </Section>
+      <Section title="가로 넘김 · 외곽선">
+        <ChipGroup<Counted>
+          scroll
+          size="md"
+          variant="outline"
+          items={counted}
+          value={tab}
+          onValueChange={setTab}
+        />
+      </Section>
       <Section title="다중 선택 · 최대 3개">
         <ChipGroup<Mood>
           multiple

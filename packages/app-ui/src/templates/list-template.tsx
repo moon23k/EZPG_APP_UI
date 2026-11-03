@@ -18,6 +18,7 @@ export type ListTemplateProps<T> = {
   renderItem: ListRenderItem<T>;
   keyExtractor: (item: T) => string;
   status?: ListTemplateStatus;
+  header?: ReactNode;
   filters?: ReactNode;
   pinned?: ReactNode;
   empty: { title: string; action?: Pick<TemplateAction, 'label' | 'onPress'> };
@@ -50,6 +51,7 @@ export function ListTemplate<T>({
   renderItem,
   keyExtractor,
   status = 'ready',
+  header,
   filters,
   pinned,
   empty,
@@ -67,6 +69,7 @@ export function ListTemplate<T>({
   if (status === 'loading') {
     return (
       <View style={s.root}>
+        {header}
         {head}
         <View style={s.loading}>
           {[0, 1, 2, 3, 4].map((i) => (
@@ -80,6 +83,7 @@ export function ListTemplate<T>({
   if (status === 'error' && error) {
     return (
       <View style={s.root}>
+        {header}
         {head}
         <EmptyState
           variant="error"
@@ -92,6 +96,7 @@ export function ListTemplate<T>({
 
   return (
     <View style={s.root}>
+      {header}
       <FlatList
         data={data}
         renderItem={renderItem}

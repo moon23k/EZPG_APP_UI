@@ -20,6 +20,10 @@ function Demo() {
           title="홈"
           action={{ icon: BellGlyph, label: '알림', onPress: () => {} }}
         />
+        <PageHeader
+          title="주문"
+          action={{ label: '일괄 발송', onPress: () => {} }}
+        />
       </Column>
     </Section>
   );

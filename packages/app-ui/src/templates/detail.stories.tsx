@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { View } from 'react-native';
 import { ListRow } from '../components/list-row/list-row';
-import { StatusBadge } from '../components/status-badge/status-badge';
 import { Text } from '../components/text/text';
 import { Phone, useStoryStyles } from '../__stories__/phone';
 import { ListSection } from './parts';
@@ -42,18 +41,8 @@ function Screen({ deposit }: { deposit?: boolean }) {
       action={<Text variant="bodyLg">⋮</Text>}
     >
       <DetailTemplate
-        status={
-          deposit ? (
-            <StatusBadge tone="warning">입금 대기</StatusBadge>
-          ) : (
-            <>
-              <StatusBadge tone="success">결제 완료</StatusBadge>
-              <StatusBadge tone="warning">
-                발송 대기 · 오늘 14:00까지
-              </StatusBadge>
-            </>
-          )
-        }
+        title={deposit ? '입금 대기' : '상품 준비 중'}
+        caption="20261028-00012 · 10월 28일 10:24"
         notice={
           deposit
             ? {

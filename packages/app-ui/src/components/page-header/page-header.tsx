@@ -6,7 +6,7 @@ import { makeStyles } from '../../utils/styles';
 import { Text } from '../text/text';
 
 export type PageHeaderAction = {
-  icon: IconSlot;
+  icon?: IconSlot;
   label: string;
   badge?: boolean;
   onPress: () => void;
@@ -42,6 +42,7 @@ const useStyles = makeStyles((t) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  text: { paddingHorizontal: t.space[2], width: 'auto' },
   dot: {
     position: 'absolute',
     top: t.space[2] + t.space[1],
@@ -71,12 +72,18 @@ export function PageHeader({
           onPress={action.onPress}
           accessibilityRole="button"
           accessibilityLabel={action.label}
-          style={s.action}
+          style={[s.action, !action.icon && s.text]}
         >
-          {renderIcon(action.icon, {
-            color: t.colors.foreground,
-            size: ICON,
-          })}
+          {action.icon ? (
+            renderIcon(action.icon, {
+              color: t.colors.foreground,
+              size: ICON,
+            })
+          ) : (
+            <Text variant="bodyLg" weight="medium">
+              {action.label}
+            </Text>
+          )}
           {action.badge ? <View style={s.dot} /> : null}
         </PressableBase>
       ) : null}
