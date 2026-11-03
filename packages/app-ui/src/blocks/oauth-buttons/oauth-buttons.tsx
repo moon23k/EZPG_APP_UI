@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import {
   ActivityIndicator,
+  Image,
   Platform,
   Text,
   View,
@@ -8,6 +9,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { PressableBase } from '../../internal/pressable-base';
+import { GOOGLE_G, KAKAO_SYMBOL, NAVER_N } from './logos';
 import { makeStyles } from '../../utils/styles';
 
 export type OAuthProvider = 'kakao' | 'naver' | 'google' | 'apple';
@@ -37,6 +39,22 @@ const BRAND: Record<
 };
 
 const HEIGHT = 48;
+const LOGO = 18;
+
+const LOGOS: Partial<Record<OAuthProvider, ReactNode>> = {
+  kakao: (
+    <Image
+      source={{ uri: KAKAO_SYMBOL }}
+      style={{ width: LOGO, height: LOGO }}
+    />
+  ),
+  naver: (
+    <Image source={{ uri: NAVER_N }} style={{ width: LOGO, height: LOGO }} />
+  ),
+  google: (
+    <Image source={{ uri: GOOGLE_G }} style={{ width: LOGO, height: LOGO }} />
+  ),
+};
 
 const useStyles = makeStyles((t) => ({
   root: { gap: t.space[2] },
@@ -89,7 +107,9 @@ export function OAuthButtons({
               },
             ]}
           >
-            {icons[p] ? <View style={s.icon}>{icons[p]}</View> : null}
+            {(icons[p] ?? LOGOS[p]) ? (
+              <View style={s.icon}>{icons[p] ?? LOGOS[p]}</View>
+            ) : null}
             {loading === p ? (
               <ActivityIndicator size="small" color={brand.fg} />
             ) : (

@@ -72,7 +72,7 @@ export function IntroTemplate({
   onDone,
   nextLabel = '다음',
   doneLabel = '시작하기',
-  skipLabel = 'Skip',
+  skipLabel = '건너뛰기',
   bottomInset = 0,
 }: IntroTemplateProps) {
   const t = useTheme();

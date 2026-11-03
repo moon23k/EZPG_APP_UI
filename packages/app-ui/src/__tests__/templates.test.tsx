@@ -259,7 +259,7 @@ describe('IntroTemplate', () => {
   it('skips to done from the first page', async () => {
     const onDone = jest.fn();
     await render(<IntroTemplate pages={pages} onDone={onDone} />);
-    await fireEvent.press(screen.getByLabelText('Skip'));
+    await fireEvent.press(screen.getByLabelText('건너뛰기'));
     expect(onDone).toHaveBeenCalledTimes(1);
   });
 
@@ -267,7 +267,7 @@ describe('IntroTemplate', () => {
     const onDone = jest.fn();
     await render(<IntroTemplate pages={pages} onDone={onDone} />);
     await fireEvent.press(screen.getByText('다음'));
-    expect(screen.queryByLabelText('Skip')).toBeNull();
+    expect(screen.queryByLabelText('건너뛰기')).toBeNull();
     await fireEvent.press(screen.getByText('시작하기'));
     expect(onDone).toHaveBeenCalledTimes(1);
   });
