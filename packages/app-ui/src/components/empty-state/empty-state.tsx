@@ -13,6 +13,11 @@ export type EmptyStateProps = {
   variant?: EmptyStateVariant;
   icon?: IconSlot;
   action?: { label: string; onPress: () => void; icon?: IconSlot };
+  actions?: readonly {
+    label: string;
+    onPress: () => void;
+    loading?: boolean;
+  }[];
   style?: StyleProp<ViewStyle>;
 };
 
@@ -39,6 +44,11 @@ const useStyles = makeStyles((t) => ({
     marginTop: t.space[5],
     height: t.controlSize.md,
     paddingHorizontal: t.space[5],
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: t.space[2],
+    marginTop: t.space[5],
   },
   section: {
     flexDirection: 'row',
@@ -73,6 +83,7 @@ export function EmptyState({
   variant = 'default',
   icon,
   action,
+  actions,
   style,
 }: EmptyStateProps) {
   const t = useTheme();
@@ -139,6 +150,21 @@ export function EmptyState({
         >
           {action.label}
         </Button>
+      ) : null}
+      {actions?.length ? (
+        <View style={s.actions}>
+          {actions.map((item) => (
+            <Button
+              key={item.label}
+              variant="outline"
+              size="sm"
+              loading={item.loading}
+              onPress={item.onPress}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </View>
       ) : null}
     </View>
   );

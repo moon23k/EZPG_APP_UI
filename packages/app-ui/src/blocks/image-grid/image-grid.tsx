@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Photo } from '../../components/photo/photo';
 import { Text } from '../../components/text/text';
-import { CloseGlyph } from '../../internal/glyphs';
+import { CloseGlyph, PlusGlyph } from '../../internal/glyphs';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
@@ -87,7 +87,6 @@ const useStyles = makeStyles((t) => ({
     borderRadius: RADIUS,
     borderWidth: 1,
     borderColor: t.colors.input,
-    backgroundColor: t.colors.muted,
   },
   count: {
     fontSize: t.typography.label.fontSize,
@@ -102,50 +101,6 @@ const g = StyleSheet.create({
   open: { borderTopColor: 'transparent', transform: [{ rotate: '45deg' }] },
   head: { position: 'absolute' },
 });
-
-function CameraGlyph({ color, size }: { color: string; size: number }) {
-  const stroke = Math.max(1.5, size / 14);
-  const line = { borderWidth: stroke, borderColor: color };
-  return (
-    <View style={[g.column, { width: size, height: size }]}>
-      <View
-        style={[
-          line,
-          g.bump,
-          {
-            width: size * 0.34,
-            height: size * 0.16,
-            marginTop: size * 0.1,
-            borderTopLeftRadius: stroke,
-            borderTopRightRadius: stroke,
-          },
-        ]}
-      />
-      <View
-        style={[
-          line,
-          g.center,
-          {
-            width: size * 0.84,
-            height: size * 0.58,
-            borderRadius: size * 0.12,
-          },
-        ]}
-      >
-        <View
-          style={[
-            line,
-            {
-              width: size * 0.3,
-              height: size * 0.3,
-              borderRadius: size * 0.15,
-            },
-          ]}
-        />
-      </View>
-    </View>
-  );
-}
 
 function RetryGlyph({ color, size }: { color: string; size: number }) {
   const stroke = Math.max(2, size / 11);
@@ -225,8 +180,8 @@ export function ImageGrid({
                 onPress={onAdd}
                 style={s.add}
               >
-                <CameraGlyph color={t.colors.mutedForeground} size={24} />
-                <Text weight="semibold" style={s.count}>
+                <PlusGlyph color={t.colors.foreground} size={24} />
+                <Text tone="muted" style={s.count}>
                   {images.length}/{max}
                 </Text>
               </PressableBase>

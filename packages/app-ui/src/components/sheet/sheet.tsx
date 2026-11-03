@@ -3,13 +3,16 @@ import {
   Animated,
   KeyboardAvoidingView,
   Modal,
+  ScrollView,
   Text,
   useWindowDimensions,
   View,
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import { CheckGlyph } from '../../internal/glyphs';
 import { Backdrop, useOverlayTransition } from '../../internal/overlay';
+import { ListRow } from '../list-row/list-row';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import { ToastHost } from '../toast/toast';
@@ -27,6 +30,7 @@ export type SheetProps = {
 
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, justifyContent: 'flex-end' },
+  options: { marginHorizontal: -t.space[4] },
   panel: {
     maxHeight: '90%',
     paddingTop: t.space[2],
@@ -114,5 +118,34 @@ export function Sheet({
       </KeyboardAvoidingView>
       <ToastHost />
     </Modal>
+  );
+}
+
+export type SheetOptionsProps<T extends string> = {
+  items: readonly { value: T; label: string }[];
+  value: T | null;
+  onValueChange: (value: T) => void;
+};
+
+export function SheetOptions<T extends string>({
+  items,
+  value,
+  onValueChange,
+}: SheetOptionsProps<T>) {
+  const s = useStyles();
+  return (
+    <ScrollView accessibilityRole="radiogroup" style={s.options}>
+      {items.map((item) => (
+        <ListRow
+          key={item.value}
+          title={item.label}
+          chevron={false}
+          trailing={item.value === value ? CheckGlyph : undefined}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: item.value === value }}
+          onPress={() => onValueChange(item.value)}
+        />
+      ))}
+    </ScrollView>
   );
 }

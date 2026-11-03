@@ -1,1 +1,6 @@
-export { Sheet, type SheetProps } from './sheet';
+export {
+  Sheet,
+  SheetOptions,
+  type SheetOptionsProps,
+  type SheetProps,
+} from './sheet';

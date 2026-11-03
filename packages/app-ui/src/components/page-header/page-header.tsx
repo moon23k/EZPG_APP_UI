@@ -54,6 +54,40 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
+export type HeaderButtonProps = {
+  label: string;
+  disabled?: boolean;
+  onPress: () => void;
+};
+
+export function HeaderButton({ label, disabled, onPress }: HeaderButtonProps) {
+  const s = useStyles();
+  return (
+    <PressableBase
+      onPress={onPress}
+      disabled={disabled}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      style={[s.action, s.text]}
+    >
+      <Text
+        variant="bodyLg"
+        weight="medium"
+        tone={disabled ? 'muted' : undefined}
+      >
+        {label}
+      </Text>
+    </PressableBase>
+  );
+}
+
+export function headerButton(props: HeaderButtonProps) {
+  return function HeaderSlot() {
+    return <HeaderButton {...props} />;
+  };
+}
+
 export function PageHeader({
   title,
   action,
@@ -67,23 +101,19 @@ export function PageHeader({
       <Text weight="bold" accessibilityRole="header" style={s.title}>
         {title}
       </Text>
-      {action ? (
+      {action && !action.icon ? (
+        <HeaderButton label={action.label} onPress={action.onPress} />
+      ) : action ? (
         <PressableBase
           onPress={action.onPress}
           accessibilityRole="button"
           accessibilityLabel={action.label}
-          style={[s.action, !action.icon && s.text]}
+          style={s.action}
         >
-          {action.icon ? (
-            renderIcon(action.icon, {
-              color: t.colors.foreground,
-              size: ICON,
-            })
-          ) : (
-            <Text variant="bodyLg" weight="medium">
-              {action.label}
-            </Text>
-          )}
+          {renderIcon(action.icon, {
+            color: t.colors.foreground,
+            size: ICON,
+          })}
           {action.badge ? <View style={s.dot} /> : null}
         </PressableBase>
       ) : null}

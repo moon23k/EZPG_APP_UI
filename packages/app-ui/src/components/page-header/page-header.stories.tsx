@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { Column, Section } from '../../__stories__/helpers';
 import { BellGlyph } from '../../internal/glyphs';
-import { PageHeader } from './page-header';
+import { HeaderButton, PageHeader } from './page-header';
 
 function Demo() {
   return (
@@ -24,6 +24,8 @@ function Demo() {
           title="주문"
           action={{ label: '일괄 발송', onPress: () => {} }}
         />
+        <HeaderButton label="저장" onPress={() => {}} />
+        <HeaderButton label="저장" disabled onPress={() => {}} />
       </Column>
     </Section>
   );

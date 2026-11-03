@@ -62,6 +62,17 @@ function Demo() {
           />
         </Screen>
       </Section>
+      <Section title="actions · 처음 채우기">
+        <Screen>
+          <EmptyState
+            title="아직 내용이 없어요"
+            actions={[
+              { label: '글 추가', onPress: () => {} },
+              { label: '사진 추가', onPress: () => {} },
+            ]}
+          />
+        </Screen>
+      </Section>
       <Section title="search · 검색 · 필터 결과 없음">
         <Screen>
           <EmptyState

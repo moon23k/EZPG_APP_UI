@@ -1,17 +1,10 @@
 import { useState } from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  type StyleProp,
-  type ViewStyle,
-} from 'react-native';
+import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { Field } from '../../components/field/field';
 import { ListRow } from '../../components/list-row/list-row';
 import { Photo } from '../../components/photo/photo';
-import { Sheet } from '../../components/sheet/sheet';
+import { Sheet, SheetOptions } from '../../components/sheet/sheet';
 import { Text } from '../../components/text/text';
-import { CheckGlyph } from '../../internal/glyphs';
 import type { IconRenderProps } from '../../internal/icon';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
@@ -78,7 +71,6 @@ const useStyles = makeStyles((t) => ({
   item: { flexDirection: 'row', alignItems: 'center', gap: t.space[3] },
   thumb: { width: THUMB },
   body: { flex: 1 },
-  options: { marginHorizontal: -t.space[4] },
   input: { flexDirection: 'row', alignItems: 'flex-start', gap: t.space[2] },
   field: { flex: 1 },
   scan: {
@@ -224,22 +216,14 @@ export function BulkShipList({
         title="택배사"
         bottomInset={bottomInset}
       >
-        <ScrollView style={s.options}>
-          {carriers.map((c) => (
-            <ListRow
-              key={c.code}
-              title={c.name}
-              chevron={false}
-              trailing={c.code === carrier ? CheckGlyph : undefined}
-              accessibilityRole="radio"
-              accessibilityState={{ selected: c.code === carrier }}
-              onPress={() => {
-                onCarrierChange(c.code);
-                setPicking(false);
-              }}
-            />
-          ))}
-        </ScrollView>
+        <SheetOptions
+          items={carriers.map((c) => ({ value: c.code, label: c.name }))}
+          value={carrier}
+          onValueChange={(code) => {
+            onCarrierChange(code);
+            setPicking(false);
+          }}
+        />
       </Sheet>
     </View>
   );

@@ -4,11 +4,13 @@ import { Row } from '../../__stories__/helpers';
 import { Button } from '../button/button';
 import { Field } from '../field/field';
 import { Text } from '../text/text';
-import { Sheet } from './sheet';
+import { Sheet, SheetOptions } from './sheet';
 
 function Demo() {
   const [memo, setMemo] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [pick, setPick] = useState(false);
+  const [carrier, setCarrier] = useState<string | null>('cj');
   return (
     <Row>
       <Button variant="outline" onPress={() => setMemo(true)}>
@@ -17,6 +19,24 @@ function Demo() {
       <Button variant="outline" onPress={() => setConfirm(true)}>
         닫기 막힘
       </Button>
+      <Button variant="outline" onPress={() => setPick(true)}>
+        하나 고르기
+      </Button>
+
+      <Sheet open={pick} onOpenChange={setPick} title="택배사">
+        <SheetOptions
+          items={[
+            { value: 'cj', label: 'CJ대한통운' },
+            { value: 'post', label: '우체국택배' },
+            { value: 'hanjin', label: '한진택배' },
+          ]}
+          value={carrier}
+          onValueChange={(next) => {
+            setCarrier(next);
+            setPick(false);
+          }}
+        />
+      </Sheet>
 
       <Sheet
         open={memo}

@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import { Photo } from '../components/photo/photo';
 import { Text } from '../components/text/text';
 import { useTheme } from '../theme/theme-provider';
 import { makeStyles } from '../utils/styles';
@@ -17,7 +18,7 @@ import {
 
 type ScrollTemplateProps = {
   top?: ReactNode;
-  heading?: { title: string; caption?: string };
+  heading?: { title: string; caption?: string; image?: string | null };
   notice?: TemplateNotice;
   primaryAction?: TemplateAction;
   secondaryAction?: TemplateAction;
@@ -27,9 +28,11 @@ type ScrollTemplateProps = {
   children: ReactNode;
 };
 
+const MEDIA = 64;
+
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, backgroundColor: t.colors.background },
-  content: { paddingBottom: t.layout.sectionGap },
+  content: { flexGrow: 1, paddingBottom: t.layout.sectionGap },
   top: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -39,11 +42,15 @@ const useStyles = makeStyles((t) => ({
   },
   notice: { paddingTop: t.layout.groupGap },
   heading: {
-    gap: t.space[1],
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: t.space[3],
     paddingTop: t.space[4],
     paddingBottom: t.space[2],
     paddingHorizontal: t.layout.screenX,
   },
+  headingText: { flex: 1, gap: t.space[1] },
+  media: { width: MEDIA },
 }));
 
 function ScrollTemplate({
@@ -77,14 +84,23 @@ function ScrollTemplate({
       >
         {heading ? (
           <View style={s.heading}>
-            <Text variant="screenTitle" accessibilityRole="header">
-              {heading.title}
-            </Text>
-            {heading.caption ? (
-              <Text variant="label" tone="muted">
-                {heading.caption}
-              </Text>
+            {heading.image !== undefined ? (
+              <Photo
+                source={{ uri: heading.image ?? '' }}
+                radius={t.radius.md}
+                style={s.media}
+              />
             ) : null}
+            <View style={s.headingText}>
+              <Text variant="screenTitle" accessibilityRole="header">
+                {heading.title}
+              </Text>
+              {heading.caption ? (
+                <Text variant="label" tone="muted">
+                  {heading.caption}
+                </Text>
+              ) : null}
+            </View>
           </View>
         ) : null}
         {top ? <View style={s.top}>{top}</View> : null}
@@ -110,6 +126,7 @@ export type DetailTemplateProps = {
   status?: ReactNode;
   title?: string;
   caption?: string;
+  image?: string | null;
   notice?: TemplateNotice;
   primaryAction?: TemplateAction;
   secondaryAction?: TemplateAction;
@@ -121,12 +138,13 @@ export function DetailTemplate({
   status,
   title,
   caption,
+  image,
   ...rest
 }: DetailTemplateProps) {
   return (
     <ScrollTemplate
       top={status}
-      heading={title ? { title, caption } : undefined}
+      heading={title ? { title, caption, image } : undefined}
       {...rest}
     />
   );
