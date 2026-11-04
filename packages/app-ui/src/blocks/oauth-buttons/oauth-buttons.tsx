@@ -126,3 +126,38 @@ export function OAuthButtons({
     </View>
   );
 }
+
+const MARK = 24;
+
+const markStyles = makeStyles((t) => ({
+  mark: {
+    width: MARK,
+    height: MARK,
+    borderRadius: t.radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  logo: { width: t.space[3], height: t.space[3] },
+}));
+
+export function OAuthMark({ provider }: { provider: OAuthProvider }) {
+  const s = markStyles();
+  const brand = BRAND[provider];
+  const logo = {
+    kakao: KAKAO_SYMBOL,
+    naver: NAVER_N,
+    google: GOOGLE_G,
+    apple: APPLE_LOGO,
+  }[provider];
+  return (
+    <View
+      style={[
+        s.mark,
+        { backgroundColor: brand.bg, borderColor: brand.border ?? brand.bg },
+      ]}
+    >
+      <Image source={{ uri: logo }} style={s.logo} />
+    </View>
+  );
+}

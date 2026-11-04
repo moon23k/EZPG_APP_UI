@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { Children, Fragment, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { Button } from '../components/button/button';
 import { Text } from '../components/text/text';
@@ -45,6 +45,23 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.layout.screenX,
   },
   inset: { paddingHorizontal: t.layout.screenX },
+  card: {
+    marginHorizontal: t.layout.screenX,
+    marginBottom: t.space[4],
+    borderWidth: 1,
+    borderColor: t.colors.border,
+    borderRadius: t.radius.lg,
+    overflow: 'hidden',
+    backgroundColor: t.colors.background,
+  },
+  cardHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: t.layout.screenX,
+    paddingVertical: t.space[3],
+  },
+  cardLine: { height: 1, backgroundColor: t.colors.muted },
 }));
 
 export function BottomBar({
@@ -109,14 +126,37 @@ export function ListSection({
   title,
   action,
   inset,
+  card,
   children,
 }: {
   title?: string;
   action?: ReactNode;
   inset?: boolean;
+  card?: boolean;
   children: ReactNode;
 }) {
   const s = useStyles();
+  if (card) {
+    const rows = Children.toArray(children);
+    return (
+      <View style={s.card}>
+        {title ? (
+          <View style={s.cardHead}>
+            <Text variant="body" weight="bold" accessibilityRole="header">
+              {title}
+            </Text>
+            {action}
+          </View>
+        ) : null}
+        {rows.map((row, index) => (
+          <Fragment key={index}>
+            {index || title ? <View style={s.cardLine} /> : null}
+            {row}
+          </Fragment>
+        ))}
+      </View>
+    );
+  }
   return (
     <View style={s.section}>
       {title ? (

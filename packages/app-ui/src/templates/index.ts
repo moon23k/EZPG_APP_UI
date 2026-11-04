@@ -11,6 +11,8 @@ export type {
   MenuTemplateProps,
 } from './scroll-templates';
 export { CalendarTemplate } from './calendar-template';
+export { NoticeTemplate } from './notice-template';
+export type { NoticeConsent, NoticeTemplateProps } from './notice-template';
 export type { CalendarTemplateProps } from './calendar-template';
 export { EditorTemplate } from './editor-template';
 export type {

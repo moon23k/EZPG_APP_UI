@@ -1,13 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { Text } from '../../components/text/text';
-import { Section } from '../../__stories__/helpers';
-import { OAuthButtons, type OAuthProvider } from './oauth-buttons';
+import { Row, Section } from '../../__stories__/helpers';
+import { OAuthButtons, OAuthMark, type OAuthProvider } from './oauth-buttons';
 
 function Demo() {
   const [loading, setLoading] = useState<OAuthProvider | null>(null);
   return (
     <>
+      <Section title="로그인 수단 표시">
+        <Row>
+          {(['kakao', 'naver', 'google', 'apple'] as const).map((p) => (
+            <OAuthMark key={p} provider={p} />
+          ))}
+        </Row>
+      </Section>
       <Section title="파트너 앱 (Apple은 iOS에서만)">
         <OAuthButtons
           providers={['kakao', 'naver', 'google', 'apple']}

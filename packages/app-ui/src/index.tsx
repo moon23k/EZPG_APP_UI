@@ -14,6 +14,7 @@ export { renderIcon } from './internal/icon';
 export {
   AlertGlyph,
   BellGlyph,
+  CameraGlyph,
   CheckGlyph,
   ChevronGlyph,
   CloseGlyph,
@@ -21,13 +22,16 @@ export {
   MenuGlyph,
   MessageGlyph,
   PackageGlyph,
+  PersonGlyph,
   PlusGlyph,
   ReceiptGlyph,
   SearchGlyph,
 } from './internal/glyphs';
 export { contrastRatio, pickForeground } from './utils/color';
 
+export * from './components/avatar';
 export * from './components/button';
+export * from './components/check-list';
 export * from './components/checkbox';
 export * from './components/chip';
 export * from './components/calendar';
@@ -53,6 +57,7 @@ export * from './components/skeleton';
 export * from './components/status-badge';
 export * from './components/switch';
 export * from './components/text';
+export * from './components/text-links';
 export * from './components/toast';
 export * from './components/wizard-steps';
 

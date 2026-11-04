@@ -1,6 +1,14 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { BELL } from './bell';
-import { HOUSE, MENU, MESSAGE, PACKAGE, RECEIPT } from './tab-icons';
+import {
+  CAMERA,
+  HOUSE,
+  MENU,
+  MESSAGE,
+  PACKAGE,
+  PERSON,
+  RECEIPT,
+} from './tab-icons';
 import type { IconRenderProps } from './icon';
 
 export function SearchGlyph({ color, size }: IconRenderProps) {
@@ -173,3 +181,5 @@ export const ReceiptGlyph = imageGlyph(RECEIPT);
 export const PackageGlyph = imageGlyph(PACKAGE);
 export const MessageGlyph = imageGlyph(MESSAGE);
 export const MenuGlyph = imageGlyph(MENU);
+export const PersonGlyph = imageGlyph(PERSON);
+export const CameraGlyph = imageGlyph(CAMERA);
