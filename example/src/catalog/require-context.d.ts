@@ -1,4 +1,3 @@
-// Metro의 require.context (transformer.unstable_allowRequireContext)
 interface MetroRequireContext {
   keys(): string[];
   (id: string): unknown;

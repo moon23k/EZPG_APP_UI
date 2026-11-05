@@ -13,7 +13,7 @@ function Demo() {
     <>
       <Section title="pressable · chevron">
         <ListRow
-          title="상점 정보"
+          title="스토어 정보"
           description="상호, 연락처, 영업시간"
           onPress={() => {}}
         />

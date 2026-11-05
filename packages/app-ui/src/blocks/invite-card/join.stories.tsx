@@ -30,7 +30,7 @@ function Demo() {
         <InviteCard
           compact
           title="초대받았어요"
-          description="초대 코드로 상점에 합류"
+          description="초대 코드로 스토어에 합류"
           onPress={() => {}}
         />
         <CodeInput

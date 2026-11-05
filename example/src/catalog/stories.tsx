@@ -28,7 +28,6 @@ export type CatalogEntry = {
   stories: CatalogStory[];
 };
 
-// Storybook(web)과 같은 packages/*/src/**/*.stories.tsx를 그대로 읽는다. 카탈로그를 따로 관리하지 않는다.
 const context = require.context(
   '../../../packages',
   true,

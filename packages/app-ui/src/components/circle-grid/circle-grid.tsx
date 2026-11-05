@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Image,
+  type ImageSourcePropType,
   Text as RNText,
   View,
   type StyleProp,
@@ -16,6 +17,7 @@ export type CircleGridItem<T extends string> = {
   value: T;
   label: string;
   uri?: string | null;
+  source?: ImageSourcePropType;
   glyph?: string;
 };
 
@@ -77,18 +79,26 @@ const useStyles = makeStyles((t) => ({
   label: { textAlign: 'center' },
 }));
 
-function Circle({ uri, glyph }: { uri?: string | null; glyph?: string }) {
+function Circle({
+  uri,
+  source,
+  glyph,
+}: {
+  uri?: string | null;
+  source?: ImageSourcePropType;
+  glyph?: string;
+}) {
   const s = useStyles();
   const [failed, setFailed] = useState<string | null>(null);
-  const show = uri && failed !== uri;
+  const image = uri && failed !== uri ? { uri } : source;
   return (
     <View style={s.circle}>
-      {show ? (
+      {image ? (
         <Image
-          source={{ uri }}
+          source={image}
           style={s.image}
           resizeMode="cover"
-          onError={() => setFailed(uri)}
+          onError={() => uri && setFailed(uri)}
         />
       ) : glyph ? (
         <RNText style={s.glyph}>{glyph}</RNText>
@@ -121,7 +131,7 @@ export function CircleGrid<T extends string>({
             style={[s.cell, { width }]}
           >
             <View style={[s.ring, on && s.ringOn]}>
-              <Circle uri={item.uri} glyph={item.glyph} />
+              <Circle uri={item.uri} source={item.source} glyph={item.glyph} />
               {on ? (
                 <View style={s.badge}>
                   <CheckGlyph color={t.colors.primaryForeground} size={14} />

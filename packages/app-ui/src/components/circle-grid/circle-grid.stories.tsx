@@ -14,7 +14,7 @@ const items = [
     label: '베이커리 카페',
     uri: sample(demoPhotoIds.cafe).uri,
   },
-  { value: 'bread', label: '빵집', glyph: '🍞' },
+  { value: 'bread', label: '빵집', source: sample(demoPhotoIds.mug) },
   { value: 'dessert', label: '디저트 가게', glyph: '🧁' },
   { value: 'cake', label: '케이크 전문점', glyph: '🎂' },
   {
