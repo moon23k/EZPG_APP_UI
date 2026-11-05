@@ -1,5 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { BELL } from './bell';
+import { PICTURE, RETURN, STAR, TRUCK } from './line-icons';
 import {
   CAMERA,
   HOUSE,
@@ -165,7 +166,7 @@ export function PlusGlyph({ color, size }: IconRenderProps) {
 }
 
 function imageGlyph(uri: string) {
-  return function ImageGlyph({ color, size }: IconRenderProps) {
+  return function Glyph({ color, size }: IconRenderProps) {
     return (
       <Image
         source={{ uri }}
@@ -183,3 +184,7 @@ export const MessageGlyph = imageGlyph(MESSAGE);
 export const MenuGlyph = imageGlyph(MENU);
 export const PersonGlyph = imageGlyph(PERSON);
 export const CameraGlyph = imageGlyph(CAMERA);
+export const TruckGlyph = imageGlyph(TRUCK);
+export const ReturnGlyph = imageGlyph(RETURN);
+export const StarGlyph = imageGlyph(STAR);
+export const ImageGlyph = imageGlyph(PICTURE);

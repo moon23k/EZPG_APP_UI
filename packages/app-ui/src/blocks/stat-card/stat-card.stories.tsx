@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
+import { MiniBars } from '../../charts/mini-bars';
 import { Sparkline } from '../../charts/sparkline';
 import { Section } from '../../__stories__/helpers';
 import { StatCard } from './stat-card';
@@ -15,6 +16,17 @@ function Demo() {
         value="1,911,000원"
         change={13.6}
         chart={<Sparkline data={[18, 24, 9, 31, 27, 42, 38]} />}
+      />
+      <StatCard
+        label="오늘 매출"
+        meta="주문 10건"
+        value="408,000원"
+        chart={
+          <MiniBars
+            data={[0, 0, 0, 77000, 0, 0, 408000]}
+            labels={['30', '31', '1', '2', '3', '4', '5']}
+          />
+        }
       />
     </Section>
   );

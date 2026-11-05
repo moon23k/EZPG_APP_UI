@@ -19,13 +19,17 @@ export {
   ChevronGlyph,
   CloseGlyph,
   HouseGlyph,
+  ImageGlyph,
   MenuGlyph,
   MessageGlyph,
   PackageGlyph,
   PersonGlyph,
   PlusGlyph,
   ReceiptGlyph,
+  ReturnGlyph,
   SearchGlyph,
+  StarGlyph,
+  TruckGlyph,
 } from './internal/glyphs';
 export { contrastRatio, pickForeground } from './utils/color';
 

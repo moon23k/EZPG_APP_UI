@@ -8,6 +8,8 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
+import { ImageGlyph } from '../../internal/glyphs';
+import { tile } from '../../theme/base';
 import { useTheme } from '../../theme/theme-provider';
 
 export type PhotoProps = Omit<ImageProps, 'source' | 'style'> & {
@@ -15,6 +17,7 @@ export type PhotoProps = Omit<ImageProps, 'source' | 'style'> & {
   aspectRatio?: number;
   radius?: number;
   fallback?: ReactNode;
+  seed?: string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -22,6 +25,12 @@ function sourceKey(source: ImageSourcePropType): string {
   if (typeof source === 'number') return String(source);
   if (Array.isArray(source)) return source.map((s) => s.uri ?? '').join('|');
   return (source as { uri?: string }).uri ?? '';
+}
+
+export function tileColor(seed = ''): string {
+  let sum = 0;
+  for (const ch of seed) sum += ch.charCodeAt(0);
+  return tile[sum % tile.length] ?? tile[0];
 }
 
 export function Photo(props: PhotoProps) {
@@ -33,6 +42,7 @@ function PhotoInner({
   aspectRatio = 1,
   radius,
   fallback,
+  seed,
   style,
   onLoad,
   onError,
@@ -42,6 +52,7 @@ function PhotoInner({
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>(
     'loading'
   );
+  const blank = sourceKey(source) === '' || status === 'error';
   return (
     <View
       style={[
@@ -49,13 +60,18 @@ function PhotoInner({
         {
           aspectRatio,
           borderRadius: radius ?? t.radius.md,
-          backgroundColor: t.colors.muted,
+          backgroundColor:
+            blank && !fallback ? tileColor(seed) : t.colors.muted,
         },
         style,
       ]}
     >
-      {status === 'error' ? (
-        <View style={styles.center}>{fallback}</View>
+      {blank ? (
+        <View style={styles.center}>
+          {fallback ?? (
+            <ImageGlyph color={t.colors.mutedForeground} size={t.iconSize.md} />
+          )}
+        </View>
       ) : (
         <Image
           {...rest}

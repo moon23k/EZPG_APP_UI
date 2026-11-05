@@ -6,6 +6,7 @@ import { Card } from '../internal/card';
 
 export type StatCardProps = {
   label: string;
+  meta?: string;
   value: string;
   change?: number | null;
   chart?: ReactNode;
@@ -16,6 +17,7 @@ export type StatCardProps = {
 const useStyles = makeStyles((t) => ({
   row: { flexDirection: 'row', alignItems: 'flex-end', gap: t.space[3] },
   body: { flex: 1, gap: t.space[1] },
+  head: { flexDirection: 'row', justifyContent: 'space-between' },
   value: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -27,6 +29,7 @@ const useStyles = makeStyles((t) => ({
 
 export function StatCard({
   label,
+  meta,
   value,
   change,
   chart,
@@ -47,9 +50,15 @@ export function StatCard({
       }`}
       style={style}
     >
+      {meta ? (
+        <View style={s.head}>
+          <Text tone="muted">{label}</Text>
+          <Text tone="muted">{meta}</Text>
+        </View>
+      ) : null}
       <View style={s.row}>
         <View style={s.body}>
-          <Text tone="muted">{label}</Text>
+          {meta ? null : <Text tone="muted">{label}</Text>}
           <View style={s.value}>
             <Text variant="title" weight="bold">
               {value}

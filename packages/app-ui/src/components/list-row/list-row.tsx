@@ -114,6 +114,7 @@ export function ListRow({
         <Photo
           source={{ uri: image ?? '' }}
           radius={t.radius.md}
+          seed={title}
           style={s.image}
         />
       ) : null}

@@ -47,6 +47,14 @@ export const semantic = {
   },
 } as const;
 
+export const tile = [
+  '#d8d2c8',
+  '#c8d2d6',
+  '#d6cdd3',
+  '#ccd5c8',
+  '#ddd5bf',
+] as const;
+
 export const space = {
   '0': 0,
   '1': 4,
