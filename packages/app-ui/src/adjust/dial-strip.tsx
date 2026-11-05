@@ -11,6 +11,7 @@ export type DialItem = {
   value?: number;
   max?: number;
   color?: string;
+  text?: string;
 };
 
 export type DialStripProps = {
@@ -91,7 +92,7 @@ function Ring({ item, on }: { item: DialItem; on: boolean }) {
         tone={on ? 'primary' : 'muted'}
         style={s.value}
       >
-        {v ? signed(v) : '0'}
+        {item.text ?? (v ? signed(v) : '0')}
       </Text>
     </View>
   );
@@ -119,7 +120,7 @@ export function DialStrip({
             onPress={() => onSelect(item.key)}
             accessibilityRole="button"
             accessibilityLabel={
-              item.color
+              item.color || item.text
                 ? item.label
                 : `${item.label} ${signed(item.value ?? 0)}`
             }

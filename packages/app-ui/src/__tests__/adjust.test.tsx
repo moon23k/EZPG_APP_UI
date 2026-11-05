@@ -5,6 +5,7 @@ import {
   ColorAdjustNote,
   ColorTrack,
   DialStrip,
+  FontControls,
   hexToHsl,
   hslToHex,
   ScrubRuler,
@@ -124,5 +125,49 @@ describe('AdjustTemplate', () => {
     expect(onCompare).toHaveBeenLastCalledWith(false);
     await fireEvent.press(screen.getByText('사이트에 반영'));
     expect(onPress).toHaveBeenCalled();
+  });
+});
+
+describe('FontControls', () => {
+  const sets = [
+    { value: 'gothic', label: '고딕' },
+    { value: 'hand', label: '손글씨' },
+  ];
+  const levels = [{ key: 'title', label: '제목', bold: true, italic: false }];
+
+  it('picks a set and toggles a level style', async () => {
+    const onSelect = jest.fn();
+    const onToggle = jest.fn();
+    await render(
+      <FontControls
+        sets={sets}
+        selected="gothic"
+        onSelect={onSelect}
+        levels={levels}
+        onToggle={onToggle}
+      />
+    );
+    await fireEvent.press(screen.getByText('손글씨'));
+    await fireEvent.press(screen.getByLabelText('제목 굵게'));
+    await fireEvent.press(screen.getByLabelText('제목 기울임'));
+    expect(onSelect).toHaveBeenCalledWith('hand');
+    expect(onToggle).toHaveBeenCalledWith('title', 'bold');
+    expect(onToggle).toHaveBeenCalledWith('title', 'italic');
+  });
+
+  it('blocks italic when the set has none', async () => {
+    const onToggle = jest.fn();
+    await render(
+      <FontControls
+        sets={sets}
+        selected="hand"
+        onSelect={jest.fn()}
+        levels={levels}
+        italicAvailable={false}
+        onToggle={onToggle}
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('제목 기울임'));
+    expect(onToggle).not.toHaveBeenCalled();
   });
 });

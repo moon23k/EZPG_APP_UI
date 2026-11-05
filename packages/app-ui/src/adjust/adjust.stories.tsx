@@ -7,6 +7,7 @@ import { AdjustTemplate } from './adjust-template';
 import { ColorAdjustNote } from './color-adjust-note';
 import { ColorTrack } from './color-track';
 import { DialStrip } from './dial-strip';
+import { FontControls } from './font-controls';
 import { hslToHex } from './hsl';
 import { ScrubRuler } from './scrub-ruler';
 
@@ -16,6 +17,19 @@ const axes = [
   { key: 'softness', label: '부드러움', neg: '단단한', pos: '부드러운' },
   { key: 'era', label: '시대감', neg: '클래식', pos: '모던' },
   { key: 'intensity', label: '강도', neg: '은은한', pos: '강렬한' },
+];
+
+const sets = [
+  { value: 'gothic', label: '고딕' },
+  { value: 'serif', label: '명조' },
+  { value: 'round', label: '둥근' },
+  { value: 'hand', label: '손글씨' },
+];
+
+const levels = [
+  { key: 'title', label: '제목', bold: true, italic: false },
+  { key: 'subtitle', label: '소제목', bold: true, italic: false },
+  { key: 'body', label: '본문', bold: false, italic: true },
 ];
 
 const styles = StyleSheet.create({ fill: { flex: 1 } });
@@ -110,3 +124,28 @@ const meta = { title: 'Templates/10 조정', component: Demo } satisfies Meta<
 export default meta;
 
 export const Variants: StoryObj<typeof meta> = {};
+
+function FontDemo() {
+  const [set, setSet] = useState('gothic');
+  const [rows, setRows] = useState(levels);
+  return (
+    <FontControls
+      sets={sets}
+      selected={set}
+      onSelect={setSet}
+      levels={rows}
+      italicAvailable={set !== 'hand'}
+      onToggle={(key, style) =>
+        setRows(
+          rows.map((row) =>
+            row.key === key ? { ...row, [style]: !row[style] } : row
+          )
+        )
+      }
+    />
+  );
+}
+
+export const Font: StoryObj<typeof meta> = {
+  render: () => <FontDemo />,
+};
