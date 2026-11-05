@@ -23,6 +23,7 @@ export type StepScreenProps = {
   onBack?: () => void;
   backLabel?: string;
   primaryAction?: StepAction;
+  floatingAction?: boolean;
   secondaryAction?: StepAction;
   actions?: ReactNode;
   notice?: TemplateNotice;
@@ -32,6 +33,7 @@ export type StepScreenProps = {
 
 const useStyles = makeStyles((t) => ({
   root: { flex: 1, backgroundColor: t.colors.background },
+  main: { flex: 1 },
   header: {
     height: t.headerHeight,
     flexDirection: 'row',
@@ -63,6 +65,19 @@ const useStyles = makeStyles((t) => ({
     paddingTop: t.layout.footerTop,
     backgroundColor: t.colors.background,
   },
+  floating: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  pill: {
+    borderRadius: t.controlSize.lg / 2,
+    paddingHorizontal: t.space[10],
+    boxShadow: t.shadow.md,
+  },
 }));
 
 export function StepScreen({
@@ -73,6 +88,7 @@ export function StepScreen({
   onBack,
   backLabel = '이전',
   primaryAction,
+  floatingAction = false,
   secondaryAction,
   actions,
   notice,
@@ -82,6 +98,7 @@ export function StepScreen({
   const t = useTheme();
   const s = useStyles();
   const step = total ? Math.min(total, Math.max(1, current + 1)) : 0;
+  const footerBottom = t.layout.footerBottom + bottomInset;
   return (
     <KeyboardAvoidingView behavior="padding" style={s.root}>
       {onBack ? (
@@ -107,44 +124,55 @@ export function StepScreen({
           <View style={[s.fill, { width: `${(step / total) * 100}%` }]} />
         </View>
       ) : null}
-      <ScrollView
-        contentContainerStyle={s.body}
-        keyboardShouldPersistTaps="handled"
-      >
-        {top}
-        <Text weight="bold" accessibilityRole="header" style={s.title}>
-          {title}
-        </Text>
-        {children}
-      </ScrollView>
-      {notice ? <Notice notice={notice} /> : null}
-      <View
-        style={[
-          s.footer,
-          { paddingBottom: t.layout.footerBottom + bottomInset },
-        ]}
-      >
-        {actions}
-        {primaryAction ? (
-          <Button
-            size="lg"
-            onPress={primaryAction.onPress}
-            disabled={primaryAction.disabled}
-            loading={primaryAction.loading}
-          >
-            {primaryAction.label}
-          </Button>
-        ) : null}
-        {secondaryAction ? (
-          <Button
-            variant="ghost"
-            onPress={secondaryAction.onPress}
-            disabled={secondaryAction.disabled}
-            loading={secondaryAction.loading}
-          >
-            {secondaryAction.label}
-          </Button>
-        ) : null}
+      <View style={s.main}>
+        <ScrollView
+          contentContainerStyle={[
+            s.body,
+            floatingAction && {
+              paddingBottom:
+                footerBottom + t.layout.footerTop + t.controlSize.lg,
+            },
+          ]}
+          keyboardShouldPersistTaps="handled"
+        >
+          {top}
+          <Text weight="bold" accessibilityRole="header" style={s.title}>
+            {title}
+          </Text>
+          {children}
+        </ScrollView>
+        {notice ? <Notice notice={notice} /> : null}
+        <View
+          pointerEvents={floatingAction ? 'box-none' : 'auto'}
+          style={[
+            s.footer,
+            floatingAction && s.floating,
+            { paddingBottom: footerBottom },
+          ]}
+        >
+          {actions}
+          {primaryAction ? (
+            <Button
+              size="lg"
+              onPress={primaryAction.onPress}
+              disabled={primaryAction.disabled}
+              loading={primaryAction.loading}
+              style={floatingAction ? s.pill : undefined}
+            >
+              {primaryAction.label}
+            </Button>
+          ) : null}
+          {secondaryAction ? (
+            <Button
+              variant="ghost"
+              onPress={secondaryAction.onPress}
+              disabled={secondaryAction.disabled}
+              loading={secondaryAction.loading}
+            >
+              {secondaryAction.label}
+            </Button>
+          ) : null}
+        </View>
       </View>
     </KeyboardAvoidingView>
   );

@@ -36,6 +36,7 @@ export * from './components/checkbox';
 export * from './components/chip';
 export * from './components/calendar';
 export * from './components/chip-group';
+export * from './components/circle-grid';
 export * from './components/dialog';
 export * from './components/divider';
 export * from './components/empty-state';

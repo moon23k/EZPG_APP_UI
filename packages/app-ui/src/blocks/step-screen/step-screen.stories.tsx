@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { ChipGroup } from '../../components/chip-group/chip-group';
+import { CircleGrid } from '../../components/circle-grid/circle-grid';
 import { SearchField } from '../../components/search-field/search-field';
 import { StepScreen } from './step-screen';
 
@@ -50,6 +51,48 @@ function Demo() {
   );
 }
 
+const filters = [
+  { value: 'all', label: '전체' },
+  { value: 'food', label: '식품' },
+  { value: 'cafe', label: '카페·베이커리' },
+  { value: 'apparel', label: '의류' },
+] as const;
+type Filter = (typeof filters)[number]['value'];
+
+function Floating() {
+  const [filter, setFilter] = useState<Filter | null>('all');
+  const [industry, setIndustry] = useState<Industry | null>(null);
+  return (
+    <View style={frame}>
+      <StepScreen
+        total={4}
+        current={0}
+        onBack={() => {}}
+        title="어떤 업종인가요?"
+        floatingAction
+        primaryAction={{
+          label: '다음',
+          onPress: () => {},
+          disabled: !industry,
+        }}
+      >
+        <SearchField value="" onChangeText={() => {}} placeholder="업종 검색" />
+        <ChipGroup<Filter>
+          scroll
+          items={filters}
+          value={filter}
+          onValueChange={setFilter}
+        />
+        <CircleGrid<Industry>
+          items={industries.map((i) => ({ ...i, glyph: '🏪' }))}
+          value={industry}
+          onValueChange={setIndustry}
+        />
+      </StepScreen>
+    </View>
+  );
+}
+
 const meta = {
   title: 'Blocks/Onboarding/StepScreen',
   component: Demo,
@@ -57,3 +100,7 @@ const meta = {
 export default meta;
 
 export const AllVariants: StoryObj<typeof meta> = {};
+
+export const FloatingAction: StoryObj<typeof meta> = {
+  render: () => <Floating />,
+};
