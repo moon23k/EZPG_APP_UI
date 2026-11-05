@@ -1,6 +1,25 @@
 import { Image, StyleSheet, View } from 'react-native';
 import { BELL } from './bell';
-import { PICTURE, RETURN, STAR, TRUCK } from './line-icons';
+import {
+  CARD,
+  CHART,
+  CLOCK,
+  EYE,
+  FILE,
+  GLOBE,
+  LINK,
+  PALETTE,
+  PHONE,
+  PICTURE,
+  RETURN,
+  SHARE,
+  SPARKLES,
+  STAR,
+  STORE,
+  TRUCK,
+  USERS,
+  WALLET,
+} from './line-icons';
 import {
   CAMERA,
   HOUSE,
@@ -188,3 +207,17 @@ export const TruckGlyph = imageGlyph(TRUCK);
 export const ReturnGlyph = imageGlyph(RETURN);
 export const StarGlyph = imageGlyph(STAR);
 export const ImageGlyph = imageGlyph(PICTURE);
+export const GlobeGlyph = imageGlyph(GLOBE);
+export const PaletteGlyph = imageGlyph(PALETTE);
+export const ChartGlyph = imageGlyph(CHART);
+export const CardGlyph = imageGlyph(CARD);
+export const ClockGlyph = imageGlyph(CLOCK);
+export const SparklesGlyph = imageGlyph(SPARKLES);
+export const StoreGlyph = imageGlyph(STORE);
+export const FileGlyph = imageGlyph(FILE);
+export const WalletGlyph = imageGlyph(WALLET);
+export const LinkGlyph = imageGlyph(LINK);
+export const UsersGlyph = imageGlyph(USERS);
+export const PhoneGlyph = imageGlyph(PHONE);
+export const EyeGlyph = imageGlyph(EYE);
+export const ShareGlyph = imageGlyph(SHARE);

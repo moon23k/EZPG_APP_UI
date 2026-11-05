@@ -7,6 +7,10 @@ import {
 } from 'react-native';
 import { EmptyState } from '../components/empty-state/empty-state';
 import { Skeleton } from '../components/skeleton/skeleton';
+import { Text } from '../components/text/text';
+import { PlusGlyph } from '../internal/glyphs';
+import { renderIcon, type IconSlot } from '../internal/icon';
+import { PressableBase } from '../internal/pressable-base';
 import { useTheme } from '../theme/theme-provider';
 import { makeStyles } from '../utils/styles';
 import type { TemplateAction } from './parts';
@@ -27,6 +31,8 @@ export type ListTemplateProps<T> = {
   onRefresh?: () => void;
   onEndReached?: () => void;
   selectionBar?: ReactElement | null;
+  columns?: number;
+  floatingAction?: { label: string; icon?: IconSlot; onPress: () => void };
   bottomInset?: number;
 };
 
@@ -44,6 +50,24 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.layout.screenX,
   },
   grow: { flexGrow: 1 },
+  columns: {
+    gap: t.space[3],
+    paddingHorizontal: t.layout.screenX,
+    paddingBottom: t.space[5],
+  },
+  fab: {
+    position: 'absolute',
+    right: t.layout.screenX,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: t.space[1],
+    height: t.controlSize.md,
+    paddingHorizontal: t.space[5],
+    borderRadius: t.controlSize.md / 2,
+    backgroundColor: t.colors.primary,
+    boxShadow: t.shadow.md,
+  },
+  fabText: { color: t.colors.primaryForeground },
 }));
 
 export function ListTemplate<T>({
@@ -60,6 +84,8 @@ export function ListTemplate<T>({
   onRefresh,
   onEndReached,
   selectionBar,
+  columns = 1,
+  floatingAction,
   bottomInset = 0,
 }: ListTemplateProps<T>) {
   const t = useTheme();
@@ -98,6 +124,9 @@ export function ListTemplate<T>({
     <View style={s.root}>
       {header}
       <FlatList
+        key={columns}
+        numColumns={columns}
+        columnWrapperStyle={columns > 1 ? s.columns : undefined}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
@@ -115,6 +144,11 @@ export function ListTemplate<T>({
         contentContainerStyle={[
           data.length === 0 ? s.grow : null,
           selectionBar ? null : { paddingBottom: bottomInset },
+          floatingAction
+            ? {
+                paddingBottom: bottomInset + t.controlSize.md + t.space[4] * 2,
+              }
+            : null,
         ]}
         refreshControl={
           onRefresh ? (
@@ -123,6 +157,21 @@ export function ListTemplate<T>({
         }
         onEndReached={onEndReached}
       />
+      {floatingAction ? (
+        <PressableBase
+          onPress={floatingAction.onPress}
+          accessibilityLabel={floatingAction.label}
+          style={[s.fab, { bottom: t.space[4] + bottomInset }]}
+        >
+          {renderIcon(floatingAction.icon ?? PlusGlyph, {
+            color: t.colors.primaryForeground,
+            size: t.iconSize.md,
+          })}
+          <Text weight="bold" style={s.fabText}>
+            {floatingAction.label}
+          </Text>
+        </PressableBase>
+      ) : null}
       {selectionBar}
     </View>
   );
