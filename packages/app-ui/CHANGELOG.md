@@ -1,5 +1,14 @@
 # @ezpg/app-ui
 
+## 0.11.0
+
+### Minor Changes
+
+- 운영 화면 개편 부품: StoreHeader · StoreMark · StoreSheet(스토어 이름 ▾ → 전환 시트), TaskTiles(할 일 4칸), StageBar(주문 단계 띠), StatusSteps(진행 단계), ProductTile · ProductTileSpacer, InboxRow(받은편지함 행), QuickActions(바로가기 칸), SiteSummary(폰 모양 사이트 미리보기 머리), ActionGrid(편집 2열 칸)
+  - ListTemplate columns(격자) · floatingAction(떠 있는 알약 버튼), StatCard meta 줄, `@ezpg/app-ui/charts` MiniBars(7일 막대)
+  - 사진 없는 Photo · ListRow 이미지를 웹과 같은 타일 색 + 사진 아이콘으로(Photo seed · tileColor, 토큰 tile)
+  - 선 아이콘 Truck · Return · Star · Image · Globe · Palette · Chart · Card · Clock · Sparkles · Store · File · Wallet · Link · Users · Phone · Eye · Share
+
 ## 0.10.0
 
 ### Minor Changes
