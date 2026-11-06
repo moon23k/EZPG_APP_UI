@@ -39,3 +39,5 @@ export type {
   PreviewTemplateAction,
   PreviewTemplateProps,
 } from './preview-template';
+export { SplitPreviewTemplate } from './split-preview-template';
+export type { SplitPreviewTemplateProps } from './split-preview-template';
