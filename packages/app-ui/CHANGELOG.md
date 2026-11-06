@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.14.0
+
+### Minor Changes
+
+- SplitPreviewTemplate(위 미리보기 · 아래 편집)
+
 ## 0.13.0
 
 ### Minor Changes
