@@ -28,7 +28,7 @@ const useStyles = makeStyles((t) => ({
     paddingBottom: t.space[5],
     gap: t.space[5],
     borderRadius: t.radius.lg,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
     boxShadow: t.shadow.md,
   },
   title: {

@@ -41,7 +41,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
 }));
 

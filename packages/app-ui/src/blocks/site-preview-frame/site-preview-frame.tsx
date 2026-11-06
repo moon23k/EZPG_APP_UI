@@ -40,7 +40,7 @@ const useStyles = makeStyles((t) => ({
     flex: 1,
     overflow: 'hidden',
     borderRadius: 28,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   bar: {
     flexDirection: 'row',

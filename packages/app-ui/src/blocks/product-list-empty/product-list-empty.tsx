@@ -45,7 +45,7 @@ const useStyles = makeStyles((t) => ({
     borderWidth: 1.5,
     borderStyle: 'dashed',
     borderColor: t.colors.mutedForeground,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   pressed: { backgroundColor: t.colors.muted },
   card: {

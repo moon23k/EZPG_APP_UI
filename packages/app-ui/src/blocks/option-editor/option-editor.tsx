@@ -39,7 +39,7 @@ const useStyles = makeStyles((t) => ({
     gap: t.space[3],
     minHeight: Math.max(t.minTouchSize, 56),
     paddingHorizontal: t.space[4],
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   separator: { borderTopWidth: 1, borderTopColor: t.colors.border },
   pressed: { backgroundColor: t.colors.muted },

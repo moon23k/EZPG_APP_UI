@@ -81,7 +81,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.md,
     borderWidth: 1,
     borderColor: t.colors.input,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   pressed: { backgroundColor: t.colors.muted },
 }));

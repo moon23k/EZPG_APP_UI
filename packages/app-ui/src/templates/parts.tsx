@@ -52,7 +52,7 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.border,
     borderRadius: t.radius.lg,
     overflow: 'hidden',
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   cardHead: {
     flexDirection: 'row',
@@ -163,7 +163,7 @@ export function ListSection({
         <View style={s.sectionHead}>
           <Text
             variant="label"
-            tone="muted"
+            tone="point"
             weight="semibold"
             accessibilityRole="header"
           >

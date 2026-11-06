@@ -22,7 +22,7 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.space[4],
     borderTopWidth: 1,
     borderTopColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
     boxShadow: t.shadow.md,
   },
   info: { flex: 1, gap: t.space[1] },

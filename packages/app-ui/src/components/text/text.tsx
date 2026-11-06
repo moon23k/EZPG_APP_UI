@@ -5,7 +5,7 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
 export type TextTone =
-  'default' | 'muted' | 'primary' | 'warning' | 'danger' | 'success';
+  'default' | 'muted' | 'primary' | 'point' | 'warning' | 'danger' | 'success';
 
 export type TextProps = RNTextProps & {
   ref?: Ref<ComponentRef<typeof RNText>>;
@@ -27,6 +27,7 @@ const useStyles = makeStyles((t) => ({
   default: { color: t.colors.foreground },
   muted: { color: t.colors.mutedForeground },
   primary: { color: t.colors.primary },
+  point: { color: t.colors.point },
   warning: { color: t.colors.warningText },
   danger: { color: t.colors.danger },
   success: { color: t.colors.success },

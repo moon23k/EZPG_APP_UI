@@ -14,7 +14,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.lg,
     borderWidth: 1,
     borderColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   pressed: { backgroundColor: t.colors.muted },
   selected: {

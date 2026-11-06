@@ -31,7 +31,7 @@ const useStyles = makeStyles((t) => ({
     minHeight: t.listRow.threeLine,
     paddingVertical: t.space[2],
     paddingHorizontal: t.layout.screenX,
-    backgroundColor: t.colors.background,
+    backgroundColor: 'transparent',
   },
   pressed: { backgroundColor: t.colors.muted },
   thumb: { width: t.listRow.oneLine },

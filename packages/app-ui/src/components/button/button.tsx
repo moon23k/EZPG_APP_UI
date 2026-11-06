@@ -51,7 +51,7 @@ const useStyles = makeStyles((t) => ({
   primary: { backgroundColor: t.colors.primary },
   secondary: { backgroundColor: t.colors.muted },
   outline: {
-    backgroundColor: t.colors.background,
+    backgroundColor: 'transparent',
     borderColor: t.colors.input,
   },
   ghost: { backgroundColor: 'transparent' },

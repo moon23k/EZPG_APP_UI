@@ -38,7 +38,7 @@ const useStyles = makeStyles((t) => ({
     gap: t.space[3],
     borderTopLeftRadius: t.radius.lg,
     borderTopRightRadius: t.radius.lg,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
     boxShadow: t.shadow.md,
   },
   handle: {

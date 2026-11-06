@@ -31,7 +31,7 @@ const useStyles = makeStyles((t) => ({
     paddingVertical: t.space[3],
     paddingHorizontal: t.space[3],
     borderRadius: t.radius.lg,
-    backgroundColor: t.colors.muted,
+    backgroundColor: t.colors.surface,
   },
   pressed: { backgroundColor: t.colors.border },
   count: {
@@ -56,13 +56,17 @@ export function TaskTiles({ items, style }: TaskTilesProps) {
           pressedStyle={s.pressed}
         >
           {renderIcon(item.icon, {
-            color: t.colors.primary,
+            color: item.count > 0 ? t.colors.point : t.colors.mutedForeground,
             size: t.iconSize.md,
           })}
           <Text variant="label" numberOfLines={1}>
             {item.label}
           </Text>
-          <Text weight="bold" style={s.count}>
+          <Text
+            weight="bold"
+            tone={item.count > 0 ? 'point' : 'muted'}
+            style={s.count}
+          >
             {item.count}
           </Text>
           <Text variant="caption" tone="muted" numberOfLines={1}>

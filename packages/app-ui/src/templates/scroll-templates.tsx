@@ -92,7 +92,11 @@ function ScrollTemplate({
               />
             ) : null}
             <View style={s.headingText}>
-              <Text variant="screenTitle" accessibilityRole="header">
+              <Text
+                variant="screenTitle"
+                tone="point"
+                accessibilityRole="header"
+              >
                 {heading.title}
               </Text>
               {heading.caption ? (

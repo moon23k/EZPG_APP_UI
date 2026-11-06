@@ -42,7 +42,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.md,
     borderWidth: 1,
     borderColor: t.colors.input,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   focused: {
     borderColor: t.colors.primaryEdge,

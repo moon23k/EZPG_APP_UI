@@ -28,7 +28,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.md,
     borderWidth: 1,
     borderColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   selected: {
     borderColor: t.colors.primaryTint,

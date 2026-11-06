@@ -4,6 +4,7 @@ export type ColorScheme = 'light' | 'dark';
 
 export type ThemeColors = {
   background: string;
+  surface: string;
   foreground: string;
   muted: string;
   mutedForeground: string;
@@ -15,6 +16,7 @@ export type ThemeColors = {
   primaryTint: string;
   primaryContainer: string;
   primaryEdge: string;
+  point: string;
   danger: string;
   dangerForeground: string;
   success: string;

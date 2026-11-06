@@ -41,7 +41,7 @@ const useStyles = makeStyles((t) => ({
     overflow: 'hidden',
     borderTopLeftRadius: t.radius.lg,
     borderTopRightRadius: t.radius.lg,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   tools: {
     flexDirection: 'row',
@@ -63,7 +63,7 @@ const useStyles = makeStyles((t) => ({
     borderTopRightRadius: t.radius.lg,
     borderTopWidth: 1,
     borderColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   grab: {
     alignSelf: 'center',

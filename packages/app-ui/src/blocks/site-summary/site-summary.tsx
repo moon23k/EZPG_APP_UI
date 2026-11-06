@@ -37,7 +37,7 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.foreground,
     borderRadius: t.radius.lg,
     overflow: 'hidden',
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
   },
   body: { flex: 1, gap: t.space[1], paddingTop: t.space[2] },
   actions: {

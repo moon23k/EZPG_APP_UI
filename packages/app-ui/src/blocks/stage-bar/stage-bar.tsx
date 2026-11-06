@@ -27,7 +27,7 @@ const useStyles = makeStyles((t) => ({
     marginHorizontal: t.layout.screenX,
     padding: t.space[1],
     borderRadius: t.radius.lg,
-    backgroundColor: t.colors.muted,
+    backgroundColor: t.colors.surface,
   },
   stage: {
     flex: 1,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((t) => ({
     paddingVertical: t.space[2],
     borderRadius: t.radius.md,
   },
-  on: { backgroundColor: t.colors.background, boxShadow: t.shadow.sm },
+  on: { backgroundColor: t.colors.primaryTint },
   count: {
     fontSize: t.typography.title.fontSize,
     lineHeight: t.typography.title.lineHeight,
@@ -75,7 +75,7 @@ export function StageBar<T extends string>({
             >
               <Text
                 weight="bold"
-                tone={live ? 'primary' : 'muted'}
+                tone={live ? 'point' : 'muted'}
                 style={s.count}
               >
                 {item.count ?? 0}

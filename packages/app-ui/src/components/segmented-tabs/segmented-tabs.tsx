@@ -29,7 +29,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
     borderRadius: t.radius.sm,
   },
-  selected: { backgroundColor: t.colors.background, boxShadow: t.shadow.sm },
+  selected: { backgroundColor: t.colors.surface, boxShadow: t.shadow.sm },
   label: {
     fontFamily: t.fontFamily,
     fontSize: t.typography.label.fontSize,

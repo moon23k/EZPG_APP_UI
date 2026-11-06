@@ -40,7 +40,7 @@ const useStyles = makeStyles((t) => ({
     minHeight: t.listRow.oneLine,
     paddingVertical: t.space[2],
     paddingHorizontal: t.layout.screenX,
-    backgroundColor: t.colors.background,
+    backgroundColor: 'transparent',
   },
   twoLine: { minHeight: t.listRow.twoLine },
   threeLine: { minHeight: t.listRow.threeLine },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((t) => ({
   value: {
     ...t.typography.bodyLg,
     fontFamily: t.fontFamily,
-    color: t.colors.mutedForeground,
+    color: t.colors.foreground,
     fontVariant: ['tabular-nums'],
   },
   meta: {
@@ -65,6 +65,7 @@ const useStyles = makeStyles((t) => ({
     fontFamily: t.fontFamily,
     fontWeight: '600',
   },
+  money: { color: t.colors.point },
   muted: { color: t.colors.mutedForeground },
   warning: { color: t.colors.warningText },
   danger: { color: t.colors.danger },
@@ -155,7 +156,7 @@ export function ListRow({
           {value ? (
             <Text
               maxFontSizeMultiplier={t.maxFontScale}
-              style={[s.value, strong && s.strong]}
+              style={[s.value, strong && s.strong, strong && s.money]}
             >
               {value}
             </Text>

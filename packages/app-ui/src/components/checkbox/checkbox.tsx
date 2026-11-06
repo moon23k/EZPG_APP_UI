@@ -31,7 +31,7 @@ const useStyles = makeStyles((t) => ({
     borderRadius: t.radius.sm,
     borderWidth: 1,
     borderColor: t.colors.border,
-    backgroundColor: t.colors.background,
+    backgroundColor: t.colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
