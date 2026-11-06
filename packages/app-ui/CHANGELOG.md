@@ -1,5 +1,15 @@
 # @ezpg/app-ui
 
+## 0.12.0
+
+### Minor Changes
+
+- 색을 스톤 바탕 · 잉크 글자 · 주황 포인트로: background #f5f5f4, foreground #2a2622, primary #c2410c
+  - 색 역할 surface(바탕 위 흰 면) · point(글자용 주황) 추가, Text tone `point` 추가
+  - 카드 · 입력칸 · 시트 · 대화상자 · 선택 칸은 surface, ListRow · ProductRow · 외곽선 Button은 투명
+  - 섹션 제목 · 상세 큰 제목 · 합계 금액 · 건수는 point, ListRow 값은 잉크
+  - TaskTiles는 1건 이상일 때만 point, StageBar는 흰 면에 현재 단계 옅은 주황
+
 ## 0.11.0
 
 ### Minor Changes
