@@ -1,5 +1,14 @@
 # @ezpg/app-ui
 
+## 0.13.0
+
+### Minor Changes
+
+- 주문 처리: Dialog 본문, ListRow 선택 표시(라디오 · 체크), Field 뒤쪽 버튼, ScanGlyph, ScanModal, SelectionTemplate, BulkShipList 한 줄 입력
+- 요약 카드: Panel, SummaryHeader, MetricCard, ValueTiles, TimeSpanCard, YearBand, AnswerChips, HistoryList, UsageCard, ToggleCard
+- Stepper, RequestCard, PhotoGrid, PreviewTemplate
+- ListRow 아이콘 강조, StatusBadge point, ListSection boxed, ProgressBar 숫자 숨김
+
 ## 0.12.1
 
 ### Patch Changes
