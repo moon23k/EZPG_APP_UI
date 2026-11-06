@@ -127,15 +127,24 @@ export function ListSection({
   action,
   inset,
   card,
+  boxed,
   children,
 }: {
   title?: string;
   action?: ReactNode;
   inset?: boolean;
   card?: boolean;
+  boxed?: boolean;
   children: ReactNode;
 }) {
   const s = useStyles();
+  if (boxed) {
+    return (
+      <ListSection title={title} action={action}>
+        <ListSection card>{children}</ListSection>
+      </ListSection>
+    );
+  }
   if (card) {
     const rows = Children.toArray(children);
     return (

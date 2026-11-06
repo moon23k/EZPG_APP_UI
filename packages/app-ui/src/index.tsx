@@ -68,6 +68,7 @@ export * from './components/progress-bar';
 export * from './components/search-field';
 export * from './components/status-steps';
 export * from './components/step-slider';
+export * from './components/stepper';
 export * from './components/progress-circle';
 export * from './components/result-mark';
 export * from './components/page-header';

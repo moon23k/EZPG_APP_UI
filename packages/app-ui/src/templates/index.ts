@@ -34,3 +34,8 @@ export type { GroupProps } from './group';
 export type { NoticeReason, TemplateAction, TemplateNotice } from './parts';
 export { SelectionTemplate } from './selection-template';
 export type { SelectionTemplateProps } from './selection-template';
+export { PreviewTemplate } from './preview-template';
+export type {
+  PreviewTemplateAction,
+  PreviewTemplateProps,
+} from './preview-template';

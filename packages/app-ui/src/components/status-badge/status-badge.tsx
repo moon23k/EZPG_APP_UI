@@ -3,7 +3,7 @@ import type { Tone } from '../../theme/contract';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
-export type StatusBadgeTone = Exclude<Tone, 'primary'>;
+export type StatusBadgeTone = Exclude<Tone, 'primary'> | 'point';
 
 export type StatusBadgeProps = {
   tone?: StatusBadgeTone;
@@ -34,6 +34,7 @@ export function StatusBadge({
   const s = useStyles();
   const [bg, fg] = {
     neutral: [t.colors.muted, t.colors.mutedForeground],
+    point: [t.colors.primaryTint, t.colors.point],
     info: [t.colors.info, t.colors.infoForeground],
     success: [t.colors.success, t.colors.successForeground],
     warning: [t.colors.warning, t.colors.warningForeground],
