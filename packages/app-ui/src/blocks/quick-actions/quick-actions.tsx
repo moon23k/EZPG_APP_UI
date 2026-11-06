@@ -29,7 +29,7 @@ const useStyles = makeStyles((t) => ({
     gap: t.space[1],
     paddingVertical: t.space[3],
     borderRadius: t.radius.lg,
-    backgroundColor: t.colors.muted,
+    backgroundColor: t.colors.surface,
   },
   pressed: { backgroundColor: t.colors.border },
 }));
