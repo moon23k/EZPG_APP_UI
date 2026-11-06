@@ -36,6 +36,7 @@ export {
   PlusGlyph,
   ReceiptGlyph,
   ReturnGlyph,
+  ScanGlyph,
   SearchGlyph,
   ShareGlyph,
   SparklesGlyph,

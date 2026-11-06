@@ -9,6 +9,7 @@ export type DialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  description?: string;
   onConfirm: () => void;
   confirmLabel?: string;
   cancelLabel?: string;
@@ -39,6 +40,14 @@ const useStyles = makeStyles((t) => ({
     textAlign: 'center',
     color: t.colors.foreground,
   },
+  copy: { gap: t.space[2] },
+  description: {
+    fontFamily: t.fontFamily,
+    fontSize: t.typography.body.fontSize,
+    lineHeight: t.typography.body.lineHeight,
+    textAlign: 'center',
+    color: t.colors.mutedForeground,
+  },
   actions: { flexDirection: 'row', gap: t.space[2] },
   action: { flex: 1, borderRadius: t.radius.lg },
 }));
@@ -47,6 +56,7 @@ export function Dialog({
   open,
   onOpenChange,
   title,
+  description,
   onConfirm,
   confirmLabel = '확인',
   cancelLabel = '취소',
@@ -91,13 +101,23 @@ export function Dialog({
             },
           ]}
         >
-          <Text
-            accessibilityRole="header"
-            maxFontSizeMultiplier={t.maxFontScale}
-            style={s.title}
-          >
-            {title}
-          </Text>
+          <View style={s.copy}>
+            <Text
+              accessibilityRole="header"
+              maxFontSizeMultiplier={t.maxFontScale}
+              style={s.title}
+            >
+              {title}
+            </Text>
+            {description ? (
+              <Text
+                maxFontSizeMultiplier={t.maxFontScale}
+                style={s.description}
+              >
+                {description}
+              </Text>
+            ) : null}
+          </View>
           <View style={s.actions}>
             <Button
               variant="secondary"

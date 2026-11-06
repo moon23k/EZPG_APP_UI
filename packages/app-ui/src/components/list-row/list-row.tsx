@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { ChevronGlyph } from '../../internal/glyphs';
+import { CheckGlyph, ChevronGlyph } from '../../internal/glyphs';
 import { renderIcon, type IconSlot } from '../../internal/icon';
 import {
   PressableBase,
@@ -28,9 +28,12 @@ export type ListRowProps = Omit<
   highlighted?: boolean;
   strong?: boolean;
   titleLines?: number;
+  selection?: 'check' | 'radio';
+  selected?: boolean;
 };
 
 const IMAGE = 48;
+const MARK = 22;
 
 const useStyles = makeStyles((t) => ({
   row: {
@@ -80,6 +83,19 @@ const useStyles = makeStyles((t) => ({
     color: t.colors.mutedForeground,
   },
   trailing: { flexDirection: 'row', alignItems: 'center', gap: t.space[2] },
+  mark: {
+    width: MARK,
+    height: MARK,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: t.colors.input,
+    backgroundColor: t.colors.surface,
+  },
+  check: { borderRadius: t.radius.sm },
+  radio: { borderRadius: t.radius.full },
+  checkOn: { borderColor: t.colors.primary, backgroundColor: t.colors.primary },
+  radioOn: { borderWidth: 6, borderColor: t.colors.primary },
   strong: { color: t.colors.foreground, fontWeight: '700' },
 }));
 
@@ -97,6 +113,8 @@ export function ListRow({
   highlighted = false,
   strong = false,
   titleLines = 1,
+  selection,
+  selected = false,
   onPress,
   style,
   ...rest
@@ -108,8 +126,31 @@ export function ListRow({
   const lines = [overline, description].filter(Boolean).length;
   const height = lines === 2 ? s.threeLine : lines === 1 ? s.twoLine : null;
 
+  const selectionProps = selection
+    ? ({
+        accessibilityRole: selection === 'check' ? 'checkbox' : 'radio',
+        accessibilityState: { checked: selected },
+      } as const)
+    : undefined;
+
   const content = (
     <>
+      {selection ? (
+        <View
+          style={[
+            s.mark,
+            s[selection],
+            selected && (selection === 'check' ? s.checkOn : s.radioOn),
+          ]}
+        >
+          {selected && selection === 'check' ? (
+            <CheckGlyph
+              color={t.colors.primaryForeground}
+              size={t.iconSize.sm}
+            />
+          ) : null}
+        </View>
+      ) : null}
       {leading ? renderIcon(leading, icon) : null}
       {image !== undefined ? (
         <Photo
@@ -191,6 +232,7 @@ export function ListRow({
   return (
     <PressableBase
       {...rest}
+      {...selectionProps}
       onPress={onPress}
       pressedStyle={s.pressed}
       style={[

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { AlertGlyph } from '../../internal/glyphs';
 import { renderIcon, type IconSlot } from '../../internal/icon';
+import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 
@@ -21,6 +22,8 @@ export type FieldProps = Omit<TextInputProps, 'style'> & {
   warning?: string;
   leading?: IconSlot;
   trailing?: IconSlot;
+  onTrailingPress?: () => void;
+  trailingLabel?: string;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -107,6 +110,8 @@ export function Field({
   warning,
   leading,
   trailing,
+  onTrailingPress,
+  trailingLabel,
   style,
   editable = true,
   onFocus,
@@ -158,7 +163,15 @@ export function Field({
             onBlur?.(e);
           }}
         />
-        {error ? (
+        {trailing && onTrailingPress ? (
+          <PressableBase
+            accessibilityRole="button"
+            accessibilityLabel={trailingLabel}
+            onPress={onTrailingPress}
+          >
+            {renderIcon(trailing, { ...icon, color: t.colors.foreground })}
+          </PressableBase>
+        ) : error ? (
           <AlertGlyph
             filled
             color={t.colors.danger}

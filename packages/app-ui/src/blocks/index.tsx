@@ -32,3 +32,4 @@ export * from './product-tile';
 export * from './quick-actions';
 export * from './action-grid';
 export * from './site-summary';
+export * from './scan-modal';

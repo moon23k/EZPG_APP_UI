@@ -32,3 +32,5 @@ export { ListSection } from './parts';
 export { Group } from './group';
 export type { GroupProps } from './group';
 export type { NoticeReason, TemplateAction, TemplateNotice } from './parts';
+export { SelectionTemplate } from './selection-template';
+export type { SelectionTemplateProps } from './selection-template';

@@ -31,6 +31,42 @@ import {
 } from './tab-icons';
 import type { IconRenderProps } from './icon';
 
+export function ScanGlyph({ color, size }: IconRenderProps) {
+  const stroke = Math.max(1.5, size / 12);
+  const arm = size * 0.3;
+  const corner = (v: 'top' | 'bottom', h: 'left' | 'right') => ({
+    position: 'absolute' as const,
+    width: arm,
+    height: arm,
+    borderColor: color,
+    [v]: 0,
+    [h]: 0,
+    [v === 'top' ? 'borderTopWidth' : 'borderBottomWidth']: stroke,
+    [h === 'left' ? 'borderLeftWidth' : 'borderRightWidth']: stroke,
+  });
+  return (
+    <View style={{ width: size, height: size }}>
+      <View style={corner('top', 'left')} />
+      <View style={corner('top', 'right')} />
+      <View style={corner('bottom', 'left')} />
+      <View style={corner('bottom', 'right')} />
+      <View
+        style={[
+          styles.scanLine,
+          {
+            left: size * 0.12,
+            right: size * 0.12,
+            top: (size - stroke) / 2,
+            height: stroke,
+            borderRadius: stroke,
+            backgroundColor: color,
+          },
+        ]}
+      />
+    </View>
+  );
+}
+
 export function SearchGlyph({ color, size }: IconRenderProps) {
   const ring = size * 0.62;
   const stroke = Math.max(1.5, size / 10);
@@ -102,6 +138,7 @@ export function CheckGlyph({ color, size }: IconRenderProps) {
 }
 
 const styles = StyleSheet.create({
+  scanLine: { position: 'absolute' },
   absolute: { position: 'absolute' },
   center: { alignItems: 'center', justifyContent: 'center' },
 });

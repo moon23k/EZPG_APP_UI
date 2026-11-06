@@ -10,6 +10,9 @@ import {
   Switch,
   ToastProvider,
   useToast,
+  Field,
+  ListRow,
+  ScanGlyph,
 } from '../index';
 
 describe('Button', () => {
@@ -214,5 +217,54 @@ describe('Calendar', () => {
     );
     await fireEvent.press(screen.getByLabelText('11월 6일 금요일 12만'));
     expect(onValueChange).toHaveBeenLastCalledWith({});
+  });
+});
+
+describe('selection and trailing action', () => {
+  it('marks list rows as radio or checkbox', async () => {
+    const onPress = jest.fn();
+    await render(
+      <>
+        <ListRow
+          title="상품 품절"
+          selection="radio"
+          selected
+          onPress={onPress}
+        />
+        <ListRow title="전체 선택" selection="check" onPress={onPress} />
+      </>
+    );
+    expect(screen.getByRole('radio', { checked: true })).toBeTruthy();
+    expect(screen.getByRole('checkbox', { checked: false })).toBeTruthy();
+    await fireEvent.press(screen.getByText('상품 품절'));
+    expect(onPress).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the trailing action available beside an error', async () => {
+    const onScan = jest.fn();
+    await render(
+      <Field
+        label="송장 번호"
+        error="숫자만 입력해 주세요"
+        trailing={ScanGlyph}
+        onTrailingPress={onScan}
+        trailingLabel="송장 스캔"
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('송장 스캔'));
+    expect(onScan).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows the dialog description', async () => {
+    await render(
+      <Dialog
+        open
+        onOpenChange={() => {}}
+        title="주문을 취소할까요?"
+        description="취소하면 되돌릴 수 없어요."
+        onConfirm={() => {}}
+      />
+    );
+    expect(screen.getByText('취소하면 되돌릴 수 없어요.')).toBeTruthy();
   });
 });
