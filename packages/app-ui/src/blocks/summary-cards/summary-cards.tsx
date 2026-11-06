@@ -438,7 +438,7 @@ export function UsageCard({ title, used, total, caption }: UsageCardProps) {
           {caption}
         </Text>
       </View>
-      <ProgressBar done={used} total={total} />
+      <ProgressBar done={used} total={total} plain />
     </Panel>
   );
 }

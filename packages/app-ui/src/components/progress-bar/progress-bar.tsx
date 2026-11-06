@@ -6,6 +6,7 @@ export type ProgressBarProps = {
   done: number;
   total: number;
   label?: string;
+  plain?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -44,7 +45,13 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-export function ProgressBar({ done, total, label, style }: ProgressBarProps) {
+export function ProgressBar({
+  done,
+  total,
+  label,
+  plain = false,
+  style,
+}: ProgressBarProps) {
   const t = useTheme();
   const s = useStyles();
   const max = Math.max(0, total);
@@ -58,20 +65,22 @@ export function ProgressBar({ done, total, label, style }: ProgressBarProps) {
       accessibilityValue={{ min: 0, max, now }}
       style={[s.root, style]}
     >
-      <View style={s.head}>
-        {label ? (
-          <Text
-            numberOfLines={2}
-            maxFontSizeMultiplier={t.maxFontScale}
-            style={s.label}
-          >
-            {label}
+      {plain ? null : (
+        <View style={s.head}>
+          {label ? (
+            <Text
+              numberOfLines={2}
+              maxFontSizeMultiplier={t.maxFontScale}
+              style={s.label}
+            >
+              {label}
+            </Text>
+          ) : null}
+          <Text maxFontSizeMultiplier={t.maxFontScale} style={s.count}>
+            <Text style={s.strong}>{now}</Text>/{max}
           </Text>
-        ) : null}
-        <Text maxFontSizeMultiplier={t.maxFontScale} style={s.count}>
-          <Text style={s.strong}>{now}</Text>/{max}
-        </Text>
-      </View>
+        </View>
+      )}
       <View style={s.track}>
         <View style={[s.fill, { width: `${ratio * 100}%` }]} />
       </View>
