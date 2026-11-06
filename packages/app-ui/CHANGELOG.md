@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.12.1
+
+### Patch Changes
+
+- QuickActions · ActionGrid 칸을 회색에서 바탕 위 흰 면(surface)으로, TaskTiles와 통일
+
 ## 0.12.0
 
 ### Minor Changes
