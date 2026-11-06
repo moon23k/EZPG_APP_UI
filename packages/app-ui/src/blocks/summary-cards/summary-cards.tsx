@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
 import { Avatar } from '../../components/avatar/avatar';
+import { Button } from '../../components/button/button';
 import { Photo } from '../../components/photo/photo';
 import { ProgressBar } from '../../components/progress-bar/progress-bar';
 import { StatusBadge } from '../../components/status-badge/status-badge';
@@ -10,6 +11,8 @@ import { UsersGlyph } from '../../internal/glyphs';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
+
+const LONG_ANSWER = 24;
 
 const useStyles = makeStyles((t) => ({
   panel: {
@@ -28,6 +31,7 @@ const useStyles = makeStyles((t) => ({
     gap: t.space[3],
   },
   grow: { flex: 1, gap: t.space[1] },
+  buttons: { flexDirection: 'row', gap: t.space[2] },
   meta: { flexDirection: 'row', alignItems: 'center', gap: t.space[1] },
   thumb: { width: 72 },
   side: { flex: 1, gap: t.space[1] },
@@ -85,6 +89,7 @@ export type SummaryHeaderProps = {
   badge?: string;
   subtitle?: string;
   people?: string;
+  actions?: readonly { key: string; label: string; onPress: () => void }[];
   children?: ReactNode;
 };
 
@@ -96,6 +101,7 @@ export function SummaryHeader({
   badge,
   subtitle,
   people,
+  actions,
   children,
 }: SummaryHeaderProps) {
   const t = useTheme();
@@ -135,6 +141,21 @@ export function SummaryHeader({
         </View>
         {badge ? <StatusBadge tone="point">{badge}</StatusBadge> : null}
       </View>
+      {actions?.length ? (
+        <View style={s.buttons}>
+          {actions.map((item) => (
+            <Button
+              key={item.key}
+              variant="outline"
+              size="sm"
+              style={s.side}
+              onPress={item.onPress}
+            >
+              {item.label}
+            </Button>
+          ))}
+        </View>
+      ) : null}
       {children}
     </Panel>
   );
@@ -346,9 +367,15 @@ export function AnswerChips({ items }: AnswerChipsProps) {
             {item.label}
           </Text>
           <View style={s.chips}>
-            {item.values.map((value) => (
-              <StatusBadge key={value}>{value}</StatusBadge>
-            ))}
+            {item.values.map((value) =>
+              value.length > LONG_ANSWER ? (
+                <Text key={value} variant="body">
+                  {value}
+                </Text>
+              ) : (
+                <StatusBadge key={value}>{value}</StatusBadge>
+              )
+            )}
           </View>
         </View>
       ))}
