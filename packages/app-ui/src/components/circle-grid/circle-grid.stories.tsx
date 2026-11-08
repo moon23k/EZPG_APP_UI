@@ -26,16 +26,19 @@ const items = [
 
 function Demo() {
   const [value, setValue] = useState<string | null>('bread');
+  const [many, setMany] = useState<string[]>(['roastery', 'clothes']);
   return (
     <>
       <Section title="3열 · 하나 선택">
         <CircleGrid items={items} value={value} onValueChange={setValue} />
       </Section>
-      <Section title="4열">
+      <Section title="4열 · 여러 개 선택">
         <CircleGrid
+          multiple
+          max={10}
           items={items}
-          value={null}
-          onValueChange={() => {}}
+          value={many}
+          onValueChange={setMany}
           columns={4}
         />
       </Section>

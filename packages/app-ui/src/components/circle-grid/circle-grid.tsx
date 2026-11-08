@@ -21,10 +21,21 @@ export type CircleGridItem<T extends string> = {
   glyph?: string;
 };
 
-export type CircleGridProps<T extends string> = {
-  items: readonly CircleGridItem<T>[];
+type Single<T extends string> = {
+  multiple?: false;
   value: T | null;
   onValueChange: (value: T) => void;
+};
+
+type Multiple<T extends string> = {
+  multiple: true;
+  value: readonly T[];
+  onValueChange: (value: T[]) => void;
+  max?: number;
+};
+
+export type CircleGridProps<T extends string> = (Single<T> | Multiple<T>) & {
+  items: readonly CircleGridItem<T>[];
   columns?: number;
   style?: StyleProp<ViewStyle>;
 };
@@ -107,27 +118,40 @@ function Circle({
   );
 }
 
-export function CircleGrid<T extends string>({
-  items,
-  value,
-  onValueChange,
-  columns = 3,
-  style,
-}: CircleGridProps<T>) {
+export function CircleGrid<T extends string>(props: CircleGridProps<T>) {
+  const { items, columns = 3, style } = props;
   const t = useTheme();
   const s = useStyles();
   const width = `${100 / columns}%` as const;
+  const isOn = (v: T) =>
+    props.multiple ? props.value.includes(v) : props.value === v;
+  const press = (v: T) => {
+    if (!props.multiple) {
+      props.onValueChange(v);
+      return;
+    }
+    if (props.value.includes(v)) {
+      props.onValueChange(props.value.filter((x) => x !== v));
+    } else if (props.max === undefined || props.value.length < props.max) {
+      props.onValueChange([...props.value, v]);
+    }
+  };
   return (
-    <View accessibilityRole="radiogroup" style={[s.root, style]}>
+    <View
+      accessibilityRole={props.multiple ? undefined : 'radiogroup'}
+      style={[s.root, style]}
+    >
       {items.map((item) => {
-        const on = item.value === value;
+        const on = isOn(item.value);
         return (
           <PressableBase
             key={item.value}
-            accessibilityRole="radio"
-            accessibilityState={{ selected: on }}
+            accessibilityRole={props.multiple ? 'checkbox' : 'radio'}
+            accessibilityState={
+              props.multiple ? { checked: on } : { selected: on }
+            }
             accessibilityLabel={item.label}
-            onPress={() => onValueChange(item.value)}
+            onPress={() => press(item.value)}
             style={[s.cell, { width }]}
           >
             <View style={[s.ring, on && s.ringOn]}>

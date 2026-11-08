@@ -73,11 +73,30 @@ const useStyles = makeStyles((t) => ({
 
 export type PanelProps = {
   children: ReactNode;
+  onPress?: () => void;
+  accessibilityLabel?: string;
   style?: StyleProp<ViewStyle>;
 };
 
-export function Panel({ children, style }: PanelProps) {
+export function Panel({
+  children,
+  onPress,
+  accessibilityLabel,
+  style,
+}: PanelProps) {
   const s = useStyles();
+  if (onPress) {
+    return (
+      <PressableBase
+        onPress={onPress}
+        accessibilityLabel={accessibilityLabel}
+        style={[s.panel, style]}
+        pressedStyle={s.pressed}
+      >
+        {children}
+      </PressableBase>
+    );
+  }
   return <View style={[s.panel, style]}>{children}</View>;
 }
 
@@ -90,6 +109,7 @@ export type SummaryHeaderProps = {
   subtitle?: string;
   people?: string;
   actions?: readonly { key: string; label: string; onPress: () => void }[];
+  onPress?: () => void;
   children?: ReactNode;
 };
 
@@ -102,12 +122,13 @@ export function SummaryHeader({
   subtitle,
   people,
   actions,
+  onPress,
   children,
 }: SummaryHeaderProps) {
   const t = useTheme();
   const s = useStyles();
   return (
-    <Panel>
+    <Panel onPress={onPress} accessibilityLabel={onPress ? title : undefined}>
       <View style={s.row}>
         {image !== undefined ? (
           <Photo
