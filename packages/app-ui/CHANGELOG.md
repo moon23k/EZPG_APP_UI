@@ -1,5 +1,12 @@
 # @ezpg/app-ui
 
+## 0.15.0
+
+### Minor Changes
+
+- CircleGrid 여러 개 선택(multiple · max)
+- SummaryHeader 누르기(onPress)
+
 ## 0.14.0
 
 ### Minor Changes
