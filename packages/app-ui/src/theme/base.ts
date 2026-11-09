@@ -1,6 +1,6 @@
 export const semantic = {
   light: {
-    background: '#fafafa',
+    background: '#f4f4f5',
     surface: '#ffffff',
     foreground: '#1a1a1a',
     muted: '#f0f0f0',
@@ -8,10 +8,10 @@ export const semantic = {
     border: '#e3e3e3',
     input: '#c7c7c7',
     ring: '#a3a3a3',
-    primary: '#ed6431',
-    primaryForeground: '#1a1a1a',
+    primary: '#c54211',
+    primaryForeground: '#ffffff',
     primaryTint: '#fdf0ea',
-    primaryContainer: '#fbe0d6',
+    primaryContainer: '#f6d3c3',
     primaryEdge: '#ed6431',
     point: '#1a1a1a',
     danger: '#b91c1c',

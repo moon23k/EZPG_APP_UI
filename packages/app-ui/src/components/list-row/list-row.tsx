@@ -157,7 +157,7 @@ export function ListRow({
         ? renderIcon(
             leading,
             leadingTone === 'point'
-              ? { ...icon, color: t.colors.primary }
+              ? { ...icon, color: t.colors.mutedForeground }
               : icon
           )
         : null}

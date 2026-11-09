@@ -55,7 +55,7 @@ export function MiniBars({
               width={barWidth}
               height={h}
               rx={barWidth / 2 - 1}
-              fill={i === last ? t.colors.primary : t.colors.primaryContainer}
+              fill={i === last ? t.colors.primaryEdge : t.colors.border}
             />
           );
         })}

@@ -172,7 +172,7 @@ export function ListSection({
         <View style={s.sectionHead}>
           <Text
             variant="label"
-            tone="point"
+            tone="muted"
             weight="semibold"
             accessibilityRole="header"
           >
