@@ -56,7 +56,7 @@ export function TaskTiles({ items, style }: TaskTilesProps) {
           pressedStyle={s.pressed}
         >
           {renderIcon(item.icon, {
-            color: item.count > 0 ? t.colors.point : t.colors.mutedForeground,
+            color: item.count > 0 ? t.colors.primary : t.colors.mutedForeground,
             size: t.iconSize.md,
           })}
           <Text variant="label" numberOfLines={1}>

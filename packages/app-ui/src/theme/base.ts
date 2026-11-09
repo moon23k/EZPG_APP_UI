@@ -13,7 +13,7 @@ export const semantic = {
     primaryTint: '#fdf0ea',
     primaryContainer: '#fbe0d6',
     primaryEdge: '#ed6431',
-    point: '#ed6431',
+    point: '#1a1a1a',
     danger: '#b91c1c',
     dangerForeground: '#ffffff',
     success: '#15803d',

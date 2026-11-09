@@ -89,7 +89,7 @@ function Ring({ item, on }: { item: DialItem; on: boolean }) {
       <Text
         variant="caption"
         weight={on ? 'bold' : 'medium'}
-        tone={on ? 'primary' : 'muted'}
+        tone={on ? 'default' : 'muted'}
         style={s.value}
       >
         {item.text ?? (v ? signed(v) : '0')}
@@ -131,7 +131,7 @@ export function DialStrip({
             <Text
               variant="caption"
               weight={on ? 'bold' : 'regular'}
-              tone={on ? 'primary' : 'muted'}
+              tone={on ? 'default' : 'muted'}
             >
               {item.label}
             </Text>

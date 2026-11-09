@@ -84,7 +84,7 @@ export function InviteCard({
     const content = (
       <>
         <View style={s.small}>
-          <Text variant="bodyLg" weight="bold" tone="primary">
+          <Text variant="bodyLg" weight="bold">
             {initial(title)}
           </Text>
         </View>
@@ -118,9 +118,7 @@ export function InviteCard({
   return (
     <View style={[s.card, style]}>
       <View style={s.mark}>
-        <Text variant="title" tone="primary">
-          {initial(title)}
-        </Text>
+        <Text variant="title">{initial(title)}</Text>
       </View>
       <Text variant="title" accessibilityRole="header">
         {title}
