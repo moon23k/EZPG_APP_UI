@@ -9,7 +9,7 @@ export const semantic = {
     input: '#c7c7c7',
     ring: '#a3a3a3',
     primary: '#ed6431',
-    primaryForeground: '#ffffff',
+    primaryForeground: '#1a1a1a',
     primaryTint: '#fdf0ea',
     primaryContainer: '#fbe0d6',
     primaryEdge: '#ed6431',
