@@ -1,4 +1,13 @@
-import type { ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  type ComponentRef,
+  type ReactNode,
+  type RefObject,
+} from 'react';
 import {
   Image,
   Text as RNText,
@@ -10,6 +19,7 @@ import {
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
+import { DetailFocusContext, type DetailFocusRect } from './focus-context';
 import {
   DETAIL_FONT_FAMILY,
   detailBlockSpace,
@@ -100,12 +110,31 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
+type FocusTarget = {
+  root: RefObject<ComponentRef<typeof View> | null>;
+  report: (rect: DetailFocusRect | null) => void;
+};
+
+const FocusTargetContext = createContext<FocusTarget | null>(null);
+
 function Handles() {
   const s = useStyles();
   const edge = -HANDLE / 2;
+  const target = useContext(FocusTargetContext);
+  const ring = useRef<ComponentRef<typeof View>>(null);
+  useEffect(() => () => target?.report(null), [target]);
+  const measure = () => {
+    const root = target?.root.current;
+    if (!target || !root || !ring.current) return;
+    ring.current.measureLayout(
+      root,
+      (_x, y, _w, height) => target.report({ y, height }),
+      () => undefined
+    );
+  };
   return (
     <>
-      <View pointerEvents="none" style={s.ring} />
+      <View ref={ring} onLayout={measure} pointerEvents="none" style={s.ring} />
       <View style={[s.handle, { left: edge, top: edge }]} />
       <View style={[s.handle, { right: edge, top: edge }]} />
       <View style={[s.handle, { left: edge, bottom: edge }]} />
@@ -178,6 +207,9 @@ export function DetailCanvas({
 }: DetailCanvasProps) {
   const t = useTheme();
   const s = useStyles();
+  const report = useContext(DetailFocusContext);
+  const root = useRef<ComponentRef<typeof View>>(null);
+  const target = useMemo(() => (report ? { root, report } : null), [report]);
   const pad = t.space[5] * scale;
   const fg = ink ?? t.colors.foreground;
   const bandText = paper ?? t.colors.surface;
@@ -292,43 +324,46 @@ export function DetailCanvas({
   };
 
   return (
-    <View
-      style={[
-        s.page,
-        { backgroundColor: doc.background ?? paper ?? t.colors.surface },
-      ]}
-    >
-      {doc.blocks.map((block, index) => (
-        <Tap
-          key={block.id}
-          onPress={press({ block: block.id })}
-          label={'블록'}
-          style={{
-            backgroundColor: block.background?.color ?? undefined,
-            paddingTop: detailBlockSpace(block.space_top) * scale,
-            paddingBottom: detailBlockSpace(block.space_bottom) * scale,
-          }}
-        >
-          {block.background?.url ? (
-            <Image
-              source={{ uri: block.background.url }}
-              resizeMode="cover"
-              style={s.fill}
-            />
-          ) : null}
-          {body(block)}
-          {picked(block) ? <Handles /> : null}
-          {selection?.block === block.id ? (
-            <View pointerEvents="none" style={s.tag}>
-              <RNText
-                style={[s.tagText, { color: t.colors.primaryForeground }]}
-              >
-                {String(index + 1)}
-              </RNText>
-            </View>
-          ) : null}
-        </Tap>
-      ))}
-    </View>
+    <FocusTargetContext.Provider value={target}>
+      <View
+        ref={root}
+        style={[
+          s.page,
+          { backgroundColor: doc.background ?? paper ?? t.colors.surface },
+        ]}
+      >
+        {doc.blocks.map((block, index) => (
+          <Tap
+            key={block.id}
+            onPress={press({ block: block.id })}
+            label={'블록'}
+            style={{
+              backgroundColor: block.background?.color ?? undefined,
+              paddingTop: detailBlockSpace(block.space_top) * scale,
+              paddingBottom: detailBlockSpace(block.space_bottom) * scale,
+            }}
+          >
+            {block.background?.url ? (
+              <Image
+                source={{ uri: block.background.url }}
+                resizeMode="cover"
+                style={s.fill}
+              />
+            ) : null}
+            {body(block)}
+            {picked(block) ? <Handles /> : null}
+            {selection?.block === block.id ? (
+              <View pointerEvents="none" style={s.tag}>
+                <RNText
+                  style={[s.tagText, { color: t.colors.primaryForeground }]}
+                >
+                  {String(index + 1)}
+                </RNText>
+              </View>
+            ) : null}
+          </Tap>
+        ))}
+      </View>
+    </FocusTargetContext.Provider>
   );
 }

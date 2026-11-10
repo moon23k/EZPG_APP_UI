@@ -1,4 +1,10 @@
-import type { ReactNode } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentRef,
+  type ReactNode,
+} from 'react';
 import { ScrollView, Text as RNText, View } from 'react-native';
 import Sortable from 'react-native-sortables';
 import { PressableBase } from '../internal/pressable-base';
@@ -76,11 +82,39 @@ export function BlockStrip({
 }: BlockStripProps) {
   const t = useTheme();
   const s = useStyles();
+  const scroller = useRef<ComponentRef<typeof ScrollView>>(null);
+  const offset = useRef(0);
+  const [width, setWidth] = useState(0);
+  const picked = items.findIndex((item) => item.key === value);
+
+  useEffect(() => {
+    if (picked < 0 || width <= 0) return;
+    const edge = t.space[3];
+    const left = edge + picked * (W + t.space[2]);
+    const right = left + W;
+    const now = offset.current;
+    const next =
+      left - edge < now
+        ? left - edge
+        : right + edge > now + width
+          ? right + edge - width
+          : now;
+    if (next !== now) {
+      scroller.current?.scrollTo({ x: Math.max(0, next), animated: true });
+    }
+  }, [picked, width, t]);
+
   return (
     <ScrollView
+      ref={scroller}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={s.row}
+      scrollEventThrottle={16}
+      onScroll={(e) => {
+        offset.current = e.nativeEvent.contentOffset.x;
+      }}
+      onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
     >
       <View style={{ width: items.length * (W + t.space[2]) - t.space[2] }}>
         <Sortable.Grid
