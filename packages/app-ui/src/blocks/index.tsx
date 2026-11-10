@@ -7,6 +7,7 @@ export * from './invite-card';
 export * from './color-swatch-picker';
 export * from './copy-variant-picker';
 export * from './credit-wallet';
+export * from './detail-editor';
 export * from './generation-progress';
 export * from './invoice-row';
 export * from './logo-candidate-grid';

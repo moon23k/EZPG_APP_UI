@@ -6,6 +6,7 @@
 
 - FloatingTabBar: 떠 있는 아래 탭(높이 64 · 가장자리 16 · 선택 칸 48 옅은 브랜드색 · 선택 아이콘 채움 · 할 일 점 배지 6), floatingTabBarSpace
 - 아이콘 Phosphor 2.1.1(MIT) 선 · 채움 5종
+- 상세페이지 편집기: DetailCanvas(블록 그리기 · 선택 핸들) · DetailComposer(첨부 · 요청 입력) · DraftStrip(초안 썸네일 줄) · LayoutPicker(블록 배치 7종) · ToolRow · FontPicker(글꼴 4종) · EditorBar · DetailEditorTemplate
 
 ## 0.16.0
 
