@@ -1,5 +1,12 @@
 import type { ReactNode } from 'react';
-import { Image, Text as RNText, View, type TextStyle } from 'react-native';
+import {
+  Image,
+  Text as RNText,
+  View,
+  type StyleProp,
+  type TextStyle,
+  type ViewStyle,
+} from 'react-native';
 import { PressableBase } from '../../internal/pressable-base';
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
@@ -22,6 +29,29 @@ export type DetailCanvasProps = {
 };
 
 const HANDLE = 10;
+
+type TapProps = {
+  onPress?: () => void;
+  label: string;
+  style?: StyleProp<ViewStyle>;
+  children?: ReactNode;
+};
+
+function Tap({ onPress, label, style, children }: TapProps) {
+  if (!onPress) {
+    return <View style={style}>{children}</View>;
+  }
+  return (
+    <PressableBase
+      onPress={onPress}
+      accessibilityLabel={label}
+      pressedStyle={{}}
+      style={style}
+    >
+      {children}
+    </PressableBase>
+  );
+}
 
 const useStyles = makeStyles((t) => ({
   page: { overflow: 'hidden' },
@@ -137,12 +167,10 @@ export function DetailCanvas({
     flex = false,
     ratio = 1
   ) => (
-    <PressableBase
+    <Tap
       key={layer.id}
-      disabled={!onSelect}
       onPress={press({ block: block.id, layer: layer.id })}
-      accessibilityLabel="사진"
-      pressedStyle={{}}
+      label={'사진'}
       style={[flex && s.half, picked(block, layer) && s.selected]}
     >
       {layer.url ? (
@@ -160,7 +188,7 @@ export function DetailCanvas({
         />
       )}
       {picked(block, layer) ? <Handles /> : null}
-    </PressableBase>
+    </Tap>
   );
 
   const texts = (block: DetailBlock, shown: DetailLayer[]) => {
@@ -171,17 +199,15 @@ export function DetailCanvas({
         {list.map((l) => {
           const style = textStyleOf(l, scale, fg, bandText);
           return (
-            <PressableBase
+            <Tap
               key={l.id}
-              disabled={!onSelect}
               onPress={press({ block: block.id, layer: l.id })}
-              accessibilityLabel={l.text ?? ''}
-              pressedStyle={{}}
+              label={l.text ?? ''}
               style={picked(block, l) ? s.selected : undefined}
             >
               <RNText style={style}>{l.text}</RNText>
               {picked(block, l) ? <Handles /> : null}
-            </PressableBase>
+            </Tap>
           );
         })}
       </View>
@@ -241,12 +267,10 @@ export function DetailCanvas({
   return (
     <View style={[s.page, { backgroundColor: paper ?? t.colors.surface }]}>
       {doc.blocks.map((block) => (
-        <PressableBase
+        <Tap
           key={block.id}
-          disabled={!onSelect}
           onPress={press({ block: block.id })}
-          accessibilityLabel="블록"
-          pressedStyle={{}}
+          label={'블록'}
           style={[
             {
               backgroundColor: block.background?.color ?? undefined,
@@ -263,7 +287,7 @@ export function DetailCanvas({
           ) : null}
           {body(block)}
           {picked(block) ? <Handles /> : null}
-        </PressableBase>
+        </Tap>
       ))}
     </View>
   );
