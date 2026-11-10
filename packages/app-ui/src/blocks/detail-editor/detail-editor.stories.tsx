@@ -4,7 +4,7 @@ import { Column, Section } from '../../__stories__/helpers';
 import { FileGlyph, ImageGlyph, MenuGlyph, PaletteGlyph } from '../../index';
 import { DetailCanvas } from './detail-canvas';
 import { DetailComposer } from './detail-composer';
-import { DetailEditorTemplate } from './detail-editor-template';
+import { DetailEditorTemplate, EditorPanel } from './detail-editor-template';
 import type { DetailDocValue, DetailFont, DetailLayout } from './detail-types';
 import { DraftStrip } from './draft-strip';
 import { EditorBar } from './editor-bar';
@@ -124,7 +124,13 @@ function Demo() {
         <LayoutPicker value={layout} onValueChange={setLayout} />
       </Section>
       <Section title="글꼴">
-        <FontPicker value={font} onValueChange={setFont} sample="Aa 한 송이" />
+        <EditorPanel>
+          <FontPicker
+            value={font}
+            onValueChange={setFont}
+            sample="Aa 한 송이"
+          />
+        </EditorPanel>
       </Section>
       <Section title="입력창">
         <DetailComposer

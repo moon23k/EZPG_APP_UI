@@ -11,6 +11,7 @@ export {
 } from './detail-composer';
 export {
   DetailEditorTemplate,
+  EditorPanel,
   type DetailEditorTemplateProps,
 } from './detail-editor-template';
 export {

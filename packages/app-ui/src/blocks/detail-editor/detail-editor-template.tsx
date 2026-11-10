@@ -21,6 +21,7 @@ const useStyles = makeStyles((t) => ({
   },
   wide: { alignSelf: 'stretch', width: '100%', boxShadow: undefined },
   bottom: { gap: t.space[3], paddingTop: t.space[2] },
+  panel: { gap: t.space[3], paddingHorizontal: t.layout.screenX },
 }));
 
 export function DetailEditorTemplate({
@@ -45,4 +46,9 @@ export function DetailEditorTemplate({
       ) : null}
     </View>
   );
+}
+
+export function EditorPanel({ children }: { children: ReactNode }) {
+  const s = useStyles();
+  return <View style={s.panel}>{children}</View>;
 }
