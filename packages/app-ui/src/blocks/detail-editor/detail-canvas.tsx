@@ -12,7 +12,10 @@ import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import {
   DETAIL_FONT_FAMILY,
+  detailBlockSpace,
   detailFontSize,
+  detailLineHeight,
+  detailTracking,
   type DetailBlock,
   type DetailDocValue,
   type DetailLayer,
@@ -123,7 +126,8 @@ export function textStyleOf(
   const base: TextStyle = {
     fontFamily: DETAIL_FONT_FAMILY[st.font ?? 'gothic'][st.weight ?? 'regular'],
     fontSize: size,
-    lineHeight: size * 1.45,
+    lineHeight: size * detailLineHeight(st.line),
+    letterSpacing: size * detailTracking(st.tracking),
     color,
     textAlign: st.align ?? 'left',
   };
@@ -299,7 +303,11 @@ export function DetailCanvas({
           key={block.id}
           onPress={press({ block: block.id })}
           label={'블록'}
-          style={{ backgroundColor: block.background?.color ?? undefined }}
+          style={{
+            backgroundColor: block.background?.color ?? undefined,
+            paddingTop: detailBlockSpace(block.space_top) * scale,
+            paddingBottom: detailBlockSpace(block.space_bottom) * scale,
+          }}
         >
           {block.background?.url ? (
             <Image

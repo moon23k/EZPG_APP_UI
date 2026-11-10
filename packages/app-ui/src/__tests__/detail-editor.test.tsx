@@ -8,6 +8,9 @@ import {
   LayoutPicker,
   PhotoTray,
   type DetailDocValue,
+  detailBlockSpace,
+  detailLineHeight,
+  detailTracking,
 } from '../index';
 
 const doc: DetailDocValue = {
@@ -111,4 +114,15 @@ it('photo tray adds and removes photos', async () => {
     <CompareSlider before="https://x.test/a.jpg" after="https://x.test/b.jpg" />
   );
   expect(screen.getByLabelText('원본과 비교')).toBeTruthy();
+});
+
+describe('detail spacing', () => {
+  it('keeps the old look by default and clamps slider values', () => {
+    expect(detailLineHeight()).toBeCloseTo(1.45, 5);
+    expect(detailTracking()).toBe(0);
+    expect(detailBlockSpace()).toBe(0);
+    expect(detailLineHeight(12)).toBeCloseTo(1.85, 5);
+    expect(detailTracking(-9)).toBeCloseTo(-0.05, 5);
+    expect(detailBlockSpace(2.5)).toBe(20);
+  });
 });

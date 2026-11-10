@@ -11,6 +11,8 @@ export type DetailTextStyle = {
   color?: string;
   align?: 'left' | 'center' | 'right';
   effect?: DetailEffect;
+  line?: number;
+  tracking?: number;
 };
 
 export type DetailLayer = {
@@ -31,6 +33,8 @@ export type DetailBlock = {
     url?: string | null;
     asset_id?: string | null;
   };
+  space_top?: number;
+  space_bottom?: number;
   layers: DetailLayer[];
 };
 
@@ -78,8 +82,23 @@ export const DETAIL_FONT_FAMILY: Record<
   },
 };
 
+const clamp = (value: number, lo: number, hi: number) =>
+  Math.min(hi, Math.max(lo, value));
+
 export function detailFontSize(size = 5): number {
-  return 12 + (Math.min(10, Math.max(1, size)) - 1) * 2;
+  return 12 + (clamp(size, 1, 10) - 1) * 2;
+}
+
+export function detailLineHeight(line = 5): number {
+  return 1.05 + clamp(line, 1, 10) * 0.08;
+}
+
+export function detailTracking(tracking = 0): number {
+  return clamp(tracking, -5, 10) * 0.01;
+}
+
+export function detailBlockSpace(space = 0): number {
+  return clamp(space, 0, 10) * 8;
 }
 
 export const DETAIL_COLORS: readonly { value: string; label: string }[] = [
