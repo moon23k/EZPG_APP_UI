@@ -61,6 +61,7 @@ export * from './components/divider';
 export * from './components/empty-state';
 export * from './components/field';
 export * from './components/field-group';
+export * from './components/floating-tab-bar';
 export * from './components/list-row';
 export * from './components/photo';
 export * from './components/price';

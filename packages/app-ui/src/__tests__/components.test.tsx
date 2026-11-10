@@ -5,6 +5,7 @@ import {
   Checkbox,
   Dialog,
   EmptyState,
+  FloatingTabBar,
   formatPrice,
   SegmentedTabs,
   Switch,
@@ -109,6 +110,38 @@ describe('SegmentedTabs', () => {
     await fireEvent.press(screen.getByText('이번 주'));
     expect(onValueChange).toHaveBeenCalledTimes(1);
     expect(onValueChange).toHaveBeenCalledWith('week');
+  });
+});
+
+describe('FloatingTabBar', () => {
+  const items = [
+    { key: 'home', label: '홈', icon: 'home' },
+    { key: 'orders', label: '주문', icon: 'orders', badge: '신규 주문 1건' },
+  ] as const;
+
+  it('reports the pressed tab only when it changes', async () => {
+    const onValueChange = jest.fn();
+    await render(
+      <FloatingTabBar
+        items={items}
+        value="home"
+        onValueChange={onValueChange}
+      />
+    );
+    await fireEvent.press(screen.getByLabelText('홈'));
+    await fireEvent.press(screen.getByLabelText('주문, 신규 주문 1건'));
+    expect(onValueChange).toHaveBeenCalledTimes(1);
+    expect(onValueChange).toHaveBeenCalledWith('orders');
+  });
+
+  it('marks the selected tab and shows a dot only for badged tabs', async () => {
+    await render(
+      <FloatingTabBar items={items} value="home" onValueChange={() => {}} />
+    );
+    expect(screen.getByLabelText('홈').props.accessibilityState).toMatchObject({
+      selected: true,
+    });
+    expect(screen.getAllByTestId('tab-badge')).toHaveLength(1);
   });
 });
 

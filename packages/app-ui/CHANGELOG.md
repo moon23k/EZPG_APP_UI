@@ -1,5 +1,12 @@
 # @ezpg/app-ui
 
+## Unreleased
+
+### Minor Changes
+
+- FloatingTabBar: 떠 있는 아래 탭(높이 64 · 가장자리 16 · 선택 칸 48 옅은 브랜드색 · 선택 아이콘 채움 · 할 일 점 배지 6), floatingTabBarSpace
+- 아이콘 Phosphor 2.1.1(MIT) 선 · 채움 5종
+
 ## 0.16.0
 
 ### Minor Changes
