@@ -14,6 +14,7 @@ import {
   Field,
   ListRow,
   ScanGlyph,
+  Slider,
 } from '../index';
 
 describe('Button', () => {
@@ -299,5 +300,29 @@ describe('selection and trailing action', () => {
       />
     );
     expect(screen.getByText('취소하면 되돌릴 수 없어요.')).toBeTruthy();
+  });
+});
+
+describe('Slider', () => {
+  it('moves by fractions and stays within range', async () => {
+    const onChange = jest.fn();
+    await render(
+      <Slider
+        value={1.95}
+        min={-2}
+        max={2}
+        onChange={onChange}
+        accessibilityLabel="온도"
+      />
+    );
+    const slider = screen.getByLabelText('온도');
+    await fireEvent(slider, 'accessibilityAction', {
+      nativeEvent: { actionName: 'decrement' },
+    });
+    expect(onChange).toHaveBeenLastCalledWith(expect.closeTo(1.55, 5));
+    await fireEvent(slider, 'accessibilityAction', {
+      nativeEvent: { actionName: 'increment' },
+    });
+    expect(onChange).toHaveBeenLastCalledWith(2);
   });
 });
