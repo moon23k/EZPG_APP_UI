@@ -14,6 +14,7 @@ export type SliderProps = {
   min?: number;
   max?: number;
   onChange: (value: number) => void;
+  onSlidingStart?: () => void;
   startLabel?: string;
   endLabel?: string;
   accessibilityLabel: string;
@@ -51,6 +52,7 @@ export function Slider({
   min = 0,
   max = 1,
   onChange,
+  onSlidingStart,
   startLabel,
   endLabel,
   accessibilityLabel,
@@ -59,8 +61,8 @@ export function Slider({
   const s = useStyles();
   const [width, setWidth] = useState(0);
   const span = max - min;
-  const latest = useRef({ value, onChange, min, span, width });
-  latest.current = { value, onChange, min, span, width };
+  const latest = useRef({ value, onChange, onSlidingStart, min, span, width });
+  latest.current = { value, onChange, onSlidingStart, min, span, width };
   const origin = useRef(0);
   const pick = (x: number) => {
     const {
@@ -83,6 +85,7 @@ export function Slider({
         onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dx) > Math.abs(g.dy),
         onPanResponderTerminationRequest: () => false,
         onPanResponderGrant: (e) => {
+          latest.current.onSlidingStart?.();
           origin.current = e.nativeEvent.locationX;
           pick(origin.current);
         },
@@ -108,6 +111,7 @@ export function Slider({
         accessibilityValue={{ min: 0, max: 100, now: Math.round(ratio * 100) }}
         accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
         onAccessibilityAction={(e) => {
+          onSlidingStart?.();
           const step =
             (span / NUDGE) *
             (e.nativeEvent.actionName === 'increment' ? 1 : -1);

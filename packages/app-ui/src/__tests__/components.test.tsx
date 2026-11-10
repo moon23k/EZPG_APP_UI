@@ -306,12 +306,14 @@ describe('selection and trailing action', () => {
 describe('Slider', () => {
   it('moves by fractions and stays within range', async () => {
     const onChange = jest.fn();
+    const onSlidingStart = jest.fn();
     await render(
       <Slider
         value={1.95}
         min={-2}
         max={2}
         onChange={onChange}
+        onSlidingStart={onSlidingStart}
         accessibilityLabel="온도"
       />
     );
@@ -324,5 +326,6 @@ describe('Slider', () => {
       nativeEvent: { actionName: 'increment' },
     });
     expect(onChange).toHaveBeenLastCalledWith(2);
+    expect(onSlidingStart).toHaveBeenCalledTimes(2);
   });
 });
