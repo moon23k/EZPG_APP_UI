@@ -14,6 +14,7 @@ export {
   type DetailEditorTemplateProps,
 } from './detail-editor-template';
 export {
+  DETAIL_COLORS,
   DETAIL_FONT_FAMILY,
   DETAIL_LAYOUTS,
   detailFontSize,

@@ -67,9 +67,24 @@ export const DETAIL_FONT_FAMILY: Record<
     bold: 'BlackHanSans-Regular',
     heavy: 'BlackHanSans-Regular',
   },
-  hand: { regular: 'NanumPen', bold: 'NanumPen', heavy: 'NanumPen' },
+  hand: {
+    regular: 'NanumPen-Regular',
+    bold: 'NanumPen-Regular',
+    heavy: 'NanumPen-Regular',
+  },
 };
 
 export function detailFontSize(size = 5): number {
   return 12 + (Math.min(10, Math.max(1, size)) - 1) * 2;
 }
+
+export const DETAIL_COLORS: readonly { value: string; label: string }[] = [
+  { value: '#1A1A1A', label: '잉크' },
+  { value: '#FFFFFF', label: '흰색' },
+  { value: '#F4F4F5', label: '연회색' },
+  { value: '#EFE7DC', label: '베이지' },
+  { value: '#3B2F25', label: '고동' },
+  { value: '#C54211', label: '주황' },
+  { value: '#2F4A2B', label: '초록' },
+  { value: '#1F3A5F', label: '남색' },
+];
