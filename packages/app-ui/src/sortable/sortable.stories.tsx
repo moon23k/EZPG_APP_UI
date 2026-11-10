@@ -12,6 +12,7 @@ import { Photo } from '../components/photo/photo';
 import { StatusBadge } from '../components/status-badge/status-badge';
 import { Text } from '../components/text/text';
 import { makeStyles } from '../utils/styles';
+import { BlockStrip } from './block-strip';
 import { SortableGrid, SortableHandle } from './sortable-grid';
 import { SortableList } from './sortable-list';
 
@@ -36,6 +37,7 @@ function Demo() {
     { id: 'c', name: demoProducts.notebook },
     { id: 'd', name: demoProducts.towel },
   ]);
+  const [blocks, setBlocks] = useState(['b1', 'b2', 'b3', 'b4']);
   const [shots, setShots] = useState<Shot[]>(
     demoPhotoList.map((n) => ({
       id: String(n),
@@ -79,6 +81,18 @@ function Demo() {
               ) : null}
             </>
           )}
+        />
+      </Section>
+      <Section title="블록 순서 칩">
+        <BlockStrip
+          items={blocks.map((key) => ({
+            key,
+            thumb: <Photo source={sample(demoPhotoList[0]!, 200)} />,
+          }))}
+          value={blocks[1] ?? null}
+          onValueChange={() => {}}
+          onReorder={setBlocks}
+          onAdd={() => {}}
         />
       </Section>
     </GestureHandlerRootView>

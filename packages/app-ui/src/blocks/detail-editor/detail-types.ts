@@ -34,7 +34,11 @@ export type DetailBlock = {
   layers: DetailLayer[];
 };
 
-export type DetailDocValue = { version?: number; blocks: DetailBlock[] };
+export type DetailDocValue = {
+  version?: number;
+  background?: string | null;
+  blocks: DetailBlock[];
+};
 
 export type DetailSelection = { block: string; layer?: string } | null;
 

@@ -62,7 +62,30 @@ const useStyles = makeStyles((t) => ({
   fill: { position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 },
   pair: { flexDirection: 'row', gap: t.space[2] },
   card: { overflow: 'hidden', borderRadius: t.radius.lg },
-  selected: { borderWidth: 2, borderColor: t.colors.primary },
+  ring: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    borderWidth: 2,
+    borderColor: t.colors.primary,
+  },
+  tagText: {
+    fontSize: t.typography.caption.fontSize,
+    fontWeight: '700',
+  },
+  tag: {
+    position: 'absolute',
+    left: t.space[1],
+    top: t.space[1],
+    minWidth: t.space[6],
+    height: t.space[6],
+    borderRadius: t.radius.full,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: t.colors.primary,
+  },
   handle: {
     position: 'absolute',
     width: HANDLE,
@@ -79,6 +102,7 @@ function Handles() {
   const edge = -HANDLE / 2;
   return (
     <>
+      <View pointerEvents="none" style={s.ring} />
       <View style={[s.handle, { left: edge, top: edge }]} />
       <View style={[s.handle, { right: edge, top: edge }]} />
       <View style={[s.handle, { left: edge, bottom: edge }]} />
@@ -171,7 +195,7 @@ export function DetailCanvas({
       key={layer.id}
       onPress={press({ block: block.id, layer: layer.id })}
       label={'사진'}
-      style={[flex && s.half, picked(block, layer) && s.selected]}
+      style={flex ? s.half : undefined}
     >
       {layer.url ? (
         <Image
@@ -203,7 +227,6 @@ export function DetailCanvas({
               key={l.id}
               onPress={press({ block: block.id, layer: l.id })}
               label={l.text ?? ''}
-              style={picked(block, l) ? s.selected : undefined}
             >
               <RNText style={style}>{l.text}</RNText>
               {picked(block, l) ? <Handles /> : null}
@@ -265,18 +288,18 @@ export function DetailCanvas({
   };
 
   return (
-    <View style={[s.page, { backgroundColor: paper ?? t.colors.surface }]}>
-      {doc.blocks.map((block) => (
+    <View
+      style={[
+        s.page,
+        { backgroundColor: doc.background ?? paper ?? t.colors.surface },
+      ]}
+    >
+      {doc.blocks.map((block, index) => (
         <Tap
           key={block.id}
           onPress={press({ block: block.id })}
           label={'블록'}
-          style={[
-            {
-              backgroundColor: block.background?.color ?? undefined,
-            },
-            picked(block) && s.selected,
-          ]}
+          style={{ backgroundColor: block.background?.color ?? undefined }}
         >
           {block.background?.url ? (
             <Image
@@ -287,6 +310,15 @@ export function DetailCanvas({
           ) : null}
           {body(block)}
           {picked(block) ? <Handles /> : null}
+          {selection?.block === block.id ? (
+            <View pointerEvents="none" style={s.tag}>
+              <RNText
+                style={[s.tagText, { color: t.colors.primaryForeground }]}
+              >
+                {String(index + 1)}
+              </RNText>
+            </View>
+          ) : null}
         </Tap>
       ))}
     </View>
