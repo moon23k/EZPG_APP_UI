@@ -1,9 +1,13 @@
 # @ezpg/app-ui
 
-## Unreleased
+## 0.17.0
 
 ### Minor Changes
 
+- 상세페이지 편집기 2차: 페이지 배경 하나 · 선택 표시 겹쳐 그리기 · 줄 간격 · 자간 · 블록 위아래 여백 · 고른 블록 자동 스크롤 · EditorPanel 좌우 여백 · DETAIL_COLORS
+- Slider: 눈금 없는 연속 슬라이더(접근성 증감 10분의 1) · onSlidingStart
+- Button: 주 버튼 테두리형(흰 바탕 · 1.5 주황 테두리 · 주황 글자), 비활성은 회색 테두리 · 회색 글자
+- 주황 줄이기: 섹션 제목 · 목록 앞 아이콘 · 할 일 아이콘 회색
 - FloatingTabBar: 떠 있는 아래 탭(높이 64 · 가장자리 16 · 선택 칸 48 옅은 브랜드색 · 선택 아이콘 채움 · 할 일 점 배지 6), floatingTabBarSpace
 - 아이콘 Phosphor 2.1.1(MIT) 선 · 채움 5종
 - 상세페이지 편집기: DetailCanvas(블록 그리기 · 선택 핸들) · DetailComposer(첨부 · 요청 입력) · DraftStrip(초안 썸네일 줄) · LayoutPicker(블록 배치 7종) · ToolRow · FontPicker(글꼴 4종) · EditorBar · DetailEditorTemplate
