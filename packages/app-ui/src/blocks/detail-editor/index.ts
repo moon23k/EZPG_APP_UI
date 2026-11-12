@@ -49,3 +49,9 @@ export {
   type TrayPhoto,
   type TraySource,
 } from './photo-tray';
+export {
+  StructurePicker,
+  type StructureOption,
+  type StructurePickerProps,
+} from './structure-picker';
+export { DraftPreview, type DraftPreviewProps } from './draft-preview';

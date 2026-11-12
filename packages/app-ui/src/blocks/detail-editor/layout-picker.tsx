@@ -55,7 +55,7 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-function Diagram({ layout }: { layout: DetailLayout }) {
+export function Diagram({ layout }: { layout: DetailLayout }) {
   const t = useTheme();
   const s = useStyles();
   const photo = <View style={s.photo} />;
