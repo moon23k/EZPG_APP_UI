@@ -48,7 +48,12 @@ const useStyles = makeStyles((t) => ({
     paddingHorizontal: t.space[5],
     borderRadius: t.radius.lg,
   },
-  primary: { backgroundColor: t.colors.primary },
+  primary: {
+    backgroundColor: t.colors.surface,
+    borderWidth: 1.5,
+    borderColor: t.colors.primary,
+  },
+  primaryOff: { borderColor: t.colors.border },
   secondary: { backgroundColor: t.colors.muted },
   outline: {
     backgroundColor: 'transparent',
@@ -85,8 +90,9 @@ export function Button({
 }: ButtonProps) {
   const t = useTheme();
   const s = useStyles();
+  const off = variant === 'primary' && !!disabled && !loading;
   const color = {
-    primary: t.colors.primaryForeground,
+    primary: off ? t.colors.mutedForeground : t.colors.primary,
     secondary: t.colors.foreground,
     outline: t.colors.foreground,
     ghost: t.colors.foreground,
@@ -100,7 +106,8 @@ export function Button({
       disabled={disabled || loading}
       touchHeight={t.controlSize[size]}
       accessibilityState={{ ...accessibilityState, busy: loading }}
-      style={[s.base, s[size], s[variant], style]}
+      disabledStyle={variant === 'primary' ? {} : undefined}
+      style={[s.base, s[size], s[variant], off && s.primaryOff, style]}
     >
       {loading ? (
         <ActivityIndicator size="small" color={color} />

@@ -11,12 +11,14 @@ export type PressableBaseProps = Omit<PressableProps, 'style'> & {
   ref?: Ref<ComponentRef<typeof Pressable>>;
   style?: StyleProp<ViewStyle>;
   pressedStyle?: StyleProp<ViewStyle>;
+  disabledStyle?: StyleProp<ViewStyle>;
   touchHeight?: number;
 };
 
 export function PressableBase({
   style,
   pressedStyle,
+  disabledStyle,
   touchHeight,
   disabled,
   hitSlop,
@@ -45,7 +47,7 @@ export function PressableBase({
         pressed &&
           !disabled &&
           (pressedStyle ?? { opacity: t.opacity.pressed }),
-        disabled && { opacity: t.opacity.disabled },
+        disabled && (disabledStyle ?? { opacity: t.opacity.disabled }),
       ]}
     />
   );
