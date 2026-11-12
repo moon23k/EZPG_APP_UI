@@ -1,4 +1,4 @@
-package ezpg.nativeui.example
+package zdot.nativeui.example
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

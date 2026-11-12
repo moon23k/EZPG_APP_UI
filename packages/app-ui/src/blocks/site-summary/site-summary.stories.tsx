@@ -26,7 +26,7 @@ function Demo() {
         }
         overline="게시됨 · 1번째 게시"
         title="반품 많은 리빙샵"
-        caption="f7-claims.ezpg.localhost"
+        caption="f7-claims.zdot.localhost"
         actions={[
           { label: '보기', icon: EyeGlyph, onPress: () => {} },
           { label: '공유', icon: ShareGlyph, onPress: () => {} },

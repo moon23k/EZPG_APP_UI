@@ -271,7 +271,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ezpg.nativeui.example";
+				PRODUCT_BUNDLE_IDENTIFIER = "zdot.nativeui.example";
 				PRODUCT_NAME = NativeUiExample;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -300,7 +300,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "ezpg.nativeui.example";
+				PRODUCT_BUNDLE_IDENTIFIER = "zdot.nativeui.example";
 				PRODUCT_NAME = NativeUiExample;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_VERSION = 5.0;

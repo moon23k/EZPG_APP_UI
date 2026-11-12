@@ -1,5 +1,5 @@
 {
-  "name": "ezpg-app-ui-monorepo",
+  "name": "zdot-app-ui-monorepo",
   "private": true,
   "workspaces": [
     "packages/*",

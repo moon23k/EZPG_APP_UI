@@ -6,22 +6,22 @@
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "ezpg-app-ui-source": "./src/index.tsx",
+      "zdot-app-ui-source": "./src/index.tsx",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
     "./charts": {
-      "ezpg-app-ui-source": "./src/charts.tsx",
+      "zdot-app-ui-source": "./src/charts.tsx",
       "types": "./lib/typescript/src/charts.d.ts",
       "default": "./lib/module/charts.js"
     },
     "./adjust": {
-      "ezpg-app-ui-source": "./src/adjust.tsx",
+      "zdot-app-ui-source": "./src/adjust.tsx",
       "types": "./lib/typescript/src/adjust.d.ts",
       "default": "./lib/module/adjust.js"
     },
     "./sortable": {
-      "ezpg-app-ui-source": "./src/sortable.tsx",
+      "zdot-app-ui-source": "./src/sortable.tsx",
       "types": "./lib/typescript/src/sortable.d.ts",
       "default": "./lib/module/sortable.js"
     },
@@ -48,7 +48,7 @@
     "ui",
     "design-system",
     "components",
-    "ezpg"
+    "zdot"
   ],
   "repository": {
     "type": "git",

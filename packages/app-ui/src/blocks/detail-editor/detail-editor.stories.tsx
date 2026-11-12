@@ -14,7 +14,7 @@ import { CompareSlider } from './compare-slider';
 import { PhotoTray } from './photo-tray';
 import { ToolRow } from './tool-row';
 
-const photo = 'https://picsum.photos/seed/ezpg-vase/600/750';
+const photo = 'https://picsum.photos/seed/zdot-vase/600/750';
 
 const doc: DetailDocValue = {
   version: 2,

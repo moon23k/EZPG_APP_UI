@@ -14,7 +14,7 @@ function Screen() {
           <ListRow
             leading={avatar}
             title="하루 리빙"
-            description="haru.ezpg.shop"
+            description="haru.zdot.shop"
             onPress={() => {}}
           />
           <ListRow title="내 사이트" onPress={() => {}} />

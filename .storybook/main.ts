@@ -82,7 +82,7 @@ const config: StorybookConfig = {
               })
             )),
       ],
-      conditions: ['ezpg-app-ui-source', ...(vite.resolve?.conditions ?? [])],
+      conditions: ['zdot-app-ui-source', ...(vite.resolve?.conditions ?? [])],
     },
   }),
 };
