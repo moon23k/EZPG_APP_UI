@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Text, View } from 'react-native';
 import { CheckGlyph, ChevronGlyph } from '../../internal/glyphs';
 import { renderIcon, type IconSlot } from '../../internal/icon';
@@ -8,6 +9,7 @@ import {
 import { useTheme } from '../../theme/theme-provider';
 import { makeStyles } from '../../utils/styles';
 import { Photo } from '../photo/photo';
+import { FlushRowContext } from '../../internal/flush-row';
 
 export type ListRowTone = 'muted' | 'warning' | 'danger';
 
@@ -48,6 +50,7 @@ const useStyles = makeStyles((t) => ({
   },
   twoLine: { minHeight: t.listRow.twoLine },
   threeLine: { minHeight: t.listRow.threeLine },
+  flush: { paddingHorizontal: 0 },
   pressed: { backgroundColor: t.colors.muted },
   highlighted: { backgroundColor: t.colors.primaryTint },
   top: { alignItems: 'flex-start' },
@@ -123,6 +126,7 @@ export function ListRow({
 }: ListRowProps) {
   const t = useTheme();
   const s = useStyles();
+  const flush = useContext(FlushRowContext);
   const icon = { color: t.colors.mutedForeground, size: t.iconSize.md };
   const showChevron = chevron ?? !!onPress;
   const lines = [overline, description].filter(Boolean).length;
@@ -228,6 +232,7 @@ export function ListRow({
       <View
         style={[
           s.row,
+          flush && s.flush,
           height,
           meta && s.top,
           highlighted && s.highlighted,
@@ -246,6 +251,7 @@ export function ListRow({
       pressedStyle={s.pressed}
       style={[
         s.row,
+        flush && s.flush,
         height,
         meta && s.top,
         highlighted && s.highlighted,

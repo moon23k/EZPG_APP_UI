@@ -10,6 +10,7 @@ import { ChevronGlyph } from '../internal/glyphs';
 import { PressableBase } from '../internal/pressable-base';
 import { useTheme } from '../theme/theme-provider';
 import { makeStyles } from '../utils/styles';
+import { FlushRowContext } from '../internal/flush-row';
 import { BottomBar, type TemplateAction } from './parts';
 
 export type SheetFormTemplateProps = {
@@ -102,7 +103,7 @@ export function SheetBlock({
         </View>
         {aside}
       </View>
-      {children}
+      <FlushRowContext.Provider value>{children}</FlushRowContext.Provider>
     </View>
   );
 }
