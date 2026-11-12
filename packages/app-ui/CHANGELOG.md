@@ -1,5 +1,14 @@
 # @ezpg/app-ui
 
+## 0.18.0
+
+### Minor Changes
+
+- SliderList: 축 이름 아래 슬라이더 한 줄을 구분선으로 촘촘히 쌓는 묶음
+- 상품 시트: SheetFormTemplate(뒤로 · 제목 · 글자 버튼 위 막대 · 탭 자리 · 회색 바탕 블록 스크롤 · 임시저장 + 등록 나란히) · SheetBlock(흰 블록, 안의 ListRow 좌우 여백 없음) · SectionTabs(구역 탭 · 확인 필요 점) · CoverPhotos(대표 2×2 · 추가 칸 · 업로드 상태)
+- 상세페이지: StructurePicker(구성 그림 고르기) · DraftPreview(초안 미리보기 자르기)
+- BottomBar split(두 버튼 나란히)
+
 ## 0.17.0
 
 ### Minor Changes
