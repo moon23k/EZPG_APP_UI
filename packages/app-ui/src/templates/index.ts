@@ -41,3 +41,8 @@ export type {
 } from './preview-template';
 export { SplitPreviewTemplate } from './split-preview-template';
 export type { SplitPreviewTemplateProps } from './split-preview-template';
+export { SheetBlock, SheetFormTemplate } from './sheet-form-template';
+export type {
+  SheetBlockProps,
+  SheetFormTemplateProps,
+} from './sheet-form-template';

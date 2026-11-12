@@ -33,6 +33,7 @@ export * from './product-tile';
 export * from './quick-actions';
 export * from './action-grid';
 export * from './site-summary';
+export * from './cover-photos';
 export * from './slider-list';
 export * from './scan-modal';
 export * from './summary-cards';

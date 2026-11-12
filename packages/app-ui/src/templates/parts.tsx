@@ -62,19 +62,64 @@ const useStyles = makeStyles((t) => ({
     paddingVertical: t.space[3],
   },
   cardLine: { height: 1, backgroundColor: t.colors.muted },
+  split: {
+    flexDirection: 'row',
+    backgroundColor: t.colors.surface,
+    borderTopWidth: 1,
+    borderTopColor: t.colors.border,
+  },
+  side: { flex: 1 },
+  main: { flex: 2 },
 }));
 
 export function BottomBar({
   primaryAction,
   secondaryAction,
   bottomInset = 0,
+  split = false,
 }: {
   primaryAction: TemplateAction;
   secondaryAction?: TemplateAction;
   bottomInset?: number;
+  split?: boolean;
 }) {
   const t = useTheme();
   const s = useStyles();
+  if (split) {
+    return (
+      <View
+        style={[
+          s.bar,
+          s.split,
+          { paddingBottom: t.layout.footerBottom + bottomInset },
+        ]}
+      >
+        {secondaryAction ? (
+          <View style={s.side}>
+            <Button
+              size="lg"
+              variant="secondary"
+              onPress={secondaryAction.onPress}
+              disabled={secondaryAction.disabled}
+              loading={secondaryAction.loading}
+            >
+              {secondaryAction.label}
+            </Button>
+          </View>
+        ) : null}
+        <View style={s.main}>
+          <Button
+            size="lg"
+            onPress={primaryAction.onPress}
+            disabled={primaryAction.disabled}
+            loading={primaryAction.loading}
+          >
+            {primaryAction.label}
+          </Button>
+        </View>
+      </View>
+    );
+  }
   return (
     <View
       style={[s.bar, { paddingBottom: t.layout.footerBottom + bottomInset }]}

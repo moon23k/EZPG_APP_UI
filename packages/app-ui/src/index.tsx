@@ -75,6 +75,7 @@ export * from './components/progress-circle';
 export * from './components/result-mark';
 export * from './components/page-header';
 export * from './blocks/setup-guide';
+export * from './components/section-tabs';
 export * from './components/segmented-tabs';
 export * from './components/sheet';
 export * from './components/skeleton';
