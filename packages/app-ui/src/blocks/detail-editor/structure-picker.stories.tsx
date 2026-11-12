@@ -33,7 +33,7 @@ function Demo() {
         />
       </Section>
       <Section title="초안 미리보기 자르기">
-        <DraftPreview height={160}>
+        <DraftPreview height={160} width={120}>
           <Text>초안</Text>
         </DraftPreview>
       </Section>

@@ -4,6 +4,7 @@ import { makeStyles } from '../../utils/styles';
 
 export type DraftPreviewProps = {
   height: number;
+  width: number;
   children: ReactNode;
 };
 
@@ -23,11 +24,11 @@ const useStyles = makeStyles((t) => ({
   },
 }));
 
-export function DraftPreview({ height, children }: DraftPreviewProps) {
+export function DraftPreview({ height, width, children }: DraftPreviewProps) {
   const s = useStyles();
   return (
     <View style={[s.box, { height }]}>
-      <View style={s.page}>{children}</View>
+      <View style={[s.page, { width }]}>{children}</View>
     </View>
   );
 }
