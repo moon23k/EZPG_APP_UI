@@ -3,6 +3,9 @@ export const semantic = {
     background: '#f4f4f5',
     surface: '#ffffff',
     foreground: '#1a1a1a',
+    title: '#2a2d33',
+    selectSurface: '#fdf6f2',
+    selectForeground: '#9a3412',
     muted: '#f0f0f0',
     mutedForeground: '#626262',
     border: '#e3e3e3',
@@ -28,6 +31,9 @@ export const semantic = {
     background: '#0a0a0a',
     surface: '#171717',
     foreground: '#fafafa',
+    title: '#fafafa',
+    selectSurface: '#5f2814',
+    selectForeground: '#f6b298',
     muted: '#262626',
     mutedForeground: '#a3a3a3',
     border: '#262626',
@@ -77,6 +83,7 @@ export const radius = {
   sm: 6,
   md: 8,
   lg: 12,
+  xl: 20,
   full: 9999,
 } as const;
 
@@ -101,6 +108,17 @@ export const typography = {
     lineHeight: 24,
     fontWeight: '400',
   },
+  eyebrow: {
+    fontSize: 13,
+    lineHeight: 18,
+    fontWeight: '500',
+  },
+  question: {
+    fontSize: 18,
+    lineHeight: 26,
+    fontWeight: '500',
+    letterSpacing: -0.4,
+  },
   title: {
     fontSize: 20,
     lineHeight: 28,
@@ -109,7 +127,8 @@ export const typography = {
   screenTitle: {
     fontSize: 24,
     lineHeight: 32,
-    fontWeight: '700',
+    fontWeight: '600',
+    letterSpacing: -0.6,
   },
   display: {
     fontSize: 28,
@@ -121,6 +140,8 @@ export const typography = {
 export const shadow = {
   sm: '0px 1px 2px rgba(0, 0, 0, 0.08)',
   md: '0px 4px 12px rgba(0, 0, 0, 0.12)',
+  panel:
+    '0px 1px 2px rgba(17, 24, 39, 0.04), 0px 8px 24px rgba(17, 24, 39, 0.04)',
 } as const;
 
 export const motion = {

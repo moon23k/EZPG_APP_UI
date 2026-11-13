@@ -6,6 +6,9 @@ export type ThemeColors = {
   background: string;
   surface: string;
   foreground: string;
+  title: string;
+  selectSurface: string;
+  selectForeground: string;
   muted: string;
   mutedForeground: string;
   border: string;
@@ -35,6 +38,7 @@ export type TypographyToken = {
   fontSize: number;
   lineHeight: number;
   fontWeight: TextStyle['fontWeight'];
+  letterSpacing?: number;
 };
 
 export type ThemeTokens = {
@@ -51,11 +55,14 @@ export type ThemeTokens = {
     12: number;
     16: number;
   };
-  radius: { sm: number; md: number; lg: number; full: number };
-  typography: Record<TypographyVariant, TypographyToken>;
+  radius: { sm: number; md: number; lg: number; xl: number; full: number };
+  typography: Record<
+    TypographyVariant | 'eyebrow' | 'question',
+    TypographyToken
+  >;
   fontFamily: string | undefined;
   maxFontScale: number;
-  shadow: { sm: string; md: string };
+  shadow: { sm: string; md: string; panel: string };
   motion: { duration: number };
   opacity: { pressed: number; disabled: number };
   iconSize: { sm: number; md: number };

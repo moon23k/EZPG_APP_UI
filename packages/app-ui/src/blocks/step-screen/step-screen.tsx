@@ -56,8 +56,8 @@ const useStyles = makeStyles((t) => ({
     paddingBottom: t.layout.footerBottom,
   },
   title: {
-    fontSize: t.typography.screenTitle.fontSize,
-    lineHeight: t.typography.screenTitle.lineHeight,
+    ...t.typography.screenTitle,
+    color: t.colors.title,
   },
   footer: {
     gap: t.layout.itemGap,
@@ -136,7 +136,7 @@ export function StepScreen({
           keyboardShouldPersistTaps="handled"
         >
           {top}
-          <Text weight="bold" accessibilityRole="header" style={s.title}>
+          <Text accessibilityRole="header" style={s.title}>
             {title}
           </Text>
           {children}

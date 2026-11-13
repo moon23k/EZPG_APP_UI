@@ -34,6 +34,9 @@ const useStyles = makeStyles((t) => ({
   title: {
     fontSize: t.typography.display.fontSize,
     lineHeight: t.typography.display.lineHeight,
+    fontWeight: t.typography.screenTitle.fontWeight,
+    letterSpacing: t.typography.screenTitle.letterSpacing,
+    color: t.colors.title,
   },
   action: {
     width: t.minTouchSize,
@@ -98,7 +101,7 @@ export function PageHeader({
   const s = useStyles();
   return (
     <View style={[s.root, { paddingTop: t.space[5] + topInset }, style]}>
-      <Text weight="bold" accessibilityRole="header" style={s.title}>
+      <Text accessibilityRole="header" style={s.title}>
         {title}
       </Text>
       {action && !action.icon ? (

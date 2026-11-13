@@ -25,6 +25,7 @@ const useStyles = makeStyles((t) => ({
   screenTitle: t.typography.screenTitle,
   display: t.typography.display,
   default: { color: t.colors.foreground },
+  heading: { color: t.colors.title },
   muted: { color: t.colors.mutedForeground },
   primary: { color: t.colors.primary },
   point: { color: t.colors.point },
@@ -51,7 +52,14 @@ export function Text({
     <RNText
       maxFontSizeMultiplier={t.maxFontScale}
       {...rest}
-      style={[s.font, s[variant], s[tone], weight && s[weight], style]}
+      style={[
+        s.font,
+        s[variant],
+        s[tone],
+        variant === 'screenTitle' && tone === 'default' && s.heading,
+        weight && s[weight],
+        style,
+      ]}
     />
   );
 }

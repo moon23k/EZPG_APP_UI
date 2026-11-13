@@ -47,8 +47,8 @@ const useStyles = makeStyles((t) => ({
     paddingTop: t.layout.screenTop,
     paddingBottom: t.layout.groupGap,
     paddingHorizontal: t.layout.screenX,
-    fontSize: t.typography.screenTitle.fontSize,
-    lineHeight: t.typography.screenTitle.lineHeight,
+    ...t.typography.screenTitle,
+    color: t.colors.title,
   },
   pager: { flex: 1 },
   page: { gap: t.space[2] },
@@ -185,7 +185,7 @@ export function ResultTemplate({
   return (
     <View style={s.root}>
       {title ? (
-        <Text weight="bold" accessibilityRole="header" style={s.heading}>
+        <Text accessibilityRole="header" style={s.heading}>
           {title}
         </Text>
       ) : null}
