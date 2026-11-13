@@ -1,5 +1,13 @@
 # @ezpg/app-ui
 
+## 0.19.0
+
+### Minor Changes
+
+- QuestionAccordion: 펼치기형 질문(접힌 줄 번호 · 섹션 · 고른 값, 펼친 질문 흰 패널 · 2열 칸 · 선택 연한 브랜드 바탕 + 점 · 기타 직접 입력)
+- 제목 톤: screenTitle 600 · 자간 -0.6 · 차콜 title 색(StepScreen · PageHeader · ResultTemplate · Text screenTitle)
+- 토큰: title · selectSurface · selectForeground · radius.xl · shadow.panel · typography eyebrow · question
+
 ## 0.18.0
 
 ### Minor Changes
