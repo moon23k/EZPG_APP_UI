@@ -333,10 +333,8 @@ export function DetailCanvas({
         ]}
       >
         {doc.blocks.map((block, index) => (
-          <Tap
+          <View
             key={block.id}
-            onPress={press({ block: block.id })}
-            label={'블록'}
             style={{
               backgroundColor: block.background?.color ?? undefined,
               paddingTop: detailBlockSpace(block.space_top) * scale,
@@ -347,6 +345,14 @@ export function DetailCanvas({
               <Image
                 source={{ uri: block.background.url }}
                 resizeMode="cover"
+                style={s.fill}
+              />
+            ) : null}
+            {onSelect ? (
+              <PressableBase
+                onPress={() => onSelect({ block: block.id })}
+                accessibilityLabel="블록"
+                pressedStyle={{}}
                 style={s.fill}
               />
             ) : null}
@@ -361,7 +367,7 @@ export function DetailCanvas({
                 </RNText>
               </View>
             ) : null}
-          </Tap>
+          </View>
         ))}
       </View>
     </FocusTargetContext.Provider>

@@ -36,6 +36,33 @@ it('canvas hides hidden layers and reports block and layer taps', async () => {
   expect(onSelect).toHaveBeenLastCalledWith({ block: 'b1' });
 });
 
+it('canvas never nests a pressable inside another', async () => {
+  await render(<DetailCanvas doc={doc} onSelect={jest.fn()} />);
+  type Node = {
+    props?: { accessibilityRole?: string };
+    children?: unknown[] | null;
+  };
+  let buttons = 0;
+  let nested = 0;
+  const walk = (node: unknown, inside: boolean) => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) {
+      node.forEach((n) => walk(n, inside));
+      return;
+    }
+    const n = node as Node;
+    const button = n.props?.accessibilityRole === 'button';
+    if (button) {
+      buttons += 1;
+      if (inside) nested += 1;
+    }
+    (n.children ?? []).forEach((c) => walk(c, inside || button));
+  };
+  walk(screen.toJSON(), false);
+  expect(buttons).toBeGreaterThan(1);
+  expect(nested).toBe(0);
+});
+
 it('pickers report the chosen value', async () => {
   const onLayout = jest.fn();
   const onFont = jest.fn();
