@@ -1,5 +1,11 @@
 # @ezpg/app-ui
 
+## 0.19.1
+
+### Patch Changes
+
+- DetailCanvas: 블록 누름 영역을 레이어 옆 바탕으로 옮겨 누름 요소가 겹치지 않게(웹 button 안 button 경고)
+
 ## 0.19.0
 
 ### Minor Changes
